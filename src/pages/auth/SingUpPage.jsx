@@ -12,7 +12,7 @@ import {
 import {} from "react-icons/ai";
 
 import { useFormik, Form, Field } from "formik";
-import { basicSchema } from "../../schemas";
+import { basicSchema } from "../../common/validators";
 
 function SingUp() {
   const onSubmit = () => {
@@ -43,13 +43,7 @@ function SingUp() {
         justifyContent={"center"}
         alignItems={"center"}
       >
-        <Card
-          w={"330px"}
-          h={"686px"}
-          bgColor={"white"}
-          borderRadius={"2xl"}
-          padding={"2"}
-        >
+        <Card w={"330px"} bgColor={"white"} borderRadius={"2xl"} padding={"2"}>
           <VStack h={"auto"}>
             <Box>
               <Heading
@@ -58,6 +52,7 @@ function SingUp() {
                 fontWeight={"600"}
                 fontSize={"30px"}
                 textAlign={"center"}
+                marginTop={"1"}
               >
                 Ranger Up!
               </Heading>
@@ -97,7 +92,12 @@ function SingUp() {
                   }
                 />
                 {errors.firstName && touched.firstName ? (
-                  <Box textAlign={"end"} color={"red.600"} fontSize={"12px"}>
+                  <Box
+                    textAlign={"end"}
+                    // marginTop={"0px"}
+                    color={"red.600"}
+                    fontSize={"12px"}
+                  >
                     {errors.firstName}
                   </Box>
                 ) : (

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
-import SignIn from "./components/auth/SignIn";
-import SignUp from "./components/auth/SingUp";
-import Home from "./components/Home";
+import Home from "./pages/Home";
 
 import "./App.css";
+import OnBoardPage from "./pages/OnBoardPage";
+import SignInPage from "./pages/auth/SignInPage";
+import SignUpPage from "./pages/auth/SingUpPage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -14,8 +14,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/signIn" element={<SignIn />} />
-        <Route path="/signUp" element={<SignUp />} />
+        <Route path="/signIn" element={<SignInPage />} />
+        <Route path="/signUp" element={<SignUpPage />} />
+        <Route path="/onboard" element={<OnBoardPage />} />
       </Routes>
     </BrowserRouter>
   );
