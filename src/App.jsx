@@ -5,7 +5,7 @@ import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SingUp";
 import Home from "./components/Home";
 
-// import "./App.css";
+import "./App.css";
 
 function App() {
   const [count, setCount] = useState(0);
