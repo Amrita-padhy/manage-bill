@@ -8,6 +8,7 @@ import {
   Heading,
   VStack,
   Stack,
+  Text,
 } from "@chakra-ui/react";
 import {} from "react-icons/ai";
 
@@ -67,7 +68,8 @@ function SingUp() {
             </Box>
             <form autoComplete="off" onSubmit={handleSubmit}>
               <Stack>
-                <label htmlFor="">Full Name*</label>
+                {/*  Last Name*/}
+                <label htmlFor="">First Name*</label>
                 <Input
                   placeholder="Enter your first name"
                   value={values.firstName}
@@ -75,35 +77,32 @@ function SingUp() {
                   id="firstName"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isRequired
-                  size={"lg"}
                   focusBorderColor="gray.600"
                   borderColor={"gray.200"}
                   color={"gray.600"}
                   fontSize={"16px"}
-                  fontWeight={"400"}
-                  lineHeight={"24px"}
                   paddingY={"4"}
                   paddingX={"6"}
-                  w={"300px"}
                   h={"38px"}
                   className={
                     errors.firstName && touched.firstName ? "input_error" : ""
                   }
                 />
                 {errors.firstName && touched.firstName ? (
-                  <Box
-                    textAlign={"end"}
-                    // marginTop={"0px"}
-                    color={"red.600"}
-                    fontSize={"12px"}
+                  <div
+                    style={{
+                      textAlign: "end",
+                      marginTop: "0",
+                      fontSize: "12px",
+                      color: "red",
+                    }}
                   >
                     {errors.firstName}
-                  </Box>
+                  </div>
                 ) : (
                   ""
                 )}
-                {/* 2 */}
+                {/* Last Name */}
                 <label htmlFor="">Last Name*</label>
                 <Input
                   placeholder="Enter your last name"
@@ -112,30 +111,32 @@ function SingUp() {
                   id="lastName"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isRequired
-                  size={"lg"}
                   focusBorderColor="gray.600"
                   borderColor={"gray.200"}
                   color={"gray.600"}
                   fontSize={"16px"}
-                  fontWeight={"400"}
-                  lineHeight={"24px"}
                   paddingY={"2"}
                   paddingX={"6"}
-                  w={"300px"}
                   h={"38px"}
                   className={
                     errors.firstName && touched.lastName ? "input_error" : ""
                   }
                 />
                 {errors.lastName && touched.lastName ? (
-                  <Box textAlign={"end"} color={"red.600"} fontSize={"12px"}>
+                  <div
+                    style={{
+                      textAlign: "end",
+                      marginTop: "0",
+                      fontSize: "12px",
+                      color: "red",
+                    }}
+                  >
                     {errors.lastName}
-                  </Box>
+                  </div>
                 ) : (
                   ""
                 )}
-                {/* 3 */}
+                {/* Email */}
                 <label htmlFor="">Email*</label>
                 <Input
                   placeholder="Enter your email address"
@@ -144,30 +145,32 @@ function SingUp() {
                   id="email"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isRequired
-                  size={"lg"}
                   focusBorderColor="gray.600"
                   borderColor={"gray.200"}
                   color={"gray.600"}
                   fontSize={"16px"}
-                  fontWeight={"400"}
-                  lineHeight={"24px"}
                   paddingY={"2"}
                   paddingX={"6"}
-                  w={"300px"}
                   h={"38px"}
                   className={
                     errors.firstName && touched.email ? "input_error" : ""
                   }
                 />
                 {errors.email && touched.email ? (
-                  <Box textAlign={"end"} color={"red.600"} fontSize={"12px"}>
+                  <div
+                    style={{
+                      textAlign: "end",
+                      marginTop: "0",
+                      fontSize: "12px",
+                      color: "red",
+                    }}
+                  >
                     {errors.email}
-                  </Box>
+                  </div>
                 ) : (
                   ""
                 )}
-                {/* 4 */}
+                {/* Password */}
                 <label htmlFor="">Password*</label>
                 <Input
                   placeholder="Password"
@@ -176,29 +179,32 @@ function SingUp() {
                   id="password"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  size={"lg"}
                   focusBorderColor="gray.600"
                   borderColor={"gray.200"}
                   color={"gray.600"}
                   fontSize={"16px"}
-                  fontWeight={"400"}
-                  lineHeight={"24px"}
                   paddingY={"2"}
                   paddingX={"6"}
-                  w={"300px"}
                   h={"38px"}
                   className={
                     errors.password && touched.password ? "input_error" : ""
                   }
                 />
                 {errors.password && touched.password ? (
-                  <Box textAlign={"end"} color={"red.600"} fontSize={"12px"}>
+                  <div
+                    style={{
+                      textAlign: "end",
+                      marginTop: "0",
+                      fontSize: "12px",
+                      color: "red",
+                    }}
+                  >
                     {errors.password}
-                  </Box>
+                  </div>
                 ) : (
                   ""
                 )}
-                {/* 5 */}
+                {/* Confirm password */}
                 <label htmlFor=""> Confirm Password*</label>
                 <Input
                   placeholder="Confirm password"
@@ -207,17 +213,12 @@ function SingUp() {
                   id="confirmPassword"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isRequired
-                  size={"lg"}
                   focusBorderColor="gray.600"
                   borderColor={"gray.200"}
                   color={"gray.600"}
                   fontSize={"16px"}
-                  fontWeight={"400"}
-                  lineHeight={"24px"}
                   paddingY={"2"}
                   paddingX={"6"}
-                  w={"300px"}
                   h={"38px"}
                   className={
                     errors.firstName && touched.confirmPassword
@@ -226,13 +227,27 @@ function SingUp() {
                   }
                 />
                 {errors.confirmPassword && touched.confirmPassword ? (
-                  <Box textAlign={"end"} color={"red.600"} fontSize={"12px"}>
+                  <div
+                    style={{
+                      textAlign: "end",
+                      marginTop: "0",
+                      fontSize: "12px",
+                      color: "red",
+                    }}
+                  >
                     {errors.confirmPassword}
-                  </Box>
+                  </div>
                 ) : (
                   ""
                 )}
                 <Button
+                  disabled={
+                    !values.firstName ||
+                    !values.lastName ||
+                    !values.email ||
+                    !values.password ||
+                    !values.confirmPassword
+                  }
                   type="submit"
                   w={"300px"}
                   h={"44px"}
@@ -248,9 +263,7 @@ function SingUp() {
               <Button
                 variant={"unstyled"}
                 color={"gray.400"}
-                fontSize={"16px"}
                 fontWeight={"400"}
-                lineHeight={"24px"}
               >
                 Already have an account ?
               </Button>
@@ -259,7 +272,6 @@ function SingUp() {
                 color={"#1971C2"}
                 fontSize={"14px"}
                 fontWeight={"500"}
-                lineHeight={"20px"}
               >
                 Log in
               </Button>
