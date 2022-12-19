@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Box,
@@ -9,13 +9,30 @@ import {
   VStack,
   Stack,
   Text,
+  Icon,
+  useColorModeValue,
+  useDisclosure,
+  MenuList,
+  MenuItem,
+  Menu,
+  MenuButton,
+  Tooltip,
 } from "@chakra-ui/react";
-import {} from "react-icons/ai";
+import { GrCircleInformation } from "react-icons/gr";
 
 import { useFormik, Form, Field } from "formik";
 import { basicSchema } from "../../common/validators";
+import { ChevronDownIcon, ChevronUpIcon, SearchIcon } from "@chakra-ui/icons";
 
 function SingUp() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  function over(e) {
+    setIsVisible(true);
+  }
+  function out(e) {
+    setIsVisible(false);
+  }
   const onSubmit = () => {
     console.log(hi);
   };
@@ -68,7 +85,7 @@ function SingUp() {
             </Box>
             <form autoComplete="off" onSubmit={handleSubmit}>
               <Stack>
-                {/*  Last Name*/}
+                {/*  fast Name*/}
                 <label htmlFor="">First Name*</label>
                 <Input
                   placeholder="Enter your first name"
@@ -85,13 +102,13 @@ function SingUp() {
                   paddingX={"6"}
                   h={"38px"}
                   className={
-                    errors.firstName && touched.firstName ? "input_error" : ""
+                    errors.lastName && touched.firstName && "input_error"
                   }
                 />
                 {errors.firstName && touched.firstName ? (
                   <div
                     style={{
-                      textAlign: "end",
+                      textAlign: "start",
                       marginTop: "0",
                       fontSize: "12px",
                       color: "red",
@@ -119,13 +136,13 @@ function SingUp() {
                   paddingX={"6"}
                   h={"38px"}
                   className={
-                    errors.firstName && touched.lastName ? "input_error" : ""
+                    errors.lastName && touched.lastName && "input_error"
                   }
                 />
                 {errors.lastName && touched.lastName ? (
                   <div
                     style={{
-                      textAlign: "end",
+                      textAlign: "start",
                       marginTop: "0",
                       fontSize: "12px",
                       color: "red",
@@ -152,14 +169,12 @@ function SingUp() {
                   paddingY={"2"}
                   paddingX={"6"}
                   h={"38px"}
-                  className={
-                    errors.firstName && touched.email ? "input_error" : ""
-                  }
+                  className={errors.email && touched.email && "input_error"}
                 />
                 {errors.email && touched.email ? (
                   <div
                     style={{
-                      textAlign: "end",
+                      textAlign: "start",
                       marginTop: "0",
                       fontSize: "12px",
                       color: "red",
@@ -171,7 +186,34 @@ function SingUp() {
                   ""
                 )}
                 {/* Password */}
-                <label htmlFor="">Password*</label>
+                <Stack direction="row" alignItems={"center"}>
+                  <label htmlFor="">Password*</label>
+
+                  <Tooltip
+                    // position={"absolute"}
+                    hasArrow
+                    label="The password must be at least 8 characters and a mixture of both uppercase and lowercase letters, at least one number and at least one special character  (e.g., ! @ # ? ])."
+                    bg="gray.300"
+                    color="black"
+                    fontSize={"12px"}
+                    w={"250px"}
+                    h={"98px"}
+                    marginLeft={"16"}
+                    paddingY={"1"}
+                    paddingX={"3"}
+                  >
+                    <Icon
+                      color={"gray.400"}
+                      fontSize={"18px"}
+                      display={"flex"}
+                      justifyContent={"center"}
+                      alignItems={"center"}
+                    >
+                      <GrCircleInformation />
+                    </Icon>
+                  </Tooltip>
+                </Stack>
+
                 <Input
                   placeholder="Password"
                   value={values.password}
@@ -187,13 +229,13 @@ function SingUp() {
                   paddingX={"6"}
                   h={"38px"}
                   className={
-                    errors.password && touched.password ? "input_error" : ""
+                    errors.password && touched.password && "input_error"
                   }
                 />
                 {errors.password && touched.password ? (
                   <div
                     style={{
-                      textAlign: "end",
+                      textAlign: "start",
                       marginTop: "0",
                       fontSize: "12px",
                       color: "red",
@@ -221,15 +263,15 @@ function SingUp() {
                   paddingX={"6"}
                   h={"38px"}
                   className={
-                    errors.firstName && touched.confirmPassword
-                      ? "input_error"
-                      : ""
+                    errors.confirmPassword &&
+                    touched.confirmPassword &&
+                    "input_error"
                   }
                 />
                 {errors.confirmPassword && touched.confirmPassword ? (
                   <div
                     style={{
-                      textAlign: "end",
+                      textAlign: "start",
                       marginTop: "0",
                       fontSize: "12px",
                       color: "red",
@@ -246,11 +288,17 @@ function SingUp() {
                     !values.lastName ||
                     !values.email ||
                     !values.password ||
-                    !values.confirmPassword
+                    !values.confirmPassword ||
+                    errors.firstName ||
+                    errors.lastName ||
+                    errors.email ||
+                    errors.password ||
+                    errors.confirmPassword
                   }
                   type="submit"
                   w={"300px"}
                   h={"44px"}
+                  fontWeight={"medium"}
                   bgColor={"#FBE122"}
                   color={"gray.700"}
                 >

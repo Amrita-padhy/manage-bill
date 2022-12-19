@@ -18,7 +18,7 @@ export const basicSchema = yup.object().shape({
         .required(" This field is required"),
     email: yup.string().email('please enter a valid email').required("This field is required"),
     password: yup.string().min(5).matches(passwordRules, {
-        message: "Please create a strong Password"
+        message: " Password must contain at least one uppercase and one lowercase a number and a special character  "
     }).required("This field is required"),
     confirmPassword: yup.string().oneOf([yup.ref('password'), null], "password must match ").required("This field is required")
 })
