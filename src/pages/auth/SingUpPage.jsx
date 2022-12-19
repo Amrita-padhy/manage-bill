@@ -8,14 +8,8 @@ import {
   Heading,
   VStack,
   Stack,
-  Text,
   Icon,
-  useColorModeValue,
   useDisclosure,
-  MenuList,
-  MenuItem,
-  Menu,
-  MenuButton,
   Tooltip,
 } from "@chakra-ui/react";
 import { GrCircleInformation } from "react-icons/gr";
@@ -25,14 +19,6 @@ import { basicSchema } from "../../common/validators";
 import { ChevronDownIcon, ChevronUpIcon, SearchIcon } from "@chakra-ui/icons";
 
 function SingUp() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  function over(e) {
-    setIsVisible(true);
-  }
-  function out(e) {
-    setIsVisible(false);
-  }
   const onSubmit = () => {
     console.log(hi);
   };
@@ -49,7 +35,6 @@ function SingUp() {
       validationSchema: basicSchema,
       onSubmit,
     });
-  console.log(errors);
 
   return (
     <>
