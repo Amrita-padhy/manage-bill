@@ -3,23 +3,53 @@ import {
   Container,
   Heading,
   HStack,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Stack,
-  useColorModeValue,
-  VStack,
   // ,
 } from "@chakra-ui/react";
-// import { PseudoBox } from "@chakra-ui/react";
-import { useDisclosure } from "@chakra-ui/react";
-import React, { useState } from "react";
+
 import { AiOutlineDown } from "react-icons/ai";
+import CompanyInformationForm from "../components/CompanyInformationForm";
 import PersonalInformationForm from "../components/PersonalInformationForm";
+import MailingAddressForm from "../components/MailingAddressForm";
+import { useFormik } from "formik";
+import { basicSchema } from "../common/validators";
+
 function OnBoardPage() {
+  const onSubmit = () => {
+    console.log(hi);
+  };
+  const { values, handleChange, touched, errors, handleSubmit, handleBlur } =
+    useFormik({
+      initialValues: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        mobileNumber: "",
+        companyName: "",
+        website: "",
+        address: "",
+        city: "",
+        state: "",
+        zipCode: "",
+        mailingAddress: "",
+        mailingCity: "",
+        mailingState: "",
+        mailingZipCode: "",
+      },
+      validationSchema: basicSchema,
+      onSubmit,
+    });
+
   return (
-    <Box w={"full"} h={"auto"} bgColor={"#E5E5E5"}>
+    <Box
+      w={"full"}
+      h={"auto"}
+      bgColor={"#E5E5E5"}
+      display={"flex"}
+      alignItems={"center"}
+      justifyContent={"center"}
+      flexDirection={"column"}
+    >
       <Stack
         className="navBar"
         w={"full"}
@@ -39,18 +69,17 @@ function OnBoardPage() {
         </Heading>
       </Stack>
       <Box
+        className="headingBar"
         w={"full"}
         h={"66px"}
         bgColor={"white"}
         display={"flex"}
         alignItems={"center"}
         justifyContent={"center"}
-        gap={"40"}
       >
         <Box
           w={"794px"}
           h={"66px"}
-          // bg={"pink.200"}
           display={"flex"}
           alignItems={"center"}
           justifyContent={"space-around"}
@@ -122,17 +151,42 @@ function OnBoardPage() {
       <Container
         maxW={["343px", "794px"]}
         bg={"white"}
-        h={"100vh"}
-        marginTop={["12", "6"]}
-        paddingX={"6"}
-        paddingY={"8"}
+        marginTop={["8", "6"]}
+        marginX={["4", "0"]}
         borderRadius={"0.5rem"}
+        paddingY={"6"}
+        paddingX={"6"}
       >
-        {/* personal info */}
-        <PersonalInformationForm />
+        <form autoComplete="off" onSubmit={handleSubmit}>
+          {/* personal info */}
+          <PersonalInformationForm
+            values={values}
+            handleChange={handleChange}
+            touched={touched}
+            errors={errors}
+            handleSubmit={handleSubmit}
+            handleBlur={handleBlur}
+          />
 
-        {/* company info */}
-        {/* mailing address */}
+          {/* company info */}
+          <CompanyInformationForm
+            values={values}
+            handleChange={handleChange}
+            touched={touched}
+            errors={errors}
+            handleSubmit={handleSubmit}
+            handleBlur={handleBlur}
+          />
+          {/* mailing address */}
+          <MailingAddressForm
+            values={values}
+            handleChange={handleChange}
+            touched={touched}
+            errors={errors}
+            handleSubmit={handleSubmit}
+            handleBlur={handleBlur}
+          />
+        </form>
       </Container>
     </Box>
   );

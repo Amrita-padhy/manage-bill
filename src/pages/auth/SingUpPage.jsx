@@ -16,7 +16,6 @@ import { GrCircleInformation } from "react-icons/gr";
 
 import { useFormik, Form, Field } from "formik";
 import { basicSchema } from "../../common/validators";
-import { ChevronDownIcon, ChevronUpIcon, SearchIcon } from "@chakra-ui/icons";
 
 function SingUp() {
   const onSubmit = () => {
