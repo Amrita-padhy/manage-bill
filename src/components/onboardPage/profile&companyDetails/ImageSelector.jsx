@@ -11,7 +11,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 
-function ImageSelector() {
+function ImageSelector({}) {
   const [image, setImage] = useState();
 
   const handlePreviewImage = (e) => {
@@ -19,7 +19,7 @@ function ImageSelector() {
       setImage(e.target.files[0]);
     }
   };
-
+  console.log(image);
   return (
     <>
       <VStack>

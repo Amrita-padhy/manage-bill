@@ -1,7 +1,9 @@
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
   Checkbox,
+  FormLabel,
   Grid,
   GridItem,
   HStack,
@@ -11,11 +13,8 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
-import IconSelector from "./IconSelector";
 
-import ImageSelector from "./ImageSelector";
-
-function CompanyInformationForm({
+function MailingAddressForm({
   values,
   handleChange,
   touched,
@@ -25,7 +24,7 @@ function CompanyInformationForm({
 }) {
   return (
     <>
-      <Box>
+      <Box mt={"6"}>
         <Stack
           className="headings"
           direction={["column", "row"]}
@@ -37,90 +36,21 @@ function CompanyInformationForm({
             color={"#212529"}
             lineHeight={"30px"}
           >
-            Company Information
+            Mailing Address
           </Box>
         </Stack>
         {/* company name ,website */}
-        <Stack w={"full"} direction={["column", "row"]} h={"auto"}>
-          <Box w={["full", "60%"]} h={"fit-content"}>
-            <label htmlFor="">Company Name</label>
-            <Input
-              placeholder="Company name"
-              type="text"
-              id="companyName"
-              value={values.companyName}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              focusBorderColor="gray.600"
-              borderColor={"gray.200"}
-              color={"gray.600"}
-              fontSize={"16px"}
-              paddingY={"4"}
-              paddingX={"6"}
-              className={
-                errors.companyName && touched.companyName && "input_error"
-              }
-            />
-            {errors.companyName && touched.companyName ? (
-              <div
-                style={{
-                  textAlign: "start",
-                  marginTop: "0",
-                  fontSize: "12px",
-                  color: "red",
-                }}
-              >
-                {errors.companyName}
-              </div>
-            ) : (
-              ""
-            )}
-            <label htmlFor="">Website</label>
-            <Input
-              placeholder=" Website"
-              type="text"
-              id="website"
-              value={values.website}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              focusBorderColor="gray.600"
-              borderColor={"gray.200"}
-              color={"gray.600"}
-              fontSize={"16px"}
-              paddingY={"4"}
-              paddingX={"6"}
-            />
-            {errors.website && touched.website ? (
-              <div
-                style={{
-                  textAlign: "start",
-                  marginTop: "0",
-                  fontSize: "12px",
-                  color: "red",
-                }}
-              >
-                {errors.website}
-              </div>
-            ) : (
-              ""
-            )}
-          </Box>
-          <Box w={["100%", "40%"]} h={"fit-content"}>
-            <VStack>
-              <Box>Company Logo</Box>
-              <IconSelector />
-            </VStack>
-          </Box>
-        </Stack>
+
         <Stack w={"full"}>
           {/* address */}
           <Box>
-            <label htmlFor="">Address*</label>
+            <FormLabel color={"#495057"}>Address*</FormLabel>
+
             <Input
               placeholder="Address"
               type="text"
-              id="address"
-              value={values.address}
+              id="mailingAddress"
+              value={values.mailingAddress}
               onChange={handleChange}
               onBlur={handleBlur}
               focusBorderColor="gray.600"
@@ -129,9 +59,14 @@ function CompanyInformationForm({
               fontSize={"16px"}
               paddingY={"4"}
               paddingX={"6"}
-              className={errors.address && touched.address && "input_error"}
+              h={"38px"}
+              w={"full"}
+              marginTop={"3"}
+              className={
+                errors.mailingAddress && touched.mailingAddress && "input_error"
+              }
             />
-            {errors.address && touched.address ? (
+            {errors.mailingAddress && touched.mailingAddress ? (
               <div
                 style={{
                   textAlign: "start",
@@ -140,23 +75,25 @@ function CompanyInformationForm({
                   color: "red",
                 }}
               >
-                {errors.address}
+                {errors.mailingAddress}
               </div>
             ) : (
               ""
             )}
           </Box>
           {/* city state zipCode */}
+
           <Box>
             <Stack direction={["column", "row"]}>
               {/* city */}
               <Stack width={"100%"}>
-                <label htmlFor="">City*</label>
+                <FormLabel color={"#495057"}>City*</FormLabel>
+
                 <Input
                   placeholder="City"
                   type="text"
-                  id="city"
-                  value={values.city}
+                  id="mailingCity"
+                  value={values.mailingCity}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   focusBorderColor="gray.600"
@@ -165,9 +102,14 @@ function CompanyInformationForm({
                   fontSize={"16px"}
                   paddingY={"4"}
                   paddingX={"6"}
-                  className={errors.city && touched.city && "input_error"}
+                  h={"38px"}
+                  w={"full"}
+                  marginTop={"3"}
+                  className={
+                    errors.mailingCity && touched.mailingCity && "input_error"
+                  }
                 />
-                {errors.city && touched.city ? (
+                {errors.mailingCity && touched.mailingCity ? (
                   <div
                     style={{
                       textAlign: "start",
@@ -176,7 +118,7 @@ function CompanyInformationForm({
                       color: "red",
                     }}
                   >
-                    {errors.city}
+                    {errors.mailingCity}
                   </div>
                 ) : (
                   ""
@@ -185,12 +127,13 @@ function CompanyInformationForm({
               {/* state */}
 
               <Stack width={"100%"}>
-                <label htmlFor="">State*</label>
+                <FormLabel color={"#495057"}>State*</FormLabel>
+
                 <Input
                   placeholder="State"
                   type="text"
-                  id="state"
-                  value={values.state}
+                  id="mailingState"
+                  value={values.mailingState}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   focusBorderColor="gray.600"
@@ -199,9 +142,14 @@ function CompanyInformationForm({
                   fontSize={"16px"}
                   paddingY={"4"}
                   paddingX={"6"}
-                  className={errors.state && touched.state && "input_error"}
+                  h={"38px"}
+                  w={"full"}
+                  marginTop={"3"}
+                  className={
+                    errors.mailingState && touched.mailingState && "input_error"
+                  }
                 />
-                {errors.state && touched.state ? (
+                {errors.mailingState && touched.mailingState ? (
                   <div
                     style={{
                       textAlign: "start",
@@ -210,7 +158,7 @@ function CompanyInformationForm({
                       color: "red",
                     }}
                   >
-                    {errors.state}
+                    {errors.mailingState}
                   </div>
                 ) : (
                   ""
@@ -219,12 +167,13 @@ function CompanyInformationForm({
               {/* zip code */}
 
               <Stack width={"100%"}>
-                <label htmlFor="">Zipcode*</label>
+                <FormLabel color={"#495057"}>Zipcode*</FormLabel>
+
                 <Input
                   placeholder="Zipcode"
                   type="number"
-                  id="zipCode"
-                  value={values.zipCode}
+                  id="mailingZipCode"
+                  value={values.mailingZipCode}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   focusBorderColor="gray.600"
@@ -233,9 +182,16 @@ function CompanyInformationForm({
                   fontSize={"16px"}
                   paddingY={"4"}
                   paddingX={"6"}
-                  className={errors.zipCode && touched.zipCode && "input_error"}
+                  h={"38px"}
+                  w={"full"}
+                  marginTop={"3"}
+                  className={
+                    errors.mailingZipCode &&
+                    touched.mailingZipCode &&
+                    "input_error"
+                  }
                 />
-                {errors.zipCode && touched.zipCode ? (
+                {errors.mailingZipCode && touched.mailingZipCode ? (
                   <div
                     style={{
                       textAlign: "start",
@@ -244,7 +200,7 @@ function CompanyInformationForm({
                       color: "red",
                     }}
                   >
-                    {errors.zipCode}
+                    {errors.mailingZipCode}
                   </div>
                 ) : (
                   ""
@@ -252,21 +208,61 @@ function CompanyInformationForm({
               </Stack>
             </Stack>
           </Box>
-          <HStack>
-            <Checkbox
-              fontSize={"16px"}
-              lineHeight={"24px"}
-              color={"gray.600"}
-              fontWeight={"normal"}
-              defaultChecked
-            >
-              Mailing Address same as above
-            </Checkbox>
-          </HStack>
+        </Stack>
+        <Stack
+          color={"#495057"}
+          fontWeight={"500"}
+          direction={["column-reverse", "row"]}
+          justifyContent={"space-between"}
+          mt={"2.5rem"}
+        >
+          <Button variant={"outline"} size="sm" padding={"6"}>
+            Sign Out
+          </Button>
+          <Button
+            rightIcon={<ArrowForwardIcon />}
+            backgroundColor={"#FBE122"}
+            variant="solid"
+            size="sm"
+            padding={"6"}
+            onClick={handleSubmit}
+            disabled={
+              !values.firstName ||
+              !values.lastName ||
+              !values.email ||
+              !values.mobileNumber ||
+              !values.companyName ||
+              !values.website ||
+              !values.address ||
+              !values.city ||
+              !values.state ||
+              !values.zipCode ||
+              !values.mailingAddress ||
+              !values.mailingCity ||
+              !values.mailingState ||
+              !values.mailingZipCode ||
+              errors.firstName ||
+              errors.lastName ||
+              errors.email ||
+              errors.mobileNumber ||
+              errors.companyName ||
+              errors.website ||
+              errors.address ||
+              errors.city ||
+              errors.state ||
+              errors.zipCode ||
+              errors.mailingAddress ||
+              errors.mailingCity ||
+              errors.mailingState ||
+              errors.mailingZipCode
+            }
+          >
+            NEXT: Plan & Payment
+          </Button>
         </Stack>
       </Box>
     </>
   );
 }
 
-export default CompanyInformationForm;
+export default MailingAddressForm;

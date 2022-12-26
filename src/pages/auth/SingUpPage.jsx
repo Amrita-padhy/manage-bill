@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import {
   Box,
@@ -11,6 +12,7 @@ import {
   Icon,
   useDisclosure,
   Tooltip,
+  FormLabel,
 } from "@chakra-ui/react";
 import { GrCircleInformation } from "react-icons/gr";
 
@@ -21,6 +23,8 @@ function SingUp() {
   const onSubmit = () => {
     console.log(hi);
   };
+
+  const navigate = useNavigate();
 
   const { values, handleChange, touched, errors, handleSubmit, handleBlur } =
     useFormik({
@@ -70,7 +74,8 @@ function SingUp() {
             <form autoComplete="off" onSubmit={handleSubmit}>
               <Stack>
                 {/*  fast Name*/}
-                <label htmlFor="">First Name*</label>
+
+                <FormLabel color={"#495057"}>First Name*</FormLabel>
                 <Input
                   placeholder="Enter your first name"
                   value={values.firstName}
@@ -104,7 +109,9 @@ function SingUp() {
                   ""
                 )}
                 {/* Last Name */}
-                <label htmlFor="">Last Name*</label>
+
+                <FormLabel color={"#495057"}>Last Name*</FormLabel>
+
                 <Input
                   placeholder="Enter your last name"
                   type="text"
@@ -138,7 +145,9 @@ function SingUp() {
                   ""
                 )}
                 {/* Email */}
-                <label htmlFor="">Email*</label>
+
+                <FormLabel color={"#495057"}>Email*</FormLabel>
+
                 <Input
                   placeholder="Enter your email address"
                   value={values.email}
@@ -171,14 +180,13 @@ function SingUp() {
                 )}
                 {/* Password */}
                 <Stack direction="row" alignItems={"center"}>
-                  <label htmlFor="">Password*</label>
+                  <FormLabel color={"#495057"}>Password*</FormLabel>
 
                   <Tooltip
-                    // position={"absolute"}
                     hasArrow
                     label="The password must be at least 8 characters and a mixture of both uppercase and lowercase letters, at least one number and at least one special character  (e.g., ! @ # ? ])."
                     bg="gray.300"
-                    color="black"
+                    color="#495057"
                     fontSize={"12px"}
                     w={"250px"}
                     h={"98px"}
@@ -199,7 +207,7 @@ function SingUp() {
                 </Stack>
 
                 <Input
-                  placeholder="Password"
+                  placeholder="Create new password"
                   value={values.password}
                   type="password"
                   id="password"
@@ -231,7 +239,9 @@ function SingUp() {
                   ""
                 )}
                 {/* Confirm password */}
-                <label htmlFor=""> Confirm Password*</label>
+
+                <FormLabel color={"#495057"}>Confirm Password*</FormLabel>
+
                 <Input
                   placeholder="Confirm password"
                   value={values.confirmPassword}
@@ -304,6 +314,9 @@ function SingUp() {
                 color={"#1971C2"}
                 fontSize={"14px"}
                 fontWeight={"500"}
+                onClick={() => {
+                  navigate("/sign-in-page");
+                }}
               >
                 Log in
               </Button>

@@ -1,4 +1,4 @@
-import { Box, Input, Stack, VStack } from "@chakra-ui/react";
+import { Box, FormLabel, Input, Stack, VStack } from "@chakra-ui/react";
 import React from "react";
 
 import ImageSelector from "./ImageSelector";
@@ -36,9 +36,10 @@ function PersonalInformationForm({
             Ranger ID: UR8A5012C
           </Box>
         </Stack>
-        <Stack direction={["column", "row"]} w={"100%"}>
+        <Stack direction={["column", "row"]} w={"100%"} marginTop={"4"}>
           <Box w={["100%", "60%"]} h="auto">
-            <label>First Name*</label>
+            <FormLabel color={"#495057"}>First Name*</FormLabel>
+
             <Input
               placeholder="First name"
               type="text"
@@ -69,7 +70,9 @@ function PersonalInformationForm({
             ) : (
               ""
             )}
-            <label htmlFor="">Last Name*</label>
+
+            <FormLabel color={"#495057"}>Last Name*</FormLabel>
+
             <Input
               placeholder=" Last name"
               type="text"
@@ -100,7 +103,9 @@ function PersonalInformationForm({
             ) : (
               ""
             )}
-            <label htmlFor="">Email*</label>
+
+            <FormLabel color={"#495057"}>Email*</FormLabel>
+
             <Input
               placeholder="Email"
               type="email"
@@ -110,7 +115,7 @@ function PersonalInformationForm({
               onBlur={handleBlur}
               focusBorderColor="gray.600"
               borderColor={"gray.200"}
-              color={"gray.600"}
+              color={"#212529"}
               fontSize={"16px"}
               paddingY={"4"}
               paddingX={"6"}
@@ -131,7 +136,9 @@ function PersonalInformationForm({
             ) : (
               ""
             )}
-            <label htmlFor="">Mobile Number.</label>
+
+            <FormLabel color={"#495057"}>Mobile Number.</FormLabel>
+
             <Input
               placeholder="Mobile Number."
               type="number"

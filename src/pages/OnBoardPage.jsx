@@ -4,191 +4,140 @@ import {
   Heading,
   HStack,
   Stack,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
   // ,
 } from "@chakra-ui/react";
 
 import { AiOutlineDown } from "react-icons/ai";
-import CompanyInformationForm from "../components/CompanyInformationForm";
-import PersonalInformationForm from "../components/PersonalInformationForm";
-import MailingAddressForm from "../components/MailingAddressForm";
 import { useFormik } from "formik";
 import { basicSchema } from "../common/validators";
+// import ProfileDetailsCard from "../components/profile&companyDetails/ProfileDetailsCard";
+// import PaymentDetailsCard from "../components/plan&PaymentDetails/PaymentDetailsCard";
+
+import ProfileDetailsCard from "../components/onboardPage/profile&companyDetails/ProfileDetailsCard";
+import PaymentDetailsCard from "../components/onboardPage/plan&PaymentDetails/PaymentDetailsCard";
+
+import { useState } from "react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 
 function OnBoardPage() {
-  const onSubmit = () => {
-    console.log(hi);
-  };
-  const { values, handleChange, touched, errors, handleSubmit, handleBlur } =
-    useFormik({
-      initialValues: {
-        firstName: "",
-        lastName: "",
-        email: "",
-        mobileNumber: "",
-        companyName: "",
-        website: "",
-        address: "",
-        city: "",
-        state: "",
-        zipCode: "",
-        mailingAddress: "",
-        mailingCity: "",
-        mailingState: "",
-        mailingZipCode: "",
-      },
-      validationSchema: basicSchema,
-      onSubmit,
-    });
+  const [formData, setFormData] = useState({});
 
+  const handleSubmit = () => {
+    setFormData(values);
+  };
+  console.log(formData);
+
+  const { values, handleChange, touched, errors, handleBlur } = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      mobileNumber: "",
+      companyName: "",
+      website: "",
+      address: "",
+      city: "",
+      state: "",
+      zipCode: "",
+      mailingAddress: "",
+      mailingCity: "",
+      mailingState: "",
+      mailingZipCode: "",
+      avatar: "",
+      companyLogo: "",
+    },
+    validationSchema: basicSchema,
+    // onSubmit,
+  });
+  // console.log(values);
   return (
-    <Box
-      w={"full"}
-      h={"auto"}
-      bgColor={"#E5E5E5"}
-      display={"flex"}
-      alignItems={"center"}
-      justifyContent={"center"}
-      flexDirection={"column"}
-    >
-      <Stack
-        className="navBar"
-        w={"full"}
-        h={"80px"}
-        bgColor={"gray.700"}
-        display={"flex"}
-        alignItems={"center"}
-        justifyContent={"center"}
-      >
-        <Heading
-          color={"white"}
-          fontWeight={"500"}
-          fontSize={"24px"}
-          lineHeight={"24px"}
-        >
-          Create Your Account
-        </Heading>
-      </Stack>
-      <Box
-        className="headingBar"
-        w={"full"}
-        h={"66px"}
-        bgColor={"white"}
-        display={"flex"}
-        alignItems={"center"}
-        justifyContent={"center"}
-      >
-        <Box
-          w={"794px"}
-          h={"66px"}
+    <>
+      <Box bgColor={"gray.100"} w={"100vw"} h={"auto"}>
+        <Stack
+          className="navBar"
+          w={"full"}
+          h={"80px"}
+          bgColor={"gray.700"}
           display={"flex"}
           alignItems={"center"}
-          justifyContent={"space-around"}
-          flexDirection={["column", "column", "row"]}
+          justifyContent={"center"}
         >
+          <Heading
+            color={"white"}
+            fontWeight={"500"}
+            fontSize={"24px"}
+            lineHeight={"24px"}
+          >
+            Create Your Account
+          </Heading>
+        </Stack>
+
+        <Tabs defaultIndex={0}>
           <Box
-            w={"397px"}
+            w={"100vw"}
+            h={"60px"}
+            bgColor={"white"}
             display={"flex"}
             justifyContent={"center"}
             alignItems={"center"}
-            gap={"5rem"}
           >
-            <HStack>
-              <Box
-                fontSize={"16px"}
-                lineHeight={"18px"}
-                display={"flex"}
-                alignItems={"center"}
-                justifyContent={"center"}
-                bgColor={"facebook.300"}
-                w={"8px"}
-                h={"18px"}
-                p={"3"}
-                borderRadius={"full"}
-              >
-                1
-              </Box>
-              <Heading
-                color={"gray.700"}
-                fontWeight={"500"}
-                fontSize={"20px"}
-                lineHeight={"24px"}
-                marginRight={"28"}
-              >
-                Profile & Company
-              </Heading>
-            </HStack>
-            <Box display={["flex", "none"]}>
-              <AiOutlineDown />
-            </Box>
+            <TabList
+              w={"794px"}
+              display={"flex"}
+              justifyContent={"space-around"}
+              fontSize={["10px", "20px"]}
+              lineHeight={"24px"}
+              fontWeight={"500"}
+              color={"#495057"}
+            >
+              <Tab padding={"4"}>
+                <HStack alignItems={"center"} justifyContent={"space-between"}>
+                  <Box>1</Box>
+                  <Box fontSize={["11px", "20px"]}>Profile & Company</Box>
+                  <Box display={["flex", "none"]}>
+                    <ChevronDownIcon size={"20px"} />
+                  </Box>
+                </HStack>
+              </Tab>
+              <Tab>
+                <HStack alignItems={"center"} justifyContent={"space-between"}>
+                  <Box>2</Box>
+                  <Box fontSize={["11px", "20px"]}> Plan & Payment</Box>
+                  <Box display={["flex", "none"]}>
+                    <ChevronDownIcon size={"20px"} />
+                  </Box>
+                </HStack>
+              </Tab>
+            </TabList>
           </Box>
 
-          <HStack display={["none", "none", "flex"]}>
-            <Box
-              fontSize={"16px"}
-              lineHeight={"18px"}
-              display={"flex"}
-              alignItems={"center"}
-              justifyContent={"center"}
-              bgColor={"facebook.300"}
-              w={"8px"}
-              h={"18px"}
-              p={"3"}
-              borderRadius={"full"}
-            >
-              2
-            </Box>
-            <Heading
-              color={"gray.700"}
-              fontWeight={"500"}
-              fontSize={"20px"}
-              lineHeight={"24px"}
-            >
-              Plan & Payment
-            </Heading>
-          </HStack>
-        </Box>
+          <TabPanels
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
+          >
+            <TabPanel>
+              <ProfileDetailsCard
+                values={values}
+                handleChange={handleChange}
+                touched={touched}
+                errors={errors}
+                handleSubmit={handleSubmit}
+                handleBlur={handleBlur}
+              />
+            </TabPanel>
+            <TabPanel>
+              <PaymentDetailsCard />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </Box>
-      <Container
-        maxW={["343px", "794px"]}
-        bg={"white"}
-        marginTop={["8", "6"]}
-        marginX={["4", "0"]}
-        borderRadius={"0.5rem"}
-        paddingY={"6"}
-        paddingX={"6"}
-      >
-        <form autoComplete="off" onSubmit={handleSubmit}>
-          {/* personal info */}
-          <PersonalInformationForm
-            values={values}
-            handleChange={handleChange}
-            touched={touched}
-            errors={errors}
-            handleSubmit={handleSubmit}
-            handleBlur={handleBlur}
-          />
-
-          {/* company info */}
-          <CompanyInformationForm
-            values={values}
-            handleChange={handleChange}
-            touched={touched}
-            errors={errors}
-            handleSubmit={handleSubmit}
-            handleBlur={handleBlur}
-          />
-          {/* mailing address */}
-          <MailingAddressForm
-            values={values}
-            handleChange={handleChange}
-            touched={touched}
-            errors={errors}
-            handleSubmit={handleSubmit}
-            handleBlur={handleBlur}
-          />
-        </form>
-      </Container>
-    </Box>
+    </>
   );
 }
 

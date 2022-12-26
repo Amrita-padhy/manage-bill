@@ -1,8 +1,8 @@
-import { ArrowForwardIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
   Checkbox,
+  FormLabel,
   Grid,
   GridItem,
   HStack,
@@ -12,8 +12,11 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
+import IconSelector from "./IconSelector";
 
-function MailingAddressForm({
+import ImageSelector from "./ImageSelector";
+
+function CompanyInformationForm({
   values,
   handleChange,
   touched,
@@ -23,7 +26,7 @@ function MailingAddressForm({
 }) {
   return (
     <>
-      <Box mt={"6"}>
+      <Box marginTop={"6"}>
         <Stack
           className="headings"
           direction={["column", "row"]}
@@ -35,20 +38,25 @@ function MailingAddressForm({
             color={"#212529"}
             lineHeight={"30px"}
           >
-            Mailing Address
+            Company Information
           </Box>
         </Stack>
         {/* company name ,website */}
+        <Stack
+          w={"full"}
+          direction={["column", "row"]}
+          h={"auto"}
+          alignItems={"center"}
+          justifyContent={"center"}
+        >
+          <Box w={["full", "60%"]} h={"fit-content"}>
+            <FormLabel color={"#495057"}>Company Name</FormLabel>
 
-        <Stack w={"full"}>
-          {/* address */}
-          <Box>
-            <label htmlFor="">Address*</label>
             <Input
-              placeholder="Address"
+              placeholder="Company name"
               type="text"
-              id="mailingAddress"
-              value={values.mailingAddress}
+              id="companyName"
+              value={values.companyName}
               onChange={handleChange}
               onBlur={handleBlur}
               focusBorderColor="gray.600"
@@ -57,14 +65,11 @@ function MailingAddressForm({
               fontSize={"16px"}
               paddingY={"4"}
               paddingX={"6"}
-              h={"38px"}
-              w={"full"}
-              marginTop={"3"}
               className={
-                errors.mailingAddress && touched.mailingAddress && "input_error"
+                errors.companyName && touched.companyName && "input_error"
               }
             />
-            {errors.mailingAddress && touched.mailingAddress ? (
+            {errors.companyName && touched.companyName ? (
               <div
                 style={{
                   textAlign: "start",
@@ -73,24 +78,97 @@ function MailingAddressForm({
                   color: "red",
                 }}
               >
-                {errors.mailingAddress}
+                {errors.companyName}
+              </div>
+            ) : (
+              ""
+            )}
+
+            <FormLabel color={"#495057"}>Website</FormLabel>
+
+            <Input
+              placeholder=" Website"
+              type="text"
+              id="website"
+              value={values.website}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              focusBorderColor="gray.600"
+              borderColor={"gray.200"}
+              color={"gray.600"}
+              fontSize={"16px"}
+              paddingY={"4"}
+              paddingX={"6"}
+            />
+            {errors.website && touched.website ? (
+              <div
+                style={{
+                  textAlign: "start",
+                  marginTop: "0",
+                  fontSize: "12px",
+                  color: "red",
+                }}
+              >
+                {errors.website}
+              </div>
+            ) : (
+              ""
+            )}
+          </Box>
+          <Box w={["100%", "40%"]} h={"fit-content"}>
+            <VStack>
+              <Box>Company Logo</Box>
+              <IconSelector />
+            </VStack>
+          </Box>
+        </Stack>
+        <Stack w={"full"}>
+          {/* address */}
+          <Box>
+            <FormLabel color={"#495057"}>Address*</FormLabel>
+
+            <Input
+              placeholder="Address"
+              type="text"
+              id="address"
+              value={values.address}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              focusBorderColor="gray.600"
+              borderColor={"gray.200"}
+              color={"gray.600"}
+              fontSize={"16px"}
+              paddingY={"4"}
+              paddingX={"6"}
+              className={errors.address && touched.address && "input_error"}
+            />
+            {errors.address && touched.address ? (
+              <div
+                style={{
+                  textAlign: "start",
+                  marginTop: "0",
+                  fontSize: "12px",
+                  color: "red",
+                }}
+              >
+                {errors.address}
               </div>
             ) : (
               ""
             )}
           </Box>
           {/* city state zipCode */}
-
           <Box>
             <Stack direction={["column", "row"]}>
               {/* city */}
               <Stack width={"100%"}>
-                <label htmlFor="">City*</label>
+                <FormLabel color={"#495057"}>City*</FormLabel>
+
                 <Input
                   placeholder="City"
                   type="text"
-                  id="mailingCity"
-                  value={values.mailingCity}
+                  id="city"
+                  value={values.city}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   focusBorderColor="gray.600"
@@ -99,14 +177,9 @@ function MailingAddressForm({
                   fontSize={"16px"}
                   paddingY={"4"}
                   paddingX={"6"}
-                  h={"38px"}
-                  w={"full"}
-                  marginTop={"3"}
-                  className={
-                    errors.mailingCity && touched.mailingCity && "input_error"
-                  }
+                  className={errors.city && touched.city && "input_error"}
                 />
-                {errors.mailingCity && touched.mailingCity ? (
+                {errors.city && touched.city ? (
                   <div
                     style={{
                       textAlign: "start",
@@ -115,7 +188,7 @@ function MailingAddressForm({
                       color: "red",
                     }}
                   >
-                    {errors.mailingCity}
+                    {errors.city}
                   </div>
                 ) : (
                   ""
@@ -124,12 +197,13 @@ function MailingAddressForm({
               {/* state */}
 
               <Stack width={"100%"}>
-                <label htmlFor="">State*</label>
+                <FormLabel color={"#495057"}>State*</FormLabel>
+
                 <Input
                   placeholder="State"
                   type="text"
-                  id="mailingState"
-                  value={values.mailingState}
+                  id="state"
+                  value={values.state}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   focusBorderColor="gray.600"
@@ -138,14 +212,9 @@ function MailingAddressForm({
                   fontSize={"16px"}
                   paddingY={"4"}
                   paddingX={"6"}
-                  h={"38px"}
-                  w={"full"}
-                  marginTop={"3"}
-                  className={
-                    errors.mailingState && touched.mailingState && "input_error"
-                  }
+                  className={errors.state && touched.state && "input_error"}
                 />
-                {errors.mailingState && touched.mailingState ? (
+                {errors.state && touched.state ? (
                   <div
                     style={{
                       textAlign: "start",
@@ -154,7 +223,7 @@ function MailingAddressForm({
                       color: "red",
                     }}
                   >
-                    {errors.mailingState}
+                    {errors.state}
                   </div>
                 ) : (
                   ""
@@ -163,12 +232,13 @@ function MailingAddressForm({
               {/* zip code */}
 
               <Stack width={"100%"}>
-                <label htmlFor="">Zipcode*</label>
+                <FormLabel color={"#495057"}>Zipcode*</FormLabel>
+
                 <Input
                   placeholder="Zipcode"
                   type="number"
-                  id="mailingZipCode"
-                  value={values.mailingZipCode}
+                  id="zipCode"
+                  value={values.zipCode}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   focusBorderColor="gray.600"
@@ -177,16 +247,9 @@ function MailingAddressForm({
                   fontSize={"16px"}
                   paddingY={"4"}
                   paddingX={"6"}
-                  h={"38px"}
-                  w={"full"}
-                  marginTop={"3"}
-                  className={
-                    errors.mailingZipCode &&
-                    touched.mailingZipCode &&
-                    "input_error"
-                  }
+                  className={errors.zipCode && touched.zipCode && "input_error"}
                 />
-                {errors.mailingZipCode && touched.mailingZipCode ? (
+                {errors.zipCode && touched.zipCode ? (
                   <div
                     style={{
                       textAlign: "start",
@@ -195,7 +258,7 @@ function MailingAddressForm({
                       color: "red",
                     }}
                   >
-                    {errors.mailingZipCode}
+                    {errors.zipCode}
                   </div>
                 ) : (
                   ""
@@ -203,26 +266,21 @@ function MailingAddressForm({
               </Stack>
             </Stack>
           </Box>
-        </Stack>
-        <Stack
-          color={"#495057"}
-          fontWeight={"500"}
-          direction={["column-reverse", "row"]}
-          justifyContent={"space-between"}
-          mt={"2.5rem"}
-        >
-          <Button variant={"outline"}>Sign Out</Button>
-          <Button
-            rightIcon={<ArrowForwardIcon />}
-            backgroundColor={"#FBE122"}
-            variant="solid"
-          >
-            NEXT: Plan & Payment
-          </Button>
+          <HStack>
+            <Checkbox
+              fontSize={"16px"}
+              lineHeight={"24px"}
+              color={"gray.600"}
+              fontWeight={"normal"}
+              defaultChecked
+            >
+              Mailing Address same as above
+            </Checkbox>
+          </HStack>
         </Stack>
       </Box>
     </>
   );
 }
 
-export default MailingAddressForm;
+export default CompanyInformationForm;
