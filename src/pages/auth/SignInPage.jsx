@@ -154,6 +154,9 @@ function SignIn() {
                     color={"#868E96"}
                     fontWeight={"light"}
                     padding={"2"}
+                    onClick={() => {
+                      navigate("/forget-password-page");
+                    }}
                   >
                     Forgot Password?
                   </Button>

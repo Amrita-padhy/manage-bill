@@ -18,6 +18,7 @@ function ForgetPassword() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setForgetPassword(values);
+    navigate("/sign-in-page");
   };
 
   const { values, handleChange, touched, errors, handleBlur } = useFormik({
@@ -95,10 +96,11 @@ function ForgetPassword() {
                 ""
               )}
               <Button
+                disabled={!values.email || errors.email}
                 size={"md"}
                 width={"full"}
                 marginTop={"8"}
-                fontWeight={"400"}
+                fontWeight={"500"}
                 fontSize={"16px"}
                 lineHeight={"24px"}
                 color={"#495057"}
