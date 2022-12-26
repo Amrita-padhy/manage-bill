@@ -49,7 +49,7 @@ function SignIn() {
           w={["343px", "349px"]}
           h={"470px"}
           bgColor={"white"}
-          borderRadius={"2xl"}
+          borderRadius={"8px"}
           paddingX={"7"}
         >
           <VStack h={"auto"}>
