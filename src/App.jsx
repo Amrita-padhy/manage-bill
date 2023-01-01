@@ -10,6 +10,7 @@ import ForgetPasswordPage from "./pages/auth/ForgetPasswordPage";
 import ForgetPasswordEmailSentPage from "./pages/auth/ForgetPasswordEmailSentPage";
 import SetNewPasswordPage from "./pages/auth/SetNewPasswordPage";
 import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
+import PopUp from "./components/PopUp";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -28,6 +29,7 @@ function App() {
         />
         <Route path="/set-new-password-page" element={<SetNewPasswordPage />} />
         <Route path="/reset-password-page" element={<ResetPasswordPage />} />
+        <Route path="/modal" element={<PopUp />} />
       </Routes>
     </BrowserRouter>
   );
