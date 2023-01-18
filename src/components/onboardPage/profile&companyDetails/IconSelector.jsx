@@ -1,17 +1,11 @@
-import {
-  Box,
-  HStack,
-  Icon,
-  Image,
-  Input,
-  Link,
-  Stack,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Button, Icon, Stack, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { AiOutlinePlusCircle } from "react-icons/ai";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
-function IconSelector() {
+import Input from "@mui/material/Input";
+import { AddIcCallOutlined, Image } from "@mui/icons-material";
+
+function ImageSelector({}) {
   const [image, setImage] = useState();
 
   const handlePreviewImage = (e) => {
@@ -19,70 +13,75 @@ function IconSelector() {
       setImage(e.target.files[0]);
     }
   };
-
+  console.log(image);
   return (
     <>
-      <VStack>
+      <Stack>
+        <Box
+          fontSize="14px"
+          lineHeight="20px"
+          fontWeight="500"
+          color="gray600.main"
+          marginBottom={1}
+        >
+          Company Logo
+        </Box>
+      </Stack>
+      <Stack>
         {image ? (
           <Image
-            w={"224px"}
-            h={"115px"}
-            objectFit="cover"
-            src={URL.createObjectURL(image)}
+            sx={{ height: "115px", width: "224px" }}
+            src={"URL.createObjectURL(image)"}
+            borderRadius={"100%"}
           />
         ) : (
-          <Box
-            w={"224px"}
-            h={"115px"}
-            borderColor="gray.300"
-            borderStyle="dashed"
-            borderWidth="2px"
-            shadow="sm"
-          >
-            <Box position="relative" height="100%" width="100%">
+          <label htmlFor="upload-photo">
+            <input
+              style={{ display: "none" }}
+              id="upload-photo"
+              name="upload-photo"
+              type="file"
+              onChange={handlePreviewImage}
+            />
+
+            <Box
+              width={"224px"}
+              height={"115px"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              sx={{ border: "1px dashed gray" }}
+            >
               <Box
-                position="absolute"
-                top="0"
-                left="0"
                 height="100%"
                 width="100%"
                 display="flex"
-                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                spacing="4"
               >
-                <Stack
-                  height="100%"
-                  width="100%"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent={"center"}
-                  spacing="4"
-                >
-                  <Stack p="8" textAlign="center" spacing="1">
-                    <Icon as={AiOutlinePlusCircle} />
-                  </Stack>
-                </Stack>
+                <AddCircleOutlineIcon color="gray600" />
               </Box>
-              <Input
-                type="file"
-                height="100%"
-                width="100%"
-                opacity="0"
-                aria-hidden="true"
-                accept=".jpg,.png,.jpeg"
-                onChange={handlePreviewImage}
-              />
             </Box>
-          </Box>
+          </label>
         )}
-        {/*  */}
-        <HStack fontSize={"12px"} lineHeight={"14px"} fontWeight={"semibold"}>
-          <Box color={"#495057"}>Drag and Drop or</Box>
 
-          <Box color={"#1971C2"}>SELECT</Box>
-        </HStack>
-      </VStack>
+        {/*  */}
+        <Stack
+          fontSize="12px"
+          lineHeight="14px"
+          fontWeight="500"
+          direction={"row"}
+          spacing={1}
+          marginTop={1}
+          justifyContent={"center"}
+        >
+          <Box color="gray700.main">Drag and Drop or</Box>
+
+          <Box color="secondary.main">SELECT</Box>
+        </Stack>
+      </Stack>
     </>
   );
 }
 
-export default IconSelector;
+export default ImageSelector;

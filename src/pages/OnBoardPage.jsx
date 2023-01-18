@@ -1,28 +1,51 @@
-import {
-  Box,
-  Container,
-  Heading,
-  HStack,
-  Stack,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-  // ,
-} from "@chakra-ui/react";
+import React, { useState } from "react";
+import { Box } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import { Link, useNavigate, Outlet } from "react-router-dom";
 
-import { AiOutlineDown } from "react-icons/ai";
-import { useFormik } from "formik";
-import { basicSchema } from "../common/validators";
-// import ProfileDetailsCard from "../components/profile&companyDetails/ProfileDetailsCard";
-// import PaymentDetailsCard from "../components/plan&PaymentDetails/PaymentDetailsCard";
+import Typography from "@mui/material/Typography";
 
 import ProfileDetailsCard from "../components/onboardPage/profile&companyDetails/ProfileDetailsCard";
 import PaymentDetailsCard from "../components/onboardPage/plan&PaymentDetails/PaymentDetailsCard";
+import { Padding } from "@mui/icons-material";
+import { useFormik } from "formik";
+import { basicSchema } from "../common/validators";
 
-import { useState } from "react";
-import { ChevronDownIcon } from "@chakra-ui/icons";
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 
 function OnBoardPage() {
   const [formData, setFormData] = useState({});
@@ -31,7 +54,6 @@ function OnBoardPage() {
     setFormData(values);
   };
   console.log(formData);
-
   const { values, handleChange, touched, errors, handleBlur } = useFormik({
     initialValues: {
       firstName: "",
@@ -55,87 +77,88 @@ function OnBoardPage() {
     // onSubmit,
   });
   // console.log(values);
+  const [value, setValue] = useState(0);
+
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
+  };
   return (
     <>
-      <Box bgColor={"gray.100"} w={"100vw"} h={"auto"}>
-        <Stack
-          className="navBar"
-          w={"full"}
-          h={"80px"}
-          bgColor={"gray.700"}
-          display={"flex"}
-          alignItems={"center"}
-          justifyContent={"center"}
+      <Box width={"100vw"} height={"auto"} bgcolor="background.main" sx={{}}>
+        <Box
+          className="navbar"
+          bgcolor="gray700.main"
+          height="80px"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          fontSize="24px"
+          lineheight="24px"
+          fontWeight="500"
+          color="white.main"
         >
-          <Heading
-            color={"white"}
-            fontWeight={"500"}
-            fontSize={"24px"}
-            lineHeight={"24px"}
+          Create Your Account
+        </Box>
+        <Box
+          bgcolor="white.main"
+          height="48px"
+          width="100vw"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Tabs
+            centered
+            value={value}
+            onChange={handleTabChange}
+            aria-label="basic tabs example"
+            textColor="secondary"
+            indicatorColor="secondary"
+            alignItems="center"
           >
-            Create Your Account
-          </Heading>
-        </Stack>
+            <Tab
+              style={{ textTransform: "none" }}
+              label="Profile & Company"
+              {...a11yProps(0)}
+              color="secondary.main"
+              fontSize="24px"
+              lineheight="24px"
+              fontWeight="500"
+              sx={{ fontSize: "20px", fontWeight: "500" }}
+            />
 
-        <Tabs defaultIndex={0}>
-          <Box
-            w={"100vw"}
-            h={"60px"}
-            bgColor={"white"}
-            display={"flex"}
-            justifyContent={"center"}
-            alignItems={"center"}
-          >
-            <TabList
-              w={"794px"}
-              display={"flex"}
-              justifyContent={"space-around"}
-              fontSize={["10px", "20px"]}
-              lineHeight={"24px"}
-              fontWeight={"500"}
-              color={"#495057"}
-            >
-              <Tab padding={"4"}>
-                <HStack alignItems={"center"} justifyContent={"space-between"}>
-                  <Box>1</Box>
-                  <Box fontSize={["11px", "20px"]}>Profile & Company</Box>
-                  <Box display={["flex", "none"]}>
-                    <ChevronDownIcon size={"20px"} />
-                  </Box>
-                </HStack>
-              </Tab>
-              <Tab>
-                <HStack alignItems={"center"} justifyContent={"space-between"}>
-                  <Box>2</Box>
-                  <Box fontSize={["11px", "20px"]}> Plan & Payment</Box>
-                  <Box display={["flex", "none"]}>
-                    <ChevronDownIcon size={"20px"} />
-                  </Box>
-                </HStack>
-              </Tab>
-            </TabList>
-          </Box>
+            <Tab
+              style={{ textTransform: "none" }}
+              label="Plan & Payment"
+              {...a11yProps(1)}
+              color="secondary.main"
+              lineheight="24px"
+              sx={{ fontSize: "20px", fontWeight: "500" }}
+            />
+          </Tabs>
+        </Box>
 
-          <TabPanels
-            display={"flex"}
-            justifyContent={"center"}
-            alignItems={"center"}
-          >
-            <TabPanel>
-              <ProfileDetailsCard
-                values={values}
-                handleChange={handleChange}
-                touched={touched}
-                errors={errors}
-                handleSubmit={handleSubmit}
-                handleBlur={handleBlur}
-              />
-            </TabPanel>
-            <TabPanel>
-              <PaymentDetailsCard />
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
+        <TabPanel value={value} index={0}>
+          <ProfileDetailsCard
+            values={values}
+            handleChange={handleChange}
+            touched={touched}
+            errors={errors}
+            handleSubmit={handleSubmit}
+            handleBlur={handleBlur}
+          />
+        </TabPanel>
+
+        <TabPanel value={value} index={1}>
+          <PaymentDetailsCard
+            values={values}
+            handleChange={handleChange}
+            touched={touched}
+            errors={errors}
+            handleSubmit={handleSubmit}
+            handleBlur={handleBlur}
+          />
+        </TabPanel>
       </Box>
     </>
   );
