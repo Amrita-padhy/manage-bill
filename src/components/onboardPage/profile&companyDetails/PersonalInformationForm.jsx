@@ -1,9 +1,16 @@
-import { Box, FormLabel, Input, Stack, VStack } from "@chakra-ui/react";
 import React from "react";
+import CssBaseline from "@mui/material/CssBaseline";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
 
 import ImageSelector from "./ImageSelector";
+import { Stack, TextField } from "@mui/material";
 
 function PersonalInformationForm({
+  firstName,
+  lastName,
+  email,
+  mobile,
   values,
   handleChange,
   touched,
@@ -12,180 +19,122 @@ function PersonalInformationForm({
   handleBlur,
 }) {
   return (
-    <>
-      <Box>
-        <Stack
-          className="headings"
-          direction={["column-reverse", "row"]}
-          justifyContent={"space-between"}
+    <React.Fragment>
+      <Stack
+        direction={{ xs: "column-reverse", sm: "row" }}
+        justifyContent={"space-between"}
+        alignitems="center"
+      >
+        <Box
+          color="gray900.main"
+          fontSize="20px"
+          fontWeight="700"
+          lineHeight={"30px"}
         >
-          <Box
-            fontWeight={"bold"}
-            fontSize={"xl"}
-            color={"#212529"}
-            lineHeight={"30px"}
-          >
-            Personal Information
-          </Box>
-          <Box
-            fontWeight={"bold"}
-            fontSize={"xl"}
-            color={"#868E96"}
-            lineHeight={"30px"}
-          >
-            Ranger ID: UR8A5012C
-          </Box>
+          Personal Information
+        </Box>
+        <Box
+          color="gray600.main"
+          fontSize={"20px"}
+          fontWeight="700"
+          lineHeight={"30px"}
+        >
+          Ranger ID: UR8A5012C
+        </Box>
+      </Stack>
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        justifyContent={"space-between"}
+        alignItems="center"
+        marginTop="24px"
+      >
+        {/* input section */}
+        <Box
+          sx={{
+            width: { xs: "100%", sm: "50%", md: "50%", p: 1 },
+          }}
+        >
+          {/* firstName */}
+          <TextField
+            fullWidth
+            size="small"
+            color="gray600"
+            bordercolor="gray200"
+            required
+            id="firstName"
+            value={values.firstName}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            label="First Name"
+            variant="outlined"
+            placeholder="First Name"
+            error={errors.firstName}
+            helperText={errors.firstName}
+            sx={{ mb: 2 }}
+          />
+          {/* lastName */}
+
+          <TextField
+            fullWidth
+            size="small"
+            color="gray600"
+            bordercolor="gray200"
+            required
+            id="lastName"
+            value={values.lastName}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            label="Last Name"
+            variant="outlined"
+            placeholder="Last Name"
+            error={errors.lastName}
+            helperText={errors.lastName}
+            sx={{ mb: 2 }}
+          />
+          {/* email */}
+
+          <TextField
+            fullWidth
+            size="small"
+            color="gray600"
+            bordercolor="gray200"
+            required
+            id="email"
+            value={values.email}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            label="Email"
+            variant="outlined"
+            placeholder="Email"
+            error={errors.email}
+            helperText={errors.email}
+            sx={{ mb: 2 }}
+          />
+          {/* mobile no */}
+
+          <TextField
+            fullWidth
+            size="small"
+            color="gray600"
+            bordercolor="gray200"
+            id="mobileNumber"
+            value={values.mobileNumber}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            label="mobile No."
+            variant="outlined"
+            placeholder="mobile No."
+            error={errors.mobileNumber}
+            helperText={errors.mobileNumber}
+            sx={{ mb: 2 }}
+          />
+        </Box>
+        {/*  ImageSelector */}
+        <Stack width={"50%"} justifyContent={"center"} alignItems={"center"}>
+          <ImageSelector />
         </Stack>
-        <Stack direction={["column", "row"]} w={"100%"} marginTop={"4"}>
-          <Box w={["100%", "60%"]} h="auto">
-            <FormLabel color={"#495057"}>First Name*</FormLabel>
-
-            <Input
-              placeholder="First name"
-              type="text"
-              id="firstName"
-              value={values.firstName}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              focusBorderColor="gray.600"
-              borderColor={"gray.200"}
-              color={"gray.600"}
-              fontSize={"16px"}
-              paddingY={"4"}
-              paddingX={"6"}
-              marginTop={"1"}
-              className={errors.lastName && touched.firstName && "input_error"}
-            />
-            {errors.firstName && touched.firstName ? (
-              <div
-                style={{
-                  textAlign: "start",
-                  marginTop: "0",
-                  fontSize: "12px",
-                  color: "red",
-                }}
-              >
-                {errors.firstName}
-              </div>
-            ) : (
-              ""
-            )}
-
-            <FormLabel color={"#495057"}>Last Name*</FormLabel>
-
-            <Input
-              placeholder=" Last name"
-              type="text"
-              id="lastName"
-              value={values.lastName}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              focusBorderColor="gray.600"
-              borderColor={"gray.200"}
-              color={"gray.600"}
-              fontSize={"16px"}
-              paddingY={"4"}
-              paddingX={"6"}
-              marginTop={"1"}
-              className={errors.lastName && touched.lastName && "input_error"}
-            />
-            {errors.lastName && touched.lastName ? (
-              <div
-                style={{
-                  textAlign: "start",
-                  marginTop: "0",
-                  fontSize: "12px",
-                  color: "red",
-                }}
-              >
-                {errors.lastName}
-              </div>
-            ) : (
-              ""
-            )}
-
-            <FormLabel color={"#495057"}>Email*</FormLabel>
-
-            <Input
-              placeholder="Email"
-              type="email"
-              id="email"
-              value={values.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              focusBorderColor="gray.600"
-              borderColor={"gray.200"}
-              color={"#212529"}
-              fontSize={"16px"}
-              paddingY={"4"}
-              paddingX={"6"}
-              marginTop={"1"}
-              className={errors.email && touched.email && "input_error"}
-            />
-            {errors.email && touched.email ? (
-              <div
-                style={{
-                  textAlign: "start",
-                  marginTop: "0",
-                  fontSize: "12px",
-                  color: "red",
-                }}
-              >
-                {errors.email}
-              </div>
-            ) : (
-              ""
-            )}
-
-            <FormLabel color={"#495057"}>Mobile Number.</FormLabel>
-
-            <Input
-              placeholder="Mobile Number."
-              type="number"
-              id="mobileNumber"
-              value={values.mobileNumber}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              focusBorderColor="gray.600"
-              borderColor={"gray.200"}
-              color={"gray.600"}
-              fontSize={"16px"}
-              paddingY={"4"}
-              paddingX={"6"}
-              marginTop={"1"}
-              className={
-                errors.mobileNumber && touched.mobileNumber && "input_error"
-              }
-            />
-            {errors.mobileNumber && touched.mobileNumber ? (
-              <div
-                style={{
-                  textAlign: "start",
-                  marginTop: "0",
-                  fontSize: "12px",
-                  color: "red",
-                }}
-              >
-                {errors.mobileNumber}
-              </div>
-            ) : (
-              ""
-            )}
-          </Box>
-
-          <VStack
-            w={["100%", "40%"]}
-            h="72"
-            display={"flex"}
-            alignItems={"center"}
-            justifyContent={"center"}
-          >
-            <Box>Avatar</Box>
-            <ImageSelector />
-          </VStack>
-        </Stack>
-      </Box>
-    </>
+      </Stack>
+    </React.Fragment>
   );
 }
 

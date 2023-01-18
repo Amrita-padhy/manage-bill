@@ -1,4 +1,4 @@
-// Import the functions you need from the SDKs you need
+
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
@@ -11,5 +11,4 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_measurementId,
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
