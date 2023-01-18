@@ -1,194 +1,287 @@
-import { Box, HStack, Text, VStack, Icon, Button } from "@chakra-ui/react";
 import React from "react";
 import { MdWaterDrop } from "react-icons/md";
 import { CiPercent, CiDollar } from "react-icons/ci";
 import { TbCurrencyDollar } from "react-icons/tb";
+import { Box, Button, Card, Stack, Typography } from "@mui/material";
+import Icon from "@mui/material/Icon";
+import OpacityIcon from "@mui/icons-material/Opacity";
+import PercentIcon from "@mui/icons-material/Percent";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 function CreditCard() {
   return (
     <>
-      <Box
-        w={["311px", "238px"]}
-        h={"400px"}
-        border={"1px"}
-        borderRadius={"8px"}
-        borderColor={"#DBDDDF"}
+      <Card
+        sx={{
+          width: { xs: "311px", sm: "230px" },
+          height: "392px",
+        }}
       >
-        <VStack p={"4"} textAlign={"center"}>
-          <Box
-            fontSize={"18px"}
-            lineHeight={"21.8px"}
-            color={"#495057"}
-            fontWeight={"semibold"}
+        <Stack
+          direction={"column"}
+          justifyContent="center"
+          alignItems={"center"}
+          sx={{
+            width: { xs: "311px", sm: "230px" },
+            height: "84px",
+            bgcolor: "white.main",
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: "18px",
+              fontWeight: "600",
+              lineHeight: "22px",
+              paddingX: "20px",
+              paddingTop: "13px",
+            }}
+            color="gray700.main"
           >
             CADET
-          </Box>
-          <Box
-            fontSize={"12px"}
-            lineHeight={"15px"}
-            color={"#495057"}
-            fontWeight={"medium"}
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: "12px",
+              fontWeight: "400",
+              lineHeight: "15px",
+              textAlign: "center",
+              margin: "auto",
+              paddingX: "20px",
+            }}
+            color="gray700.main"
+            component="div"
           >
             Only have 1 utility to bill residents (ex. Water/Sewer).
-          </Box>
-
-          <Box
-            display={"flex"}
-            flexDirection={"column"}
-            justifyContent={"center"}
-            alignItems={"center"}
-            w={["311px", "238px"]}
-            h={"84px"}
-            bgColor={"#FBE122"}
-            borderTopColor={"#DBDDDF"}
+          </Typography>
+        </Stack>
+        {/* 2 */}
+        <Stack
+          direction={"column"}
+          justifyContent="center"
+          alignItems={"center"}
+          sx={{
+            width: { xs: "311px", sm: "230px" },
+            height: "84px",
+            bgcolor: "primary.main",
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: "16px",
+              fontWeight: "400",
+              lineHeight: "20px",
+              textAlign: "center",
+            }}
+            color="gray700.main"
+            component="div"
           >
-            <Text
-              fontSize={"16px"}
-              lineHeight={"20px"}
-              color={"#495057"}
-              fontWeight={"medium"}
-            >
-              Free*
-            </Text>
-            <Box
-              display={"flex"}
-              justifyContent={"center"}
-              alignItems={"center"}
-              gap={"3"}
-            >
-              <Text
-                fontSize={"30px"}
-                lineHeight={"37px"}
-                color={"#495057"}
-                fontWeight={"medium"}
-              >
-                $2
-              </Text>
-              <Text
-                fontSize={"10px"}
-                lineHeight={"13px"}
-                color={"#495057"}
-                fontWeight={"medium"}
-              >
-                unit/month
-              </Text>
-            </Box>
-          </Box>
-          <Box
-            w={["311px", "238px"]}
-            h={"166px"}
-            bgColor={"#495057"}
-            display={"flex"}
-            flexDirection={"column"}
+            Free*
+          </Typography>
+          <Stack
+            direction={"row"}
+            spacing={1}
+            justifyContent="center"
+            color="gray700.main"
             alignItems={"center"}
-            paddingTop={"20px"}
           >
-            <HStack mb={"3"} w={"168px"} justifyContent={"flex-start"}>
-              <Icon
-                as={MdWaterDrop}
-                w={"15px"}
-                h={"15px"}
-                bgColor={"#FBE122"}
-                borderRadius={"full"}
-              />
-              <Text
-                fontSize={"10px"}
-                lineHeight={"14px"}
-                color={"#ffff"}
-                fontWeight={"medium"}
-              >
-                Recover high-use unit utilities
-              </Text>
-            </HStack>
-            <HStack mb={"3"} w={"168px"} justifyContent={"flex-start"}>
-              <Icon
-                as={CiPercent}
-                w={"15px"}
-                h={"15px"}
-                bgColor={"#FBE122"}
-                borderRadius={"full"}
-              />
-              <Text
-                fontSize={"10px"}
-                lineHeight={"14px"}
-                color={"#ffff"}
-                fontWeight={"medium"}
-              >
-                Lower property’s utility use
-              </Text>
-            </HStack>
-
-            <HStack mb={"3"} w={"168px"} justifyContent={"flex-start"}>
-              <Icon
-                as={TbCurrencyDollar}
-                w={"15px"}
-                h={"15px"}
-                bgColor={"#FBE122"}
-                borderRadius={"full"}
-              />
-              <Text
-                fontSize={"10px"}
-                lineHeight={"14px"}
-                color={"#ffff"}
-                fontWeight={"medium"}
-              >
-                Pass thru admin fee to resident*
-              </Text>
-            </HStack>
-            <HStack mb={"3"} w={"168px"} justifyContent={"flex-start"}>
-              <Icon
-                as={TbCurrencyDollar}
-                w={"15px"}
-                h={"15px"}
-                bgColor={"#FBE122"}
-                borderRadius={"full"}
-              />
-              <Text
-                fontSize={"10px"}
-                lineHeight={"14px"}
-                color={"#ffff"}
-                fontWeight={"medium"}
-              >
-                Improve your NOI!
-              </Text>
-            </HStack>
-
-            <HStack mb={"3"} w={"168px"} justifyContent={"flex-start"}>
-              <Icon
-                as={TbCurrencyDollar}
-                w={"15px"}
-                h={"15px"}
-                bgColor={"#FBE122"}
-                borderRadius={"full"}
-              />
-              <Text
-                fontSize={"10px"}
-                lineHeight={"14px"}
-                color={"#ffff"}
-                fontWeight={"medium"}
-              >
-                Bill Boldly!
-              </Text>
-            </HStack>
-          </Box>
-          <Box>
-            <Button
-              variant={"solid"}
-              w={"60px"}
-              h={"12px"}
-              color={"#ffff"}
-              fontSize={"10px"}
-              lineHeight={"13px"}
-              fontWeight={"normal"}
-              backgroundColor={"#1971C2"}
-              borderRadius={"22px"}
-              padding={"16px"}
+            <Typography
+              sx={{
+                fontSize: "30px",
+                fontWeight: "400",
+                lineHeight: "36px",
+                textAlign: "center",
+              }}
             >
-              GO CADET
-            </Button>
-          </Box>
-        </VStack>
-      </Box>
+              $2
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: "10px",
+                fontWeight: "400",
+                lineHeight: "12px",
+              }}
+            >
+              unit/month
+            </Typography>
+          </Stack>
+        </Stack>
+        {/* 3 */}
+
+        <Box
+          display={"flex"}
+          flexDirection={"column"}
+          justifyContent="flex-start"
+          sx={{
+            width: { xs: "311px", sm: "230px" },
+            height: "166px",
+            bgcolor: "gray700.main",
+            // padding: "20px",
+          }}
+        >
+          {/* 1 */}
+          <Stack
+            direction={"row"}
+            justifyContent="start"
+            alignItems={"center"}
+            spacing={1}
+            padding="5px"
+            marginTop={"10px"}
+            sx={{
+              fontSize: "16px",
+              fontWeight: "400",
+              lineHeight: "5px",
+            }}
+            component="div"
+          >
+            <OpacityIcon color="primary" fontSize="small" />
+            <Typography
+              sx={{
+                fontSize: "10px",
+                fontWeight: "400",
+                lineHeight: "14px",
+              }}
+              color="white.main"
+              component="div"
+            >
+              Recover high-use unit utilities
+            </Typography>
+          </Stack>
+          {/* 2 */}
+
+          <Stack
+            direction={"row"}
+            justifyContent="start"
+            alignItems={"center"}
+            spacing={1}
+            padding="5px"
+            sx={{
+              fontSize: "16px",
+              fontWeight: "400",
+              lineHeight: "20px",
+            }}
+            component="div"
+          >
+            <PercentIcon color="primary" fontSize="small" />
+            <Typography
+              sx={{
+                fontSize: "10px",
+                fontWeight: "400",
+                lineHeight: "14px",
+              }}
+              color="white.main"
+              component="div"
+            >
+              Lower property’s utility use
+            </Typography>
+          </Stack>
+          {/* 3 */}
+          <Stack
+            direction={"row"}
+            justifyContent="start"
+            alignItems={"center"}
+            spacing={1}
+            padding="5px"
+            sx={{
+              fontSize: "16px",
+              fontWeight: "400",
+              lineHeight: "20px",
+            }}
+            component="div"
+          >
+            <AttachMoneyIcon color="primary" fontSize="small" />
+            <Typography
+              sx={{
+                fontSize: "10px",
+                fontWeight: "400",
+                lineHeight: "14px",
+              }}
+              color="white.main"
+              component="div"
+            >
+              Pass thru admin fee to residents*
+            </Typography>
+          </Stack>
+          {/* 4 */}
+          <Stack
+            direction={"row"}
+            justifyContent="start"
+            alignItems={"center"}
+            spacing={1}
+            padding="5px"
+            sx={{
+              fontSize: "16px",
+              fontWeight: "400",
+              lineHeight: "20px",
+            }}
+            component="div"
+          >
+            <AttachMoneyIcon color="primary" fontSize="small" />
+            <Typography
+              sx={{
+                fontSize: "10px",
+                fontWeight: "400",
+                lineHeight: "14px",
+              }}
+              color="white.main"
+              component="div"
+            >
+              Improve your NOI!
+            </Typography>
+          </Stack>
+          {/* 5 */}
+          <Stack
+            direction={"row"}
+            justifyContent="start"
+            alignItems={"center"}
+            spacing={1}
+            padding="5px"
+            sx={{
+              fontSize: "16px",
+              fontWeight: "400",
+              lineHeight: "20px",
+            }}
+            component="div"
+          >
+            <AttachMoneyIcon color="primary" fontSize="small" />
+
+            <Typography
+              sx={{
+                fontSize: "10px",
+                fontWeight: "400",
+                lineHeight: "14px",
+              }}
+              color="white.main"
+              component="div"
+            >
+              Bill Boldly!
+            </Typography>
+          </Stack>
+        </Box>
+        <Box
+          sx={{
+            width: { xs: "311px", sm: "230px" },
+            height: "60px",
+            bgcolor: "white.main",
+          }}
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          <Button
+            variant="contained"
+            color="secondary"
+            sx={{
+              fontSize: "12px",
+              fontWeight: "400",
+              lineHeight: "15px",
+              borderRadius: "22px",
+              textAlign: "center",
+            }}
+          >
+            GO CADET
+          </Button>
+        </Box>
+      </Card>
     </>
   );
 }

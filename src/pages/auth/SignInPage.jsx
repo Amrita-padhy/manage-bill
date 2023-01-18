@@ -1,219 +1,156 @@
-import React, { useState } from "react";
-
-import {
-  Box,
-  Card,
-  Input,
-  Button,
-  Heading,
-  VStack,
-  Stack,
-  Icon,
-  useDisclosure,
-  Tooltip,
-  FormLabel,
-} from "@chakra-ui/react";
-
+import React from "react";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import { ButtonMain, MyLabel, useStyles } from "../../styles/styles";
+import { Stack, TextField } from "@mui/material";
 import { useFormik, Form, Field } from "formik";
+import { Link, useNavigate } from "react-router-dom";
 import { basicSchema } from "../../common/validators";
-import { useNavigate } from "react-router-dom";
 
-function SignIn() {
-  const [signInValues, setSignInValues] = useState({});
-  const navigate = useNavigate();
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSignInValues(values);
+function SignInPage() {
+  const classes = useStyles();
+  const onSubmit = () => {
+    console.log(hi);
   };
 
-  const { values, handleChange, touched, errors, handleBlur } = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema: basicSchema,
-    // onSubmit,
-  });
-  console.log(signInValues);
+  const { values, handleChange, touched, errors, handleSubmit, handleBlur } =
+    useFormik({
+      initialValues: {
+        email: "",
+        password: "",
+      },
+      validationSchema: basicSchema,
+      onSubmit,
+    });
+  console.log(values);
+  console.log(errors);
   return (
     <>
-      <Box
-        w={"full"}
-        h={"100vh"}
-        bgColor={"#E5E5E5"}
-        display={"flex"}
-        justifyContent={"center"}
-        alignItems={"center"}
-      >
-        <Card
-          w={["343px", "349px"]}
-          h={"470px"}
-          bgColor={"white"}
-          borderRadius={"8px"}
-          paddingX={"7"}
+      <Box className={classes.root}>
+        <Box
+          p={2}
+          borderRadius={2}
+          bgcolor="white.main"
+          sx={{
+            width: { xs: "343px", sm: "343px", md: "392px" },
+            height: "470px",
+          }}
         >
-          <VStack h={"auto"}>
-            <Box>
-              <Heading
-                color={"gray.900"}
-                lineHeight={"38px"}
-                fontWeight={"600"}
-                fontSize={"30px"}
-                textAlign={"center"}
-                marginTop={"10"}
-              >
-                Log In!
-              </Heading>
-              <Heading
-                color={"gray.600"}
-                lineHeight={"24px"}
-                fontWeight={"400"}
-                fontSize={"16px"}
-              >
-                Log in with your registered email.
-              </Heading>
-            </Box>
-            <form autoComplete="off" onSubmit={handleSubmit}>
-              <Stack>
-                {/* Email */}
-
-                <FormLabel color={"#495057"}>Email*</FormLabel>
-                <Input
-                  placeholder="Enter your email address"
-                  value={values.email}
-                  type="email"
-                  id="email"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  focusBorderColor="gray.600"
-                  borderColor={"gray.200"}
-                  color={"gray.600"}
-                  fontSize={"16px"}
-                  paddingY={"2"}
-                  paddingX={"6"}
-                  className={errors.email && touched.email && "input_error"}
-                />
-                {errors.email && touched.email ? (
-                  <div
-                    style={{
-                      textAlign: "start",
-                      marginTop: "0",
-                      fontSize: "12px",
-                      color: "red",
-                    }}
-                  >
-                    {errors.email}
-                  </div>
-                ) : (
-                  ""
-                )}
-                {/* Password */}
-
-                <FormLabel color={"#495057"}>Password*</FormLabel>
-
-                <Input
-                  placeholder="Create new password"
-                  value={values.password}
-                  type="password"
-                  id="password"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  focusBorderColor="gray.600"
-                  borderColor={"gray.200"}
-                  color={"gray.600"}
-                  fontSize={"16px"}
-                  paddingY={"2"}
-                  paddingX={"6"}
-                  h={"38px"}
-                  className={
-                    errors.password && touched.password && "input_error"
-                  }
-                />
-                {errors.password && touched.password ? (
-                  <div
-                    style={{
-                      textAlign: "start",
-                      marginTop: "0",
-                      fontSize: "12px",
-                      color: "red",
-                    }}
-                  >
-                    {errors.password}
-                  </div>
-                ) : (
-                  ""
-                )}
+          <Stack spacing={2}>
+            <Box mt="84px">
+              <Stack justifyContent={"center"} alignItems={"center"}>
                 <Box
-                  display={"flex"}
-                  justifyContent={"flex-end"}
-                  alignItems={"center"}
+                  color="gray900.main"
+                  fontSize="30px"
+                  lineheight="38px"
+                  fontWeight="600"
                 >
+                  Log In!
+                </Box>
+                <Box
+                  color="gray600.main"
+                  fontSize="16px"
+                  lineheight="24px"
+                  fontWeight="400"
+                >
+                  Log in with your registered email.
+                </Box>
+              </Stack>
+            </Box>
+            <Box component="form" noValidate autoComplete="off">
+              <TextField
+                fullWidth
+                size="small"
+                color="gray600"
+                bordercolor="gray200"
+                required
+                id="email"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label="email"
+                variant="outlined"
+                placeholder="Enter your email address"
+                error={errors.email}
+                helperText={errors.email}
+                sx={{ mb: 1 }}
+              />
+              <TextField
+                fullWidth
+                size="small"
+                color="gray600"
+                bordercolor="gray200"
+                required
+                id="password"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label="Password"
+                variant="outlined"
+                placeholder="Enter your email address"
+                error={errors.password}
+                helperText={errors.password}
+              />
+
+              {/*    Forgot Password button */}
+              <Box display={"flex"} justifyContent={"flex-end"}>
+                <Link to="/" style={{ textTransform: "none" }}>
                   <Button
-                    variant={"link"}
-                    fontSize={"14px"}
-                    color={"#868E96"}
-                    fontWeight={"light"}
-                    padding={"2"}
-                    onClick={() => {
-                      navigate("/forget-password-page");
-                    }}
+                    style={{ textTransform: "none" }}
+                    color="gray600"
+                    variant="text"
                   >
                     Forgot Password?
                   </Button>
-                </Box>
-                <Box
-                  display={"flex"}
-                  justifyContent={"center"}
-                  alignItems={"center"}
+                </Link>
+              </Box>
+              {/* Submit button */}
+              <ButtonMain
+                style={{ textTransform: "none", marginTop: "15px" }}
+                variant="contained"
+                fullWidth
+                disableElevation
+                color="primary"
+                disabled={
+                  !values.email ||
+                  !values.password ||
+                  errors.email ||
+                  errors.password
+                }
+              >
+                Submit
+              </ButtonMain>
+            </Box>
+            <Stack
+              direction={"row"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              style={{ gap: 0, marginTop: "15px" }}
+            >
+              <Box style={{ textTransform: "none" }} color="gray600.main">
+                Don’t have an account?
+              </Box>
+
+              <Box display={"flex"} justifyContent={"flex-end"}>
+                <Link
+                  to="/signup"
+                  style={{ textTransform: "none", textDecoration: "none" }}
                 >
                   <Button
-                    disabled={
-                      !values.email ||
-                      !values.password ||
-                      errors.email ||
-                      errors.password
-                    }
-                    type="submit"
-                    w={["313px", "319px"]}
-                    h={"44px"}
-                    fontWeight={"medium"}
-                    bgColor={"#FBE122"}
-                    color={"gray.700"}
-                    marginTop={"4"}
-                    onClick={handleSubmit}
-                  >
-                    Submit
-                  </Button>
-                </Box>
-                {/*  */}
-                <Box display={"flex"} justifyContent={"center"} gap={"1"}>
-                  <Button
-                    variant={"unstyled"}
-                    color={"gray.400"}
-                    fontWeight={"400"}
-                    fontSize={"14px"}
-                  >
-                    Don’t have an account?
-                  </Button>
-                  <Button
-                    variant={"link"}
-                    color={"#1971C2"}
-                    fontSize={"14px"}
-                    fontWeight={"500"}
-                    onClick={() => {
-                      navigate("/sign-up-page");
-                    }}
+                    style={{ textTransform: "none" }}
+                    color="secondary"
+                    variant="text"
                   >
                     Sign Up
                   </Button>
-                </Box>
-              </Stack>
-            </form>
-          </VStack>
-        </Card>
+                </Link>
+              </Box>
+            </Stack>
+          </Stack>
+        </Box>
       </Box>
     </>
   );
 }
 
-export default SignIn;
+export default SignInPage;

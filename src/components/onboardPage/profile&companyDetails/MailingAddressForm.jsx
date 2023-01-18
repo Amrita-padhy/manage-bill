@@ -1,18 +1,5 @@
-import { ArrowForwardIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  Button,
-  Checkbox,
-  FormLabel,
-  Grid,
-  GridItem,
-  HStack,
-  Input,
-  Stack,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
 import React from "react";
+import { Box, Checkbox, Input, Stack, TextField } from "@mui/material";
 
 function MailingAddressForm({
   values,
@@ -23,245 +10,88 @@ function MailingAddressForm({
   handleBlur,
 }) {
   return (
-    <>
-      <Box mt={"6"}>
-        <Stack
-          className="headings"
-          direction={["column", "row"]}
-          justifyContent={"flex-start"}
-        >
-          <Box
-            fontWeight={"bold"}
-            fontSize={"xl"}
-            color={"#212529"}
-            lineHeight={"30px"}
-          >
-            Mailing Address
-          </Box>
-        </Stack>
-        {/* company name ,website */}
-
-        <Stack w={"full"}>
-          {/* address */}
-          <Box>
-            <FormLabel color={"#495057"}>Address*</FormLabel>
-
-            <Input
-              placeholder="Address"
-              type="text"
-              id="mailingAddress"
-              value={values.mailingAddress}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              focusBorderColor="gray.600"
-              borderColor={"gray.200"}
-              color={"gray.600"}
-              fontSize={"16px"}
-              paddingY={"4"}
-              paddingX={"6"}
-              h={"38px"}
-              w={"full"}
-              marginTop={"3"}
-              className={
-                errors.mailingAddress && touched.mailingAddress && "input_error"
-              }
-            />
-            {errors.mailingAddress && touched.mailingAddress ? (
-              <div
-                style={{
-                  textAlign: "start",
-                  marginTop: "0",
-                  fontSize: "12px",
-                  color: "red",
-                }}
-              >
-                {errors.mailingAddress}
-              </div>
-            ) : (
-              ""
-            )}
-          </Box>
-          {/* city state zipCode */}
-
-          <Box>
-            <Stack direction={["column", "row"]}>
-              {/* city */}
-              <Stack width={"100%"}>
-                <FormLabel color={"#495057"}>City*</FormLabel>
-
-                <Input
-                  placeholder="City"
-                  type="text"
-                  id="mailingCity"
-                  value={values.mailingCity}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  focusBorderColor="gray.600"
-                  borderColor={"gray.200"}
-                  color={"gray.600"}
-                  fontSize={"16px"}
-                  paddingY={"4"}
-                  paddingX={"6"}
-                  h={"38px"}
-                  w={"full"}
-                  marginTop={"3"}
-                  className={
-                    errors.mailingCity && touched.mailingCity && "input_error"
-                  }
-                />
-                {errors.mailingCity && touched.mailingCity ? (
-                  <div
-                    style={{
-                      textAlign: "start",
-                      marginTop: "0",
-                      fontSize: "12px",
-                      color: "red",
-                    }}
-                  >
-                    {errors.mailingCity}
-                  </div>
-                ) : (
-                  ""
-                )}
-              </Stack>
-              {/* state */}
-
-              <Stack width={"100%"}>
-                <FormLabel color={"#495057"}>State*</FormLabel>
-
-                <Input
-                  placeholder="State"
-                  type="text"
-                  id="mailingState"
-                  value={values.mailingState}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  focusBorderColor="gray.600"
-                  borderColor={"gray.200"}
-                  color={"gray.600"}
-                  fontSize={"16px"}
-                  paddingY={"4"}
-                  paddingX={"6"}
-                  h={"38px"}
-                  w={"full"}
-                  marginTop={"3"}
-                  className={
-                    errors.mailingState && touched.mailingState && "input_error"
-                  }
-                />
-                {errors.mailingState && touched.mailingState ? (
-                  <div
-                    style={{
-                      textAlign: "start",
-                      marginTop: "0",
-                      fontSize: "12px",
-                      color: "red",
-                    }}
-                  >
-                    {errors.mailingState}
-                  </div>
-                ) : (
-                  ""
-                )}
-              </Stack>
-              {/* zip code */}
-
-              <Stack width={"100%"}>
-                <FormLabel color={"#495057"}>Zipcode*</FormLabel>
-
-                <Input
-                  placeholder="Zipcode"
-                  type="number"
-                  id="mailingZipCode"
-                  value={values.mailingZipCode}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  focusBorderColor="gray.600"
-                  borderColor={"gray.200"}
-                  color={"gray.600"}
-                  fontSize={"16px"}
-                  paddingY={"4"}
-                  paddingX={"6"}
-                  h={"38px"}
-                  w={"full"}
-                  marginTop={"3"}
-                  className={
-                    errors.mailingZipCode &&
-                    touched.mailingZipCode &&
-                    "input_error"
-                  }
-                />
-                {errors.mailingZipCode && touched.mailingZipCode ? (
-                  <div
-                    style={{
-                      textAlign: "start",
-                      marginTop: "0",
-                      fontSize: "12px",
-                      color: "red",
-                    }}
-                  >
-                    {errors.mailingZipCode}
-                  </div>
-                ) : (
-                  ""
-                )}
-              </Stack>
-            </Stack>
-          </Box>
-        </Stack>
-        <Stack
-          color={"#495057"}
-          fontWeight={"500"}
-          direction={["column-reverse", "row"]}
-          justifyContent={"space-between"}
-          mt={"2.5rem"}
-        >
-          <Button variant={"outline"} size="sm" padding={"6"}>
-            Sign Out
-          </Button>
-          <Button
-            rightIcon={<ArrowForwardIcon />}
-            backgroundColor={"#FBE122"}
-            variant="solid"
-            size="sm"
-            padding={"6"}
-            onClick={handleSubmit}
-            disabled={
-              !values.firstName ||
-              !values.lastName ||
-              !values.email ||
-              !values.mobileNumber ||
-              !values.companyName ||
-              !values.website ||
-              !values.address ||
-              !values.city ||
-              !values.state ||
-              !values.zipCode ||
-              !values.mailingAddress ||
-              !values.mailingCity ||
-              !values.mailingState ||
-              !values.mailingZipCode ||
-              errors.firstName ||
-              errors.lastName ||
-              errors.email ||
-              errors.mobileNumber ||
-              errors.companyName ||
-              errors.website ||
-              errors.address ||
-              errors.city ||
-              errors.state ||
-              errors.zipCode ||
-              errors.mailingAddress ||
-              errors.mailingCity ||
-              errors.mailingState ||
-              errors.mailingZipCode
-            }
-          >
-            NEXT: Plan & Payment
-          </Button>
-        </Stack>
+    <React.Fragment>
+      <Box
+        color="gray900.main"
+        fontSize="20px"
+        fontWeight="700"
+        lineHeight={"30px"}
+      >
+        Mailing Address
       </Box>
-    </>
+
+      <TextField
+        fullWidth
+        size="small"
+        color="gray600"
+        bordercolor="gray200"
+        required
+        id="address"
+        value={values.address}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        label="Address"
+        variant="outlined"
+        placeholder="Street Address"
+        error={errors.address}
+        helperText={errors.address}
+        sx={{ mt: 2 }}
+      />
+      <Stack direction={{ xs: "column", sm: "row" }}>
+        <TextField
+          fullWidth
+          size="small"
+          color="gray600"
+          bordercolor="gray200"
+          required
+          id="city"
+          value={values.city}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          label="City"
+          variant="outlined"
+          placeholder="City"
+          error={errors.city}
+          helperText={errors.city}
+          sx={{ mt: 2, mr: 1 }}
+        />
+        <TextField
+          fullWidth
+          size="small"
+          color="gray600"
+          bordercolor="gray200"
+          required
+          id="state"
+          value={values.state}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          label="State"
+          variant="outlined"
+          placeholder="State"
+          error={errors.state}
+          helperText={errors.state}
+          sx={{ mb: 2, mt: 2, mr: 1 }}
+        />
+        <TextField
+          fullWidth
+          type="number"
+          size="small"
+          color="gray600"
+          bordercolor="gray200"
+          required
+          id="zipCode"
+          value={values.zipCode}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          label="Zipcode"
+          variant="outlined"
+          placeholder="Zipcode"
+          error={errors.zipCode}
+          helperText={errors.zipCode}
+          sx={{ mb: 2, mt: 2, mr: 1 }}
+        />
+      </Stack>
+    </React.Fragment>
   );
 }
 
