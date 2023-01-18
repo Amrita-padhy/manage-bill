@@ -19,6 +19,9 @@ app.use(cors({ origin: true }));
 const register = async (req, res) => {
   const { email, password, userName } = req.body;
   try {
+    if (req.method !== "POST") {
+      return res.status(405).send("Method not allowed");
+    }
     const user = await admin.auth().createUser({ email, password });
     await db.doc(`users/${user.uid}`).set({
       email,
@@ -30,7 +33,7 @@ const register = async (req, res) => {
       .send({ message: "User registration successfully", status: true });
     return;
   } catch (error) {
-    res.status(200).send({ message: error.message, status: false });
+    res.status(500).send({ message: error.message, status: false });
     return;
   }
 };
