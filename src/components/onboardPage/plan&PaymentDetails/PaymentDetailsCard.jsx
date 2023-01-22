@@ -11,7 +11,6 @@ import {
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import CommanderCard from "./CommanderCard";
 import CreditCard from "./CreditCard";
-import { ArrowForwardIcon } from "@chakra-ui/icons";
 
 function PaymentDetailsCard({
   values,
@@ -213,7 +212,6 @@ function PaymentDetailsCard({
                   },
                   width: { xs: "100%", sm: "auto" },
                 }}
-                endIcon={<ArrowForwardIcon />}
                 onClick={handleSubmit}
                 fontWeight="500"
                 fontSize="14px"
