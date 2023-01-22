@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { ButtonMain, useStyles } from "../../styles/styles";
+import { ButtonMain, useStyles } from "@/styles/styles";
 import { Stack, TextField } from "@mui/material";
 import { useFormik, Form, Field } from "formik";
 import { useNavigate } from "react-router-dom";
