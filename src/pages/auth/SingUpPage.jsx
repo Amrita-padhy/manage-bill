@@ -6,13 +6,13 @@ import { ButtonMain, MyLabel, useStyles } from "../../styles/styles";
 import { Stack, TextField } from "@mui/material";
 import { useFormik, Form, Field } from "formik";
 import { Link, useNavigate } from "react-router-dom";
-import { basicSchema } from "../../common/validators";
+import { basicSchema } from "@/common/validators";
 import { lineHeight } from "@mui/system";
+import { useQuery, useMutation } from "react-query";
+import { handleRegister } from "@/api/auth/authApi";
 
 function SingUp() {
-  const onSubmit = () => {
-    console.log(hi);
-  };
+  const onSubmit = () => {};
 
   // const navigate = useNavigate();
 
@@ -168,12 +168,7 @@ function SingUp() {
                 fullWidth
                 disableElevation
                 color="primary"
-                disabled={
-                  !values.email ||
-                  !values.password ||
-                  errors.email ||
-                  errors.password
-                }
+                onClick={() => onSubmit}
               >
                 Create account
               </ButtonMain>

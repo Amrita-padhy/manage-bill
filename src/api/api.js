@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios from "axios";
 const axiosParams = {
   baseURL: "https://us-central1-manage-billls.cloudfunctions.net/app",
 };

@@ -16,31 +16,28 @@ import SetNewPasswordPage from "./pages/auth/SetNewPasswordPage";
 import OnBoardPage from "./pages/OnBoardPage";
 import { customTheme } from "./styles/colorPalette";
 import { CssBaseline } from "@mui/material";
+import { store } from "@/store/store.js";
+import { Provider } from "react-redux";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <CssBaseline />
-    <ThemeProvider theme={customTheme}>
-      <BrowserRouter>
-        {/* Auth layout route */}
-        <Routes>
-          <Route element={<AuthLayout />}>
-            <Route index element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
-            <Route
-              path="/forgetPasswordEmailSentPage"
-              element={<ForgetPasswordEmailSentPage />}
-            />
-            <Route
-              path="/setNewPasswordPage"
-              element={<SetNewPasswordPage />}
-            />
-            <Route path="/resetPasswordPage" element={<ResetPasswordPage />} />
-            <Route path="/Onboard" element={<OnBoardPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
-  </React.StrictMode>
+  <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
+      <CssBaseline />
+      <ThemeProvider theme={customTheme}>
+        <BrowserRouter>
+          {/* Auth layout route */}
+          <Routes>
+            <Route element={<AuthLayout />}>
+              <Route index element={<SignIn />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/Onboard" element={<OnBoardPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+    </Provider>
+  </QueryClientProvider>
 );

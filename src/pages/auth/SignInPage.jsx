@@ -5,12 +5,19 @@ import { ButtonMain, MyLabel, useStyles } from "../../styles/styles";
 import { Stack, TextField } from "@mui/material";
 import { useFormik, Form, Field } from "formik";
 import { Link, useNavigate } from "react-router-dom";
-import { basicSchema } from "../../common/validators";
+import { basicSchema } from "@/common/validators";
+
+import { useSelector, useDispatch } from "react-redux";
+import { initUser } from "@/store/user/userStore";
 
 function SignInPage() {
   const classes = useStyles();
+
+  const user = useSelector((state) => state.user.value);
+  const dispatch = useDispatch();
+
   const onSubmit = () => {
-    console.log(hi);
+    dispatch(initUser({ name: "Boone" }));
   };
   const navigate = useNavigate();
 
@@ -23,8 +30,7 @@ function SignInPage() {
       validationSchema: basicSchema,
       onSubmit,
     });
-  console.log(values);
-  console.log(errors);
+
   return (
     <>
       <Box className={classes.root}>
@@ -46,7 +52,7 @@ function SignInPage() {
                   lineheight="38px"
                   fontWeight="600"
                 >
-                  Log In!
+                  Log In! {user?.name}
                 </Box>
                 <Box
                   color="gray600.main"
