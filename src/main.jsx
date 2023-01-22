@@ -6,8 +6,8 @@ import { ThemeProvider } from "@mui/material/styles";
 import "./index.css";
 
 import AuthLayout from "./layout/AuthLayout";
-import SignIn from "./pages/auth/SignInPage";
-import SignUp from "./pages/auth/SingUpPage";
+import SignIn from "./pages/auth/SigninPage";
+import SignUp from "./pages/auth/SingupPage";
 import ForgetPasswordPage from "./pages/auth/ForgetPasswordPage";
 import ForgetPasswordEmailSentPage from "./pages/auth/ForgetPasswordEmailSentPage";
 import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
