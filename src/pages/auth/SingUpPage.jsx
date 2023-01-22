@@ -1,8 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { GrCircleInformation } from "react-icons/gr";
-
-// import { useStyles } from "../../styles/styles";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { ButtonMain, MyLabel, useStyles } from "../../styles/styles";
@@ -31,6 +28,7 @@ function SingUp() {
       validationSchema: basicSchema,
       onSubmit,
     });
+
   const classes = useStyles();
 
   return (
@@ -42,7 +40,7 @@ function SingUp() {
           bgcolor="white.main"
           sx={{
             width: { xs: "343px", sm: "343px", md: "392px" },
-            height: "680px",
+            height: "auto",
           }}
         >
           <Stack spacing={2}>
@@ -81,8 +79,8 @@ function SingUp() {
                 label="First Name"
                 variant="outlined"
                 placeholder="Enter your email address"
-                error={errors.firstName}
-                helperText={errors.firstName}
+                error={errors.firstName && touched.firstName}
+                helperText={touched.firstName ? errors.firstName : null}
                 sx={{ mb: 2 }}
               />
               <TextField
@@ -99,8 +97,8 @@ function SingUp() {
                 label="Last Name"
                 variant="outlined"
                 placeholder="Enter your last name"
-                error={errors.lastName}
-                helperText={errors.lastName}
+                error={errors.lastName && touched.lastName}
+                helperText={touched.lastName ? errors.lastName : null}
                 sx={{ mb: 2 }}
               />
               <TextField
@@ -114,11 +112,11 @@ function SingUp() {
                 value={values.email}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="email"
+                label="Email"
                 variant="outlined"
                 placeholder="Enter your email address"
-                error={errors.email}
-                helperText={errors.email}
+                error={errors.email && touched.email}
+                helperText={touched.email ? errors.email : null}
                 sx={{ mb: 2 }}
               />
               <TextField
@@ -135,8 +133,8 @@ function SingUp() {
                 label="Password"
                 variant="outlined"
                 placeholder="Create new password"
-                error={errors.password}
-                helperText={errors.password}
+                error={errors.password && touched.password}
+                helperText={touched.password ? errors.password : null}
                 sx={{ mb: 2 }}
               />
               <TextField
@@ -153,13 +151,19 @@ function SingUp() {
                 label="Confirm Password"
                 variant="outlined"
                 placeholder="Confirm password"
-                error={errors.confirmPassword}
-                helperText={errors.confirmPassword}
+                error={errors.confirmPassword && touched.confirmPassword}
+                helperText={
+                  touched.confirmPassword ? errors.confirmPassword : null
+                }
               />
 
               {/* Create account button */}
               <ButtonMain
-                style={{ textTransform: "none", marginTop: "15px" }}
+                style={{
+                  textTransform: "none",
+                  marginTop: "16px",
+                  color: "gray700.main",
+                }}
                 variant="contained"
                 fullWidth
                 disableElevation
@@ -178,31 +182,24 @@ function SingUp() {
               direction={"row"}
               justifyContent={"center"}
               alignItems={"center"}
-              style={{ gap: 0, marginTop: "15px" }}
+              style={{ gap: "0px", marginTop: "16px" }}
             >
               <Box style={{ textTransform: "none" }} color="gray600.main">
                 Already have an account?
               </Box>
 
               <Box display={"flex"} justifyContent={"flex-end"}>
-                <Link
-                  to="/"
+                <Button
                   style={{
                     textTransform: "none",
-                    textDecoration: "none",
+                    paddingLeft: "0px",
                   }}
+                  color="secondary"
+                  variant="text"
+                  onClick={() => navigate("/")}
                 >
-                  <Button
-                    style={{
-                      textTransform: "none",
-                      lineHeight: "20px",
-                    }}
-                    color="secondary"
-                    variant="text"
-                  >
-                    Log in
-                  </Button>
-                </Link>
+                  Log in
+                </Button>
               </Box>
             </Stack>
           </Stack>

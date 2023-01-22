@@ -6,7 +6,6 @@ function MailingAddressForm({
   handleChange,
   touched,
   errors,
-  handleSubmit,
   handleBlur,
 }) {
   return (
@@ -34,7 +33,7 @@ function MailingAddressForm({
         variant="outlined"
         placeholder="Street Address"
         error={errors.address}
-        helperText={errors.address}
+        helperText={touched.address ? errors.address : null}
         sx={{ mt: 2 }}
       />
       <Stack direction={{ xs: "column", sm: "row" }}>
@@ -52,7 +51,7 @@ function MailingAddressForm({
           variant="outlined"
           placeholder="City"
           error={errors.city}
-          helperText={errors.city}
+          helperText={touched.city ? errors.city : null}
           sx={{ mt: 2, mr: 1 }}
         />
         <TextField
@@ -69,7 +68,7 @@ function MailingAddressForm({
           variant="outlined"
           placeholder="State"
           error={errors.state}
-          helperText={errors.state}
+          helperText={touched.state ? errors.state : null}
           sx={{ mb: 2, mt: 2, mr: 1 }}
         />
         <TextField
@@ -87,7 +86,7 @@ function MailingAddressForm({
           variant="outlined"
           placeholder="Zipcode"
           error={errors.zipCode}
-          helperText={errors.zipCode}
+          helperText={touched.zipCode ? errors.zipCode : null}
           sx={{ mb: 2, mt: 2, mr: 1 }}
         />
       </Stack>

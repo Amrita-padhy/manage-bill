@@ -1,189 +1,139 @@
-import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  FormLabel,
-  Heading,
-  HStack,
-  Input,
-  Stack,
-  VStack,
-} from "@chakra-ui/react";
-import { basicSchema } from "../../common/validators";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import { ButtonMain, MyLabel, useStyles } from "../../styles/styles";
+import { Stack, TextField } from "@mui/material";
 import { useFormik, Form, Field } from "formik";
-import { ArrowBackIcon } from "@chakra-ui/icons";
+import { Link, useNavigate } from "react-router-dom";
+import { basicSchema } from "../../common/validators";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 
-function SetNewPasswordPage() {
-  const [newPassword, setNewPassword] = useState({});
-  const navigate = useNavigate();
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setNewPassword(values);
+function SignInPage() {
+  const classes = useStyles();
+  const onSubmit = () => {
+    console.log(hi);
   };
+  const navigate = useNavigate();
 
-  const { values, handleChange, touched, errors, handleBlur } = useFormik({
-    initialValues: {
-      email: "",
-    },
-    validationSchema: basicSchema,
-    // onSubmit,
-  });
-  console.log(newPassword);
+  const { values, handleChange, touched, errors, handleSubmit, handleBlur } =
+    useFormik({
+      initialValues: {
+        password: "",
+        confirmNewPassword: "",
+      },
+      validationSchema: basicSchema,
+      onSubmit,
+    });
+  console.log(values);
+  console.log(errors);
   return (
     <>
-      <Box
-        w={"full"}
-        height={"100vh"}
-        bgColor={"#E5E5E5"}
-        display={"flex"}
-        justifyContent={"center"}
-        alignItems={"center"}
-      >
+      <Box className={classes.root}>
         <Box
-          className="card"
-          w={["343px", "392px"]}
-          h={"480px"}
-          bgColor={"white"}
-          borderRadius={"8px"}
+          p={2}
+          borderRadius={2}
+          bgcolor="white.main"
+          sx={{
+            width: { xs: "343px", sm: "343px", md: "392px" },
+            height: "auto",
+          }}
         >
-          <Heading
-            textAlign={"center"}
-            fontSize={"30px"}
-            lineHeight={"38px"}
-            fontWeight={"semibold"}
-            color={"#212529"}
-            marginTop={"84px"}
-          >
-            Set New Password
-          </Heading>
-          <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
-            <Heading
-              w={"270px"}
-              h={"44px"}
-              fontSize={"16px"}
-              lineHeight={"24px"}
-              fontWeight={"light"}
-              color={"#868E96"}
-              textAlign={"center"}
-            >
-              Your new password must be different to previously used passwords.
-            </Heading>
-          </Box>
-          <Box padding={"4"}>
-            <form>
-              {/* Password */}
-              <FormLabel
-                fontWeight={"500"}
-                fontSize={"14px"}
-                lineHeight={"20px"}
-                color={"#868E96"}
-              >
-                Password*
-              </FormLabel>
-              <Input
-                type="password"
-                id="password"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                focusBorderColor="gray.600"
-                fontWeight={"400"}
-                fontSize={"16px"}
-                lineHeight={"24px"}
-                color={"#495057"}
-                placeholder="Enter your email address"
-                className={errors.password && touched.password && "input_error"}
-              />
-              {errors.password && touched.password ? (
-                <div
-                  style={{
-                    textAlign: "start",
-                    marginTop: "0",
-                    fontSize: "12px",
-                    color: "red",
-                  }}
+          <Stack spacing={2}>
+            <Box mt="84px">
+              {/* heading */}
+              <Stack justifyContent={"center"} alignItems={"center"}>
+                <Box
+                  color="gray900.main"
+                  fontSize="30px"
+                  lineheight="38px"
+                  fontWeight="600"
                 >
-                  {errors.password}
-                </div>
-              ) : (
-                ""
-              )}
-              {/* confirmPassword */}
-              <FormLabel color={"#495057"}>Confirm Password*</FormLabel>
+                  Set New Password
+                </Box>
+                <Box
+                  color="gray600.main"
+                  fontSize="16px"
+                  lineheight="24px"
+                  fontWeight="400"
+                  textAlign="center"
+                >
+                  Your new password must be different to previously used
+                  passwords.
+                </Box>
+              </Stack>
+            </Box>
+          </Stack>
+          {/* form */}
+          <Box component="form" noValidate autoComplete="off" mt="32px">
+            <TextField
+              fullWidth
+              size="small"
+              color="gray600"
+              bordercolor="gray200"
+              required
+              id="password"
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              label="Password"
+              variant="outlined"
+              placeholder="Create new password"
+              error={errors.password && touched.password}
+              helperText={touched.password ? errors.password : null}
+              sx={{ mb: "16px" }}
+            />
+            <TextField
+              fullWidth
+              size="small"
+              color="gray600"
+              bordercolor="gray200"
+              required
+              id="confirmNewPassword"
+              value={values.confirmNewPassword}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              label="Confirm Password"
+              variant="outlined"
+              placeholder="Confirm new password"
+              error={errors.confirmNewPassword && touched.confirmNewPassword}
+              helperText={
+                touched.confirmNewPassword ? errors.confirmNewPassword : null
+              }
+            />
 
-              <Input
-                placeholder="Confirm password"
-                value={values.confirmPassword}
-                type="password"
-                id="confirmPassword"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                focusBorderColor="gray.600"
-                borderColor={"gray.200"}
-                color={"gray.600"}
-                fontSize={"16px"}
-                paddingY={"2"}
-                paddingX={"6"}
-                h={"38px"}
-                className={
-                  errors.confirmPassword &&
-                  touched.confirmPassword &&
-                  "input_error"
-                }
-              />
-              {errors.confirmPassword && touched.confirmPassword ? (
-                <div
-                  style={{
-                    textAlign: "start",
-                    marginTop: "0",
-                    fontSize: "12px",
-                    color: "red",
-                  }}
-                >
-                  {errors.confirmPassword}
-                </div>
-              ) : (
-                ""
-              )}
-              <Button
-                disabled={
-                  !values.password ||
-                  !values.confirmPassword ||
-                  errors.password ||
-                  errors.confirmPassword
-                }
-                size={"md"}
-                width={"full"}
-                marginTop={"4"}
-                fontWeight={"500"}
-                fontSize={"16px"}
-                lineHeight={"24px"}
-                color={"#495057"}
-                padding={"4"}
-                bgColor={"#FBE122"}
-                onClick={handleSubmit}
-              >
-                Reset Password
-              </Button>
-            </form>
-            <Stack>
-              <Button
-                variant={"unstyled"}
-                leftIcon={<ArrowBackIcon />}
-                size={"md"}
-                width={"full"}
-                fontWeight={"400"}
-                fontSize={"14px"}
-                lineHeight={"20px"}
-                color={"#212529"}
-                marginTop={"2"}
-                onClick={() => {
-                  navigate("/sign-in-page");
-                }}
-              >
-                Back to login
-              </Button>
-            </Stack>
+            {/* Submit button */}
+            <ButtonMain
+              style={{
+                textTransform: "none",
+                marginTop: "16px",
+                color: "gray700.main",
+              }}
+              variant="contained"
+              fullWidth
+              disableElevation
+              color="primary"
+              disabled={
+                !values.email ||
+                !values.password ||
+                errors.email ||
+                errors.password
+              }
+            >
+              Reset Password
+            </ButtonMain>
+          </Box>
+          <Box display={"flex"} justifyContent={"center"} sx={{ mt: "16px" }}>
+            <Button
+              style={{
+                textTransform: "none",
+              }}
+              color="gray900"
+              variant="text"
+              startIcon={<KeyboardBackspaceIcon />}
+              onClick={() => navigate("/")}
+            >
+              Back to login
+            </Button>
           </Box>
         </Box>
       </Box>
@@ -191,4 +141,4 @@ function SetNewPasswordPage() {
   );
 }
 
-export default SetNewPasswordPage;
+export default SignInPage;

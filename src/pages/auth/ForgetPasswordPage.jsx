@@ -1,133 +1,117 @@
-import { ArrowBackIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  Button,
-  FormLabel,
-  Heading,
-  Input,
-  Stack,
-} from "@chakra-ui/react";
-import React, { useState } from "react";
+import React from "react";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import { ButtonMain, useStyles } from "../../styles/styles";
+import { Stack, TextField } from "@mui/material";
 import { useFormik, Form, Field } from "formik";
-import { basicSchema } from "../../common/validators";
 import { useNavigate } from "react-router-dom";
+import { basicSchema } from "../../common/validators";
 
-function ForgetPassword() {
-  const [forgetPassword, setForgetPassword] = useState({});
-  const navigate = useNavigate();
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setForgetPassword(values);
-    navigate("/sign-in-page");
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+
+function SignInPage() {
+  const classes = useStyles();
+  const onSubmit = () => {
+    console.log(hi);
   };
-
-  const { values, handleChange, touched, errors, handleBlur } = useFormik({
-    initialValues: {
-      email: "",
-    },
-    validationSchema: basicSchema,
-    // onSubmit,
-  });
-  console.log(forgetPassword);
+  const navigate = useNavigate();
+  const { values, handleChange, touched, errors, handleSubmit, handleBlur } =
+    useFormik({
+      initialValues: {
+        email: "",
+      },
+      validationSchema: basicSchema,
+      onSubmit,
+    });
+  console.log(values);
+  // console.log(errors);
   return (
     <>
-      <Box
-        w={"full"}
-        height={"100vh"}
-        bgColor={"#E5E5E5"}
-        display={"flex"}
-        justifyContent={"center"}
-        alignItems={"center"}
-      >
+      <Box className={classes.root}>
         <Box
-          className="card"
-          w={["343px", "392px"]}
-          h={["399px", "376px"]}
-          bgColor={"white"}
-          borderRadius={"8px"}
+          p={2}
+          borderRadius={2}
+          bgcolor="white.main"
+          sx={{
+            width: { xs: "343px", sm: "343px", md: "392px" },
+            height: "auto",
+          }}
         >
-          <Box textAlign={"center"} className="Heading">
-            <Heading fontSize={"x-large"} color={"#212529"} marginTop={"84px"}>
-              Forgot Password?
-            </Heading>
-            <Heading
-              fontSize={"smaller"}
-              color={"#868E96"}
-              fontWeight={"light"}
+          <Stack spacing={2}>
+            <Box mt="84px">
+              <Stack justifyContent={"center"} alignItems={"center"}>
+                <Box
+                  color="gray900.main"
+                  fontSize="30px"
+                  lineheight="38px"
+                  fontWeight="600"
+                >
+                  Forgot Password?
+                </Box>
+                <Box
+                  color="gray600.main"
+                  fontSize="16px"
+                  lineheight="24px"
+                  fontWeight="400"
+                  textAlign={"center"}
+                >
+                  No worries, we’ll send you reset instructions.
+                </Box>
+              </Stack>
+            </Box>
+            <Box
+              component="form"
+              noValidate
+              autoComplete="off"
+              sx={{ mt: "16px" }}
             >
-              No worries, we’ll send you reset instructions.
-            </Heading>
-          </Box>
-          <Box padding={"4"}>
-            <form>
-              <FormLabel
-                fontWeight={"500"}
-                fontSize={"14px"}
-                lineHeight={"20px"}
-                color={"#868E96"}
-              >
-                Email*
-              </FormLabel>
-              <Input
-                type="email"
+              <TextField
+                fullWidth
+                size="small"
+                color="gray600"
+                bordercolor="gray200"
+                required
                 id="email"
+                value={values.email}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                focusBorderColor="gray.600"
-                fontWeight={"400"}
-                fontSize={"16px"}
-                lineHeight={"24px"}
-                color={"#495057"}
+                label="Email"
+                variant="outlined"
                 placeholder="Enter your email address"
-                className={errors.email && touched.email && "input_error"}
+                error={errors.email && touched.email}
+                helperText={touched.email ? errors.email : null}
               />
-              {errors.email && touched.email ? (
-                <div
-                  style={{
-                    textAlign: "start",
-                    marginTop: "0",
-                    fontSize: "12px",
-                    color: "red",
-                  }}
-                >
-                  {errors.email}
-                </div>
-              ) : (
-                ""
-              )}
-              <Button
+
+              {/* Reset Password button */}
+              <ButtonMain
+                style={{
+                  textTransform: "none",
+                  marginTop: "24px",
+                  color: "gray700.main",
+                }}
+                variant="contained"
+                fullWidth
+                disableElevation
+                color="primary"
                 disabled={!values.email || errors.email}
-                size={"md"}
-                width={"full"}
-                marginTop={"8"}
-                fontWeight={"500"}
-                fontSize={"16px"}
-                lineHeight={"24px"}
-                color={"#495057"}
-                padding={"4"}
-                bgColor={"#FBE122"}
-                onClick={handleSubmit}
               >
                 Reset Password
+              </ButtonMain>
+            </Box>
+
+            <Box display={"flex"} justifyContent={"center"}>
+              <Button
+                style={{
+                  textTransform: "none",
+                }}
+                color="gray900"
+                variant="text"
+                startIcon={<KeyboardBackspaceIcon />}
+                onClick={() => navigate("/")}
+              >
+                Back to login
               </Button>
-            </form>
-          </Box>
-          <Stack>
-            <Button
-              variant={"unstyled"}
-              leftIcon={<ArrowBackIcon />}
-              size={"md"}
-              width={"full"}
-              fontWeight={"400"}
-              fontSize={"14px"}
-              lineHeight={"20px"}
-              color={"#212529"}
-              onClick={() => {
-                navigate("/sign-in-page");
-              }}
-            >
-              Back to login
-            </Button>
+            </Box>
           </Stack>
         </Box>
       </Box>
@@ -135,4 +119,4 @@ function ForgetPassword() {
   );
 }
 
-export default ForgetPassword;
+export default SignInPage;

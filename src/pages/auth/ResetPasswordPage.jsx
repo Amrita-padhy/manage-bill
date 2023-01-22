@@ -1,71 +1,72 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  FormLabel,
-  Heading,
-  Input,
-  Stack,
-} from "@chakra-ui/react";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import { ButtonMain, useStyles } from "../../styles/styles";
+import { Stack, TextField } from "@mui/material";
+import { useFormik, Form, Field } from "formik";
+import { useNavigate } from "react-router-dom";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 
-function ResetPassword() {
+function ForgetPasswordEmailSentPage() {
+  const navigate = useNavigate();
+  const classes = useStyles();
+
   return (
-    <Box
-      w={"full"}
-      height={"100vh"}
-      bgColor={"#E5E5E5"}
-      display={"flex"}
-      justifyContent={"center"}
-      alignItems={"center"}
-    >
-      <Box
-        className="card"
-        w={["343px", "392px"]}
-        h={"270px"}
-        bgColor={"white"}
-        borderRadius={"8px"}
-      >
-        <Heading
-          textAlign={"center"}
-          fontSize={"30px"}
-          lineHeight={"38px"}
-          fontWeight={"semibold"}
-          color={"#212529"}
-          marginTop={"84px"}
+    <>
+      <Box className={classes.root}>
+        <Box
+          p={2}
+          borderRadius={2}
+          bgcolor="white.main"
+          sx={{
+            width: { xs: "343px", sm: "343px", md: "392px" },
+            height: "auto",
+          }}
         >
-          Password Reset
-        </Heading>
-        <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
-          <Heading
-            w={"320px"}
-            h={"44px"}
-            fontSize={"16px"}
-            lineHeight={"24px"}
-            fontWeight={"light"}
-            color={"#868E96"}
-            textAlign={"center"}
-          >
-            Your password has been successfully reset. Click on CONTINUE to
-            login back.
-          </Heading>
-        </Box>
-        <Box padding={"4"}>
-          <Button
-            size={"md"}
-            width={"full"}
-            marginTop={"5"}
-            fontWeight={"500"}
-            fontSize={"16px"}
-            lineHeight={"24px"}
-            color={"#495057"}
-            bgColor={"#FBE122"}
+          {/* heading */}
+          <Stack spacing={2}>
+            <Box mt="84px">
+              <Stack justifyContent={"center"} alignItems={"center"}>
+                <Box
+                  color="gray900.main"
+                  fontSize="30px"
+                  lineheight="38px"
+                  fontWeight="600"
+                >
+                  Password Reset
+                </Box>
+                <Box
+                  color="gray600.main"
+                  fontSize="16px"
+                  lineheight="24px"
+                  fontWeight="400"
+                  textAlign={"center"}
+                >
+                  Your password has been successfully reset. Click on CONTINUE
+                  to login back.
+                </Box>
+              </Stack>
+            </Box>
+          </Stack>
+
+          <ButtonMain
+            style={{
+              textTransform: "none",
+              marginTop: "30px",
+              marginBottom: "10px",
+              color: "gray700.main",
+            }}
+            variant="contained"
+            fullWidth
+            disableElevation
+            color="primary"
           >
             Continue
-          </Button>
+          </ButtonMain>
         </Box>
       </Box>
-    </Box>
+    </>
   );
 }
 
-export default ResetPassword;
+export default ForgetPasswordEmailSentPage;
