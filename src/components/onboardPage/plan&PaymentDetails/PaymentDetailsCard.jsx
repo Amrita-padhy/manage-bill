@@ -79,14 +79,15 @@ function PaymentDetailsCard({
             bordercolor="gray200"
             required
             id="address"
+            touched
             value={values.address}
             onChange={handleChange}
             onBlur={handleBlur}
             label="Address"
             variant="outlined"
             placeholder="Street Address"
-            error={errors.address}
-            helperText={errors.address}
+            error={errors.address && touched.address}
+            helperText={touched.address ? errors.address : null}
             sx={{ mt: 2 }}
           />
           <Stack direction={{ xs: "column", sm: "row" }}>
@@ -103,8 +104,8 @@ function PaymentDetailsCard({
               label="City"
               variant="outlined"
               placeholder="City"
-              error={errors.city}
-              helperText={errors.city}
+              error={errors.city && touched.city}
+              helperText={touched.city ? errors.city : null}
               sx={{ mt: 2, mr: 1 }}
             />
             <TextField
@@ -120,8 +121,8 @@ function PaymentDetailsCard({
               label="State"
               variant="outlined"
               placeholder="State"
-              error={errors.state}
-              helperText={errors.state}
+              error={errors.state && touched.state}
+              helperText={touched.state ? errors.state : null}
               sx={{ mb: 2, mt: 2, mr: 1 }}
             />
             <TextField
@@ -138,8 +139,8 @@ function PaymentDetailsCard({
               label="Zipcode"
               variant="outlined"
               placeholder="Zipcode"
-              error={errors.zipCode}
-              helperText={errors.zipCode}
+              error={errors.zipCode && touched.zipCode}
+              helperText={touched.zipCode ? errors.zipCode : null}
               sx={{ mb: 2, mt: 2, mr: 1 }}
             />
           </Stack>

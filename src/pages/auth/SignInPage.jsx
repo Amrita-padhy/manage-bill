@@ -12,6 +12,7 @@ function SignInPage() {
   const onSubmit = () => {
     console.log(hi);
   };
+  const navigate = useNavigate();
 
   const { values, handleChange, touched, errors, handleSubmit, handleBlur } =
     useFormik({
@@ -33,7 +34,7 @@ function SignInPage() {
           bgcolor="white.main"
           sx={{
             width: { xs: "343px", sm: "343px", md: "392px" },
-            height: "470px",
+            height: "auto",
           }}
         >
           <Stack spacing={2}>
@@ -57,7 +58,12 @@ function SignInPage() {
                 </Box>
               </Stack>
             </Box>
-            <Box component="form" noValidate autoComplete="off">
+            <Box
+              component="form"
+              noValidate
+              autoComplete="off"
+              sx={{ mt: "24px" }}
+            >
               <TextField
                 fullWidth
                 size="small"
@@ -68,12 +74,12 @@ function SignInPage() {
                 value={values.email}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="email"
+                label="Email"
                 variant="outlined"
                 placeholder="Enter your email address"
-                error={errors.email}
-                helperText={errors.email}
-                sx={{ mb: 1 }}
+                error={errors.email && touched.email}
+                helperText={touched.email ? errors.email : null}
+                sx={{ mb: 2 }}
               />
               <TextField
                 fullWidth
@@ -87,16 +93,20 @@ function SignInPage() {
                 onBlur={handleBlur}
                 label="Password"
                 variant="outlined"
-                placeholder="Enter your email address"
-                error={errors.password}
-                helperText={errors.password}
+                placeholder="Enter your password"
+                error={errors.password && touched.password}
+                helperText={touched.password ? errors.password : null}
               />
 
               {/*    Forgot Password button */}
-              <Box display={"flex"} justifyContent={"flex-end"}>
-                <Link to="/" style={{ textTransform: "none" }}>
+              <Box
+                display={"flex"}
+                justifyContent={"flex-end"}
+                marginTop="10px"
+              >
+                <Link to="/forgetPassword">
                   <Button
-                    style={{ textTransform: "none" }}
+                    style={{ textTransform: "none", padding: "0px" }}
                     color="gray600"
                     variant="text"
                   >
@@ -106,7 +116,11 @@ function SignInPage() {
               </Box>
               {/* Submit button */}
               <ButtonMain
-                style={{ textTransform: "none", marginTop: "15px" }}
+                style={{
+                  textTransform: "none",
+                  marginTop: "16px",
+                  color: "gray700.main",
+                }}
                 variant="contained"
                 fullWidth
                 disableElevation
@@ -125,25 +139,24 @@ function SignInPage() {
               direction={"row"}
               justifyContent={"center"}
               alignItems={"center"}
-              style={{ gap: 0, marginTop: "15px" }}
+              style={{ gap: "0px", marginTop: "15px" }}
             >
               <Box style={{ textTransform: "none" }} color="gray600.main">
                 Don’t have an account?
               </Box>
 
               <Box display={"flex"} justifyContent={"flex-end"}>
-                <Link
-                  to="/signup"
-                  style={{ textTransform: "none", textDecoration: "none" }}
+                <Button
+                  style={{
+                    textTransform: "none",
+                    paddingLeft: "4px",
+                  }}
+                  color="secondary"
+                  variant="text"
+                  onClick={() => navigate("/signup")}
                 >
-                  <Button
-                    style={{ textTransform: "none" }}
-                    color="secondary"
-                    variant="text"
-                  >
-                    Sign Up
-                  </Button>
-                </Link>
+                  Sign Up
+                </Button>
               </Box>
             </Stack>
           </Stack>

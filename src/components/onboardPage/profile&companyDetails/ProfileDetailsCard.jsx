@@ -39,8 +39,8 @@ function ProfileDetailsCard({
               handleSubmit={handleSubmit}
               handleBlur={handleBlur}
             />
-            {/* CompanyInformationForm  */}
 
+            {/* CompanyInformationForm  */}
             <CompanyInformationForm
               values={values}
               handleChange={handleChange}
@@ -50,7 +50,6 @@ function ProfileDetailsCard({
               handleBlur={handleBlur}
             />
             {/* MailingAddressForm  */}
-
             <MailingAddressForm
               values={values}
               handleChange={handleChange}
