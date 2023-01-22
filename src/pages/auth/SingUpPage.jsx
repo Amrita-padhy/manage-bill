@@ -7,6 +7,11 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { ButtonMain, MyLabel, useStyles } from "../../styles/styles";
 import { Stack, TextField } from "@mui/material";
+// import { useStyles } from "../../styles/styles";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import { ButtonMain, MyLabel, useStyles } from "../../styles/styles";
+import { Stack, TextField } from "@mui/material";
 import { useFormik, Form, Field } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { basicSchema } from "../../common/validators";
@@ -17,7 +22,7 @@ function SingUp() {
     console.log(hi);
   };
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const { values, handleChange, touched, errors, handleSubmit, handleBlur } =
     useFormik({
@@ -31,6 +36,7 @@ function SingUp() {
       validationSchema: basicSchema,
       onSubmit,
     });
+  const classes = useStyles();
   const classes = useStyles();
 
   return (

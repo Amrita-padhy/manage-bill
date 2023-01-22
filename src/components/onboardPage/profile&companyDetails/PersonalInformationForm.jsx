@@ -7,6 +7,10 @@ import ImageSelector from "./ImageSelector";
 import { Stack, TextField } from "@mui/material";
 
 function PersonalInformationForm({
+  firstName,
+  lastName,
+  email,
+  mobile,
   values,
   handleChange,
   touched,
