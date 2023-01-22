@@ -1,13 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { GrCircleInformation } from "react-icons/gr";
-
-// import { useStyles } from "../../styles/styles";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import { ButtonMain, MyLabel, useStyles } from "../../styles/styles";
-import { Stack, TextField } from "@mui/material";
-// import { useStyles } from "../../styles/styles";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { ButtonMain, MyLabel, useStyles } from "../../styles/styles";
@@ -36,7 +28,7 @@ function SingUp() {
       validationSchema: basicSchema,
       onSubmit,
     });
-  const classes = useStyles();
+
   const classes = useStyles();
 
   return (
