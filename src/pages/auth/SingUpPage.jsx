@@ -9,12 +9,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { basicSchema } from "@/common/validators";
 
 import { useQuery, useMutation } from "react-query";
-import { handleRegister } from "@/api/auth/authApi";
+import { register } from "@/api/auth/authApi";
 
 function SingUp() {
   const onSubmit = () => {};
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const { values, handleChange, touched, errors, handleSubmit, handleBlur } =
     useFormik({

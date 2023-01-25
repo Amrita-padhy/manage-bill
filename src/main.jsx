@@ -16,28 +16,31 @@ import SetNewPasswordPage from "./pages/auth/SetNewPasswordPage";
 import OnBoardPage from "./pages/OnBoardPage";
 import { customTheme } from "./styles/colorPalette";
 import { CssBaseline } from "@mui/material";
-import { store } from "@/store/store.js";
+import store from "@/store/store.js";
 import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "react-query";
+import AuthContextProvider from "./context/authContext";
 
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <QueryClientProvider client={queryClient}>
     <Provider store={store}>
-      <CssBaseline />
-      <ThemeProvider theme={customTheme}>
-        <BrowserRouter>
-          {/* Auth layout route */}
-          <Routes>
-            <Route element={<AuthLayout />}>
-              <Route index element={<SignIn />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/Onboard" element={<OnBoardPage />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </ThemeProvider>
+      <AuthContextProvider>
+        <CssBaseline />
+        <ThemeProvider theme={customTheme}>
+          <BrowserRouter>
+            {/* Auth layout route */}
+            <Routes>
+              <Route element={<AuthLayout />}>
+                <Route index element={<SignIn />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/Onboard" element={<OnBoardPage />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </ThemeProvider>
+      </AuthContextProvider>
     </Provider>
   </QueryClientProvider>
 );

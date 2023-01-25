@@ -6,18 +6,13 @@ import { Stack, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { basicSchema } from "@/common/validators";
-
-import { useSelector, useDispatch } from "react-redux";
-import { initUser } from "@/store/user/userStore";
+import { login } from "@/api/auth/authApi";
 
 function SignInPage() {
   const classes = useStyles();
 
-  const user = useSelector((state) => state.user.value);
-  const dispatch = useDispatch();
-
-  const onSubmit = () => {
-    dispatch(initUser({ name: "Boone" }));
+  const handleLogin = async () => {
+    await login(values);
   };
   const navigate = useNavigate();
 
@@ -28,7 +23,7 @@ function SignInPage() {
         password: "",
       },
       validationSchema: basicSchema,
-      onSubmit,
+      handleLogin,
     });
 
   return (
@@ -52,7 +47,7 @@ function SignInPage() {
                   lineheight="38px"
                   fontWeight="600"
                 >
-                  Log In! {user?.name}
+                  Log In!
                 </Box>
                 <Box
                   color="gray600.main"
@@ -131,12 +126,7 @@ function SignInPage() {
                 fullWidth
                 disableElevation
                 color="primary"
-                disabled={
-                  !values.email ||
-                  !values.password ||
-                  errors.email ||
-                  errors.password
-                }
+                onClick={handleLogin}
               >
                 Submit
               </ButtonMain>
