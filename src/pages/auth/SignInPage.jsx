@@ -1,16 +1,18 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { ButtonMain, MyLabel, useStyles } from "../../styles/styles";
+import { ButtonMain, useStyles } from "../../styles/styles";
 import { Stack, TextField } from "@mui/material";
-import { useFormik, Form, Field } from "formik";
+import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
-import { basicSchema } from "../../common/validators";
+import { basicSchema } from "@/common/validators";
+import { login } from "@/api/auth/authApi";
 
 function SignInPage() {
   const classes = useStyles();
-  const onSubmit = () => {
-    console.log(hi);
+
+  const handleLogin = async () => {
+    await login(values);
   };
   const navigate = useNavigate();
 
@@ -21,10 +23,9 @@ function SignInPage() {
         password: "",
       },
       validationSchema: basicSchema,
-      onSubmit,
+      handleLogin,
     });
-  console.log(values);
-  console.log(errors);
+
   return (
     <>
       <Box className={classes.root}>
@@ -125,12 +126,7 @@ function SignInPage() {
                 fullWidth
                 disableElevation
                 color="primary"
-                disabled={
-                  !values.email ||
-                  !values.password ||
-                  errors.email ||
-                  errors.password
-                }
+                onClick={handleLogin}
               >
                 Submit
               </ButtonMain>

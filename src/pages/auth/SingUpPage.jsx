@@ -2,19 +2,19 @@ import React from "react";
 
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { ButtonMain, MyLabel, useStyles } from "../../styles/styles";
+import { ButtonMain, useStyles } from "../../styles/styles";
 import { Stack, TextField } from "@mui/material";
-import { useFormik, Form, Field } from "formik";
+import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
-import { basicSchema } from "../../common/validators";
-import { lineHeight } from "@mui/system";
+import { basicSchema } from "@/common/validators";
+
+import { useQuery, useMutation } from "react-query";
+import { register } from "@/api/auth/authApi";
 
 function SingUp() {
-  const onSubmit = () => {
-    console.log(hi);
-  };
+  const onSubmit = () => {};
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const { values, handleChange, touched, errors, handleSubmit, handleBlur } =
     useFormik({
@@ -168,12 +168,7 @@ function SingUp() {
                 fullWidth
                 disableElevation
                 color="primary"
-                disabled={
-                  !values.email ||
-                  !values.password ||
-                  errors.email ||
-                  errors.password
-                }
+                onClick={() => onSubmit}
               >
                 Create account
               </ButtonMain>
