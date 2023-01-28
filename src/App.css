@@ -7,3 +7,9 @@ Input.input_error,
 select.input_error {
   border-color: rgb(191, 19, 19);
 }
+.unstyled {
+  border-color: transparent;
+}
+.styled {
+  border-color: blue;
+}

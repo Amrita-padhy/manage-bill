@@ -8,13 +8,14 @@ import OpacityIcon from "@mui/icons-material/Opacity";
 import PercentIcon from "@mui/icons-material/Percent";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
-function CreditCard() {
+function CreditCard({ setStatus2, setColor }) {
   return (
     <>
-      <Card
+      <Box
         sx={{
-          width: { xs: "311px", sm: "230px" },
+          width: { xs: "307px", sm: "225px" },
           height: "392px",
+          border: "1px solid grey",
         }}
       >
         <Stack
@@ -22,9 +23,8 @@ function CreditCard() {
           justifyContent="center"
           alignItems={"center"}
           sx={{
-            width: { xs: "311px", sm: "230px" },
+            width: { xs: "307px", sm: "225px" },
             height: "84px",
-            bgcolor: "white.main",
           }}
         >
           <Typography
@@ -60,7 +60,7 @@ function CreditCard() {
           justifyContent="center"
           alignItems={"center"}
           sx={{
-            width: { xs: "311px", sm: "230px" },
+            width: { xs: "307px", sm: "223px" },
             height: "84px",
             bgcolor: "primary.main",
           }}
@@ -112,10 +112,9 @@ function CreditCard() {
           flexDirection={"column"}
           justifyContent="flex-start"
           sx={{
-            width: { xs: "311px", sm: "230px" },
+            width: { xs: "307px", sm: "223px" },
             height: "166px",
             bgcolor: "gray700.main",
-            // padding: "20px",
           }}
         >
           {/* 1 */}
@@ -259,8 +258,8 @@ function CreditCard() {
         </Box>
         <Box
           sx={{
-            width: { xs: "311px", sm: "230px" },
-            height: "60px",
+            width: { xs: "307px", sm: "223px" },
+            height: "56px",
             bgcolor: "white.main",
           }}
           display={"flex"}
@@ -269,19 +268,22 @@ function CreditCard() {
         >
           <Button
             variant="contained"
-            color="secondary"
+            // color="secondary"
+            backgroundColor={setColor}
             sx={{
               fontSize: "12px",
               fontWeight: "400",
               lineHeight: "15px",
               borderRadius: "22px",
               textAlign: "center",
+              "&:hover": { backgroundColor: "transparent" },
             }}
+            onClick={setStatus2}
           >
             GO CADET
           </Button>
         </Box>
-      </Card>
+      </Box>
     </>
   );
 }

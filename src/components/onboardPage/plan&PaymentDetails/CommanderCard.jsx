@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdWaterDrop } from "react-icons/md";
 import { CiPercent, CiDollar } from "react-icons/ci";
 import { TbCurrencyDollar } from "react-icons/tb";
@@ -7,13 +7,15 @@ import Icon from "@mui/material/Icon";
 import OpacityIcon from "@mui/icons-material/Opacity";
 import PercentIcon from "@mui/icons-material/Percent";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-function CommanderCard() {
+
+function CommanderCard({ setStatus1, setColor }) {
   return (
     <>
-      <Card
+      <Box
         sx={{
-          width: { xs: "311px", sm: "230px" },
+          width: { xs: "307px", sm: "227px" },
           height: "392px",
+          border: "1px solid grey",
         }}
       >
         <Stack
@@ -21,9 +23,8 @@ function CommanderCard() {
           justifyContent="center"
           alignItems={"center"}
           sx={{
-            width: { xs: "311px", sm: "230px" },
+            width: { xs: "307px", sm: "227px" },
             height: "84px",
-            bgcolor: "white.main",
           }}
         >
           <Typography
@@ -59,7 +60,7 @@ function CommanderCard() {
           justifyContent="center"
           alignItems={"center"}
           sx={{
-            width: { xs: "311px", sm: "230px" },
+            width: { xs: "307px", sm: "225px" },
             height: "84px",
             bgcolor: "primary.main",
           }}
@@ -111,10 +112,9 @@ function CommanderCard() {
           flexDirection={"column"}
           justifyContent="flex-start"
           sx={{
-            width: { xs: "311px", sm: "230px" },
+            width: { xs: "307px", sm: "225px" },
             height: "166px",
             bgcolor: "gray700.main",
-            // padding: "20px",
           }}
         >
           {/* 1 */}
@@ -258,29 +258,33 @@ function CommanderCard() {
         </Box>
         <Box
           sx={{
-            width: { xs: "311px", sm: "230px" },
-            height: "60px",
+            width: { xs: "305px", sm: "225px" },
+            height: "56px",
             bgcolor: "white.main",
           }}
           display={"flex"}
           justifyContent={"center"}
           alignItems={"center"}
         >
-          <Button
+          <Box
+            component={Button}
             variant="contained"
-            color="secondary"
+            // color={setColor}
+            backgroundColor={setColor}
             sx={{
               fontSize: "12px",
               fontWeight: "400",
               lineHeight: "15px",
               borderRadius: "22px",
               textAlign: "center",
+              "&:hover": { backgroundColor: "transparent" },
             }}
+            onClick={setStatus1}
           >
             GO COMMANDER
-          </Button>
+          </Box>
         </Box>
-      </Card>
+      </Box>
     </>
   );
 }

@@ -8,11 +8,11 @@ const axiosInstance = axios.create(axiosParams);
 // Main api function
 const api = (axios) => {
   return {
-    get: (url, body, config) => axios.get(url, body, config),
-    delete: (url, config) => axios.delete(url, config),
-    post: (url, body, config) => axios.post(url, body, config, config),
-    patch: (url, body, config) => axios.patch(url, body, config),
-    put: (url, body, config) => axios.put(url, body, config),
+    get: (endpoint, body, config) => axios.get(endpoint, body, config),
+    delete: (endpoint, config) => axios.delete(endpoint, config),
+    post: (endpoint, body, config) => axios.post(endpoint, body, config),
+    patch: (endpoint, body, config) => axios.patch(endpoint, body, config),
+    put: (endpoint, body, config) => axios.put(endpoint, body, config),
   };
 };
 export default api(axiosInstance);

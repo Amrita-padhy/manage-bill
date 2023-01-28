@@ -7,10 +7,6 @@ import ImageSelector from "./ImageSelector";
 import { Stack, TextField } from "@mui/material";
 
 function PersonalInformationForm({
-  firstName,
-  lastName,
-  email,
-  mobile,
   values,
   handleChange,
   touched,
@@ -67,7 +63,7 @@ function PersonalInformationForm({
             label="First Name"
             variant="outlined"
             placeholder="First Name"
-            error={errors.firstName}
+            error={errors.firstName && touched.firstName}
             helperText={touched.firstName ? errors.firstName : null}
             sx={{ mb: 2 }}
           />
@@ -86,7 +82,7 @@ function PersonalInformationForm({
             label="Last Name"
             variant="outlined"
             placeholder="Last Name"
-            error={errors.lastName}
+            error={errors.lastName && touched.lastName}
             helperText={touched.lastName ? errors.lastName : null}
             sx={{ mb: 2 }}
           />
@@ -105,7 +101,7 @@ function PersonalInformationForm({
             label="Email"
             variant="outlined"
             placeholder="Email"
-            error={errors.email}
+            error={errors.email && touched.email}
             helperText={touched.email ? errors.email : null}
             sx={{ mb: 2 }}
           />
@@ -123,7 +119,7 @@ function PersonalInformationForm({
             label="mobile No."
             variant="outlined"
             placeholder="mobile No."
-            error={errors.mobileNumber}
+            error={errors.mobileNumber && touched.mobileNumber}
             helperText={touched.mobileNumber ? errors.mobileNumber : null}
             sx={{ mb: 2 }}
           />

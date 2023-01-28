@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { ButtonMain, useStyles } from "../../styles/styles";
@@ -7,27 +7,83 @@ import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { basicSchema } from "@/common/validators";
 import { login } from "@/api/auth/authApi";
+import Snackbar from "@mui/material/Snackbar";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+
+import Typography from "@mui/material/Typography";
 
 function SignInPage() {
   const classes = useStyles();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarErrorMsg, setSnackbarErrorMsg] = useState("");
 
-  const handleLogin = async () => {
-    await login(values);
-  };
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+  });
+  const { vertical, horizontal, open } = state;
   const navigate = useNavigate();
+  const handleLogin = async () => {
+    const result = await login(values);
+
+    if (!result.response) {
+      setSnackbarOpen(true);
+      setSnackbarErrorMsg(result.message);
+    }
+    console.log(result);
+    navigate("/onboard");
+  };
 
   const { values, handleChange, touched, errors, handleSubmit, handleBlur } =
     useFormik({
       initialValues: {
-        email: "",
-        password: "",
+        email: "test@1333.com",
+        password: "Test@123",
       },
       validationSchema: basicSchema,
       handleLogin,
     });
 
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackbarOpen(false);
+  };
+  const action = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+        bgcolor="white.main"
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
   return (
     <>
+      {/* snackbar */}
+      <Box>
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          message={snackbarErrorMsg}
+          action={action}
+          anchorOrigin={{ vertical, horizontal }}
+          key={vertical + horizontal}
+          sx={{
+            width: { xs: "250px", sm: "300px" },
+            height: "auto",
+            padding: "10px",
+          }}
+        />
+      </Box>
       <Box className={classes.root}>
         <Box
           p={2}

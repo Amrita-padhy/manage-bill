@@ -32,7 +32,7 @@ function MailingAddressForm({
         label="Address"
         variant="outlined"
         placeholder="Street Address"
-        error={errors.address}
+        error={errors.address && touched.address}
         helperText={touched.address ? errors.address : null}
         sx={{ mt: 2 }}
       />
@@ -50,7 +50,7 @@ function MailingAddressForm({
           label="City"
           variant="outlined"
           placeholder="City"
-          error={errors.city}
+          error={errors.city && touched.city}
           helperText={touched.city ? errors.city : null}
           sx={{ mt: 2, mr: 1 }}
         />
@@ -67,7 +67,7 @@ function MailingAddressForm({
           label="State"
           variant="outlined"
           placeholder="State"
-          error={errors.state}
+          error={errors.state && touched.state}
           helperText={touched.state ? errors.state : null}
           sx={{ mb: 2, mt: 2, mr: 1 }}
         />
@@ -85,7 +85,7 @@ function MailingAddressForm({
           label="Zipcode"
           variant="outlined"
           placeholder="Zipcode"
-          error={errors.zipCode}
+          error={errors.zipCode && touched.zipCode}
           helperText={touched.zipCode ? errors.zipCode : null}
           sx={{ mb: 2, mt: 2, mr: 1 }}
         />

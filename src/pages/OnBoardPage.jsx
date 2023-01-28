@@ -56,23 +56,34 @@ function OnBoardPage() {
   console.log(formData);
   const { values, handleChange, touched, errors, handleBlur } = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      mobileNumber: "",
-      companyName: "",
-      website: "",
-      address: "",
-      city: "",
-      state: "",
-      zipCode: "",
-      mailingAddress: "",
-      mailingCity: "",
-      mailingState: "",
-      mailingZipCode: "",
-      avatar: "",
-      companyLogo: "",
+      PersonalInformation: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        mobileNumber: "",
+      },
+      companyInformation: {
+        companyName: "",
+        website: "",
+        address: "",
+        city: "",
+        state: "",
+        zipCode: "",
+      },
+      mailingInformation: {
+        mailingAddress: "",
+        mailingCity: "",
+        mailingState: "",
+        mailingZipCode: "",
+      },
+      billingInformation: {
+        billingAddress: "",
+        billingCity: "",
+        billingState: "",
+        billingZipCode: "",
+      },
     },
+
     validationSchema: basicSchema,
     // onSubmit,
   });

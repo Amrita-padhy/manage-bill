@@ -45,7 +45,7 @@ function CompanyInformationForm({
             label="Company Name"
             variant="outlined"
             placeholder="Company Name"
-            error={errors.companyName}
+            error={errors.companyName && touched.companyName}
             helperText={touched.companyName ? errors.companyName : null}
             sx={{ mb: 2 }}
           />
@@ -63,7 +63,7 @@ function CompanyInformationForm({
             label="Website"
             variant="outlined"
             placeholder="Website"
-            error={errors.website}
+            error={errors.website && touched.website}
             helperText={touched.website ? errors.website : null}
             sx={{ mb: 2 }}
           />
@@ -86,7 +86,7 @@ function CompanyInformationForm({
         label="Address"
         variant="outlined"
         placeholder="Street Address"
-        error={errors.address}
+        error={errors.address && touched.address}
         helperText={touched.address ? errors.address : null}
         sx={{ mt: 2 }}
       />
@@ -104,7 +104,7 @@ function CompanyInformationForm({
           label="City"
           variant="outlined"
           placeholder="City"
-          error={errors.city}
+          error={errors.city && touched.city}
           helperText={touched.city ? errors.city : null}
           sx={{ mt: 2, mr: 1 }}
         />
@@ -121,7 +121,7 @@ function CompanyInformationForm({
           label="State"
           variant="outlined"
           placeholder="State"
-          error={errors.state}
+          error={errors.state && touched.state}
           helperText={touched.state ? errors.state : null}
           sx={{ mb: 2, mt: 2, mr: 1 }}
         />
@@ -139,7 +139,7 @@ function CompanyInformationForm({
           label="Zipcode"
           variant="outlined"
           placeholder="Zipcode"
-          error={errors.zipCode}
+          error={errors.zipCode && touched.zipCode}
           helperText={touched.zipCode ? errors.zipCode : null}
           sx={{ mb: 2, mt: 2, mr: 1 }}
         />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -20,6 +20,20 @@ function PaymentDetailsCard({
   handleSubmit,
   handleBlur,
 }) {
+  const [isSelected, setIsSelected] = useState(true);
+  const [selectedIndex, setSelectedIndex] = useState(1);
+  const setColor = () => {
+    return isSelected ? " blue" : " pink";
+  };
+
+  const setStatus1 = (val) => {
+    setIsSelected(!isSelected);
+  };
+
+  const setStatus2 = (val) => {
+    setIsSelected(!isSelected);
+  };
+
   return (
     <>
       <Box
@@ -39,7 +53,7 @@ function PaymentDetailsCard({
           {/* heading */}
           <Stack direction={"row"} alignItems="center" spacing={1}>
             <Box
-              color="gray900.main"
+              // color={setColor}
               fontSize="20px"
               fontWeight="700"
               lineHeight={"30px"}
@@ -57,8 +71,9 @@ function PaymentDetailsCard({
             spacing={1.5}
             marginTop={"32px"}
           >
-            <CommanderCard />
-            <CreditCard />
+            {/* {PlanVariant.map((item, index) => {
+              return <h1 key={index}>{item.name}</h1>;
+            })} */}
           </Stack>
           {/* billing address */}
           <Box
@@ -162,8 +177,6 @@ function PaymentDetailsCard({
                 fontSize: "14px",
                 fontWeight: "400",
                 lineHeight: "16px",
-                // paddingX: "20px",
-                // paddingTop: "13px",
                 textAlign: "center",
               }}
               color="gray600.main"
