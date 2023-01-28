@@ -8,15 +8,14 @@ import OpacityIcon from "@mui/icons-material/Opacity";
 import PercentIcon from "@mui/icons-material/Percent";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
-function CommanderCard({ setStatus1, setColor }) {
+function CommanderCard({ selectSubscription, ...props }) {
   return (
     <>
       <Box
         sx={{
           width: { xs: "307px", sm: "227px" },
-          height: "392px",
-          border: "1px solid grey",
         }}
+        border={props.isSelected ? "1px solid grey" : ""}
       >
         <Stack
           direction={"column"}
@@ -24,7 +23,6 @@ function CommanderCard({ setStatus1, setColor }) {
           alignItems={"center"}
           sx={{
             width: { xs: "307px", sm: "227px" },
-            height: "84px",
           }}
         >
           <Typography
@@ -37,7 +35,7 @@ function CommanderCard({ setStatus1, setColor }) {
             }}
             color="gray700.main"
           >
-            COMMANDER
+            {props?.name}
           </Typography>
           <Typography
             sx={{
@@ -51,7 +49,7 @@ function CommanderCard({ setStatus1, setColor }) {
             color="gray700.main"
             component="div"
           >
-            Have utilities and other fees to charge residents.
+            {props?.highlight}
           </Typography>
         </Stack>
         {/* 2 */}
@@ -61,7 +59,6 @@ function CommanderCard({ setStatus1, setColor }) {
           alignItems={"center"}
           sx={{
             width: { xs: "307px", sm: "225px" },
-            height: "84px",
             bgcolor: "primary.main",
           }}
         >
@@ -75,7 +72,7 @@ function CommanderCard({ setStatus1, setColor }) {
             color="gray700.main"
             component="div"
           >
-            Free + $*
+            {props?.costDetails}
           </Typography>
           <Stack
             direction={"row"}
@@ -92,7 +89,7 @@ function CommanderCard({ setStatus1, setColor }) {
                 textAlign: "center",
               }}
             >
-              $3
+              ${props?.costPerUnit}
             </Typography>
             <Typography
               sx={{
@@ -113,153 +110,53 @@ function CommanderCard({ setStatus1, setColor }) {
           justifyContent="flex-start"
           sx={{
             width: { xs: "307px", sm: "225px" },
-            height: "166px",
             bgcolor: "gray700.main",
           }}
         >
-          {/* 1 */}
-          <Stack
-            direction={"row"}
-            justifyContent="start"
-            alignItems={"center"}
-            spacing={1}
-            padding="5px"
-            marginTop={"10px"}
-            sx={{
-              fontSize: "16px",
-              fontWeight: "400",
-              lineHeight: "5px",
-            }}
-            component="div"
-          >
-            <OpacityIcon color="primary" fontSize="small" />
-            <Typography
+          {props?.planFeatures?.map((feature, index) => (
+            <Stack
+              direction={"row"}
+              justifyContent="start"
+              alignItems={"center"}
+              spacing={1}
+              padding="5px"
+              marginTop={"10px"}
               sx={{
-                fontSize: "10px",
+                fontSize: "16px",
                 fontWeight: "400",
-                lineHeight: "14px",
+                lineHeight: "5px",
               }}
-              color="white.main"
               component="div"
             >
-              Recover high-use unit utilities
-            </Typography>
-          </Stack>
-          {/* 2 */}
+              {index === 0 && <OpacityIcon color="primary" fontSize="small" />}
+              {index === 1 && <PercentIcon color="primary" fontSize="small" />}
+              {index === 2 && (
+                <AttachMoneyIcon color="primary" fontSize="small" />
+              )}
+              {index === 3 && (
+                <AttachMoneyIcon color="primary" fontSize="small" />
+              )}
+              {index === 4 && (
+                <AttachMoneyIcon color="primary" fontSize="small" />
+              )}
 
-          <Stack
-            direction={"row"}
-            justifyContent="start"
-            alignItems={"center"}
-            spacing={1}
-            padding="5px"
-            sx={{
-              fontSize: "16px",
-              fontWeight: "400",
-              lineHeight: "20px",
-            }}
-            component="div"
-          >
-            <PercentIcon color="primary" fontSize="small" />
-            <Typography
-              sx={{
-                fontSize: "10px",
-                fontWeight: "400",
-                lineHeight: "14px",
-              }}
-              color="white.main"
-              component="div"
-            >
-              Lower property’s utility use
-            </Typography>
-          </Stack>
-          {/* 3 */}
-          <Stack
-            direction={"row"}
-            justifyContent="start"
-            alignItems={"center"}
-            spacing={1}
-            padding="5px"
-            sx={{
-              fontSize: "16px",
-              fontWeight: "400",
-              lineHeight: "20px",
-            }}
-            component="div"
-          >
-            <AttachMoneyIcon color="primary" fontSize="small" />
-            <Typography
-              sx={{
-                fontSize: "10px",
-                fontWeight: "400",
-                lineHeight: "14px",
-              }}
-              color="white.main"
-              component="div"
-            >
-              Pass thru admin fee to residents*
-            </Typography>
-          </Stack>
-          {/* 4 */}
-          <Stack
-            direction={"row"}
-            justifyContent="start"
-            alignItems={"center"}
-            spacing={1}
-            padding="5px"
-            sx={{
-              fontSize: "16px",
-              fontWeight: "400",
-              lineHeight: "20px",
-            }}
-            component="div"
-          >
-            <AttachMoneyIcon color="primary" fontSize="small" />
-            <Typography
-              sx={{
-                fontSize: "10px",
-                fontWeight: "400",
-                lineHeight: "14px",
-              }}
-              color="white.main"
-              component="div"
-            >
-              Improve your NOI!
-            </Typography>
-          </Stack>
-          {/* 5 */}
-          <Stack
-            direction={"row"}
-            justifyContent="start"
-            alignItems={"center"}
-            spacing={1}
-            padding="5px"
-            sx={{
-              fontSize: "16px",
-              fontWeight: "400",
-              lineHeight: "20px",
-            }}
-            component="div"
-          >
-            <AttachMoneyIcon color="primary" fontSize="small" />
-
-            <Typography
-              sx={{
-                fontSize: "10px",
-                fontWeight: "400",
-                lineHeight: "14px",
-              }}
-              color="white.main"
-              component="div"
-            >
-              Bill Boldly!
-            </Typography>
-          </Stack>
+              <Typography
+                sx={{
+                  fontSize: "10px",
+                  fontWeight: "400",
+                  lineHeight: "14px",
+                }}
+                color="white.main"
+                component="div"
+              >
+                {feature.details}
+              </Typography>
+            </Stack>
+          ))}
         </Box>
         <Box
           sx={{
             width: { xs: "305px", sm: "225px" },
-            height: "56px",
             bgcolor: "white.main",
           }}
           display={"flex"}
@@ -269,8 +166,6 @@ function CommanderCard({ setStatus1, setColor }) {
           <Box
             component={Button}
             variant="contained"
-            // color={setColor}
-            backgroundColor={setColor}
             sx={{
               fontSize: "12px",
               fontWeight: "400",
@@ -279,9 +174,9 @@ function CommanderCard({ setStatus1, setColor }) {
               textAlign: "center",
               "&:hover": { backgroundColor: "transparent" },
             }}
-            onClick={setStatus1}
+            onClick={() => selectSubscription(props.name)}
           >
-            GO COMMANDER
+            GO {props?.name}
           </Box>
         </Box>
       </Box>
@@ -290,4 +185,3 @@ function CommanderCard({ setStatus1, setColor }) {
 }
 
 export default CommanderCard;
-//

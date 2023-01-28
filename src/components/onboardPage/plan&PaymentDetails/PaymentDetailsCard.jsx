@@ -20,20 +20,76 @@ function PaymentDetailsCard({
   handleSubmit,
   handleBlur,
 }) {
-  const [isSelected, setIsSelected] = useState(true);
+  const PlanVariant = [
+    {
+      name: "COMMANDER",
+      highlight: "Have utilities and other fees to charge residents.",
+      costDetails: "FREE + $*",
+      costPerUnit: 3,
+      isSelected: true,
+      planFeatures: [
+        {
+          stroke: "none",
+          fill: "currentColor",
+          details: "Recover unlimited property utilities",
+        },
+        {
+          details: `Lower property's utility use`,
+        },
+        {
+          details: "Pass through & increase admin fees for additional revenue",
+        },
+        {
+          details: "Improve your NOI!",
+        },
+        {
+          details: "Bill Boldy and Prosper!",
+        },
+      ],
+    },
+    {
+      name: "CADET",
+      highlight: "Only have 1 utility to bill residents (ex. Water/Sewer).",
+      costDetails: "FREE*",
+      costPerUnit: 2,
+      isSelected: false,
+      planFeatures: [
+        {
+          details: "Recover 1 property utility ( ex. water/sewer)",
+        },
+        {
+          details: `Lower property's utility use`,
+        },
+        {
+          details: "Pass thru admin fees to residents*",
+        },
+        {
+          details: "Improve your NOI!",
+        },
+        {
+          details: "Bill Boldy!",
+        },
+      ],
+    },
+  ];
+
+  const [plan, setPlan] = useState(PlanVariant);
+
   const [selectedIndex, setSelectedIndex] = useState(1);
-  const setColor = () => {
-    return isSelected ? " blue" : " pink";
-  };
 
-  const setStatus1 = (val) => {
-    setIsSelected(!isSelected);
+  const selectSubscription = (val) => {
+    setPlan(
+      plan.map((p) =>
+        p.name === val
+          ? { ...p, isSelected: true }
+          : { ...p, isSelected: false }
+      )
+    );
   };
-
-  const setStatus2 = (val) => {
-    setIsSelected(!isSelected);
+  const payload = {
+    ...values,
+    subscriptionType: plan.find((p) => p.isSelected).name,
   };
-
   return (
     <>
       <Box
@@ -52,17 +108,11 @@ function PaymentDetailsCard({
         >
           {/* heading */}
           <Stack direction={"row"} alignItems="center" spacing={1}>
-            <Box
-              // color={setColor}
-              fontSize="20px"
-              fontWeight="700"
-              lineHeight={"30px"}
-            >
+            <Box fontSize="20px" fontWeight="700" lineHeight={"30px"}>
               Select Level of Subscription
             </Box>
             <InfoOutlinedIcon fontSize="small" color="gray600" />
           </Stack>
-          {/* card components */}
 
           <Stack
             direction={{ xs: "column", sm: "row" }}
@@ -71,9 +121,13 @@ function PaymentDetailsCard({
             spacing={1.5}
             marginTop={"32px"}
           >
-            {/* {PlanVariant.map((item, index) => {
-              return <h1 key={index}>{item.name}</h1>;
-            })} */}
+            {plan.map((e, index) => (
+              <CommanderCard
+                key={index}
+                {...e}
+                selectSubscription={selectSubscription}
+              />
+            ))}
           </Stack>
           {/* billing address */}
           <Box
