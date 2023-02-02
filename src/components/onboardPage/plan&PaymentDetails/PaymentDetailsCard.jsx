@@ -9,30 +9,89 @@ import {
   Typography,
 } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import CommanderCard from "./CommanderCard";
-import CreditCard from "./CreditCard";
+import PlanCard from "./PlanCard";
+import EastIcon from "@mui/icons-material/East";
+
+import LoadingButton from "@mui/lab/LoadingButton";
 
 function PaymentDetailsCard({
   values,
   handleChange,
   touched,
   errors,
-  handleSubmit,
+  onSubmit,
   handleBlur,
+  handleAcknowledgeBtn,
+  acknowledgeBtn,
+  isLoading,
 }) {
-  const [isSelected, setIsSelected] = useState(true);
-  const [selectedIndex, setSelectedIndex] = useState(1);
-  const setColor = () => {
-    return isSelected ? " blue" : " pink";
-  };
+  console.log(values);
+  const PlanVariant = [
+    {
+      name: "COMMANDER",
+      highlight: "Have utilities and other fees to charge residents.",
+      costDetails: "FREE + $*",
+      costPerUnit: 3,
+      isSelected: true,
+      planFeatures: [
+        {
+          stroke: "none",
+          fill: "currentColor",
+          details: "Recover unlimited property utilities",
+        },
+        {
+          details: `Lower property's utility use`,
+        },
+        {
+          details: "Pass through & increase admin fees for additional revenue",
+        },
+        {
+          details: "Improve your NOI!",
+        },
+        {
+          details: "Bill Boldy and Prosper!",
+        },
+      ],
+    },
+    {
+      name: "CADET",
+      highlight: "Only have 1 utility to bill residents (ex. Water/Sewer).",
+      costDetails: "FREE*",
+      costPerUnit: 2,
+      isSelected: false,
+      planFeatures: [
+        {
+          details: "Recover 1 property utility ( ex. water/sewer)",
+        },
+        {
+          details: `Lower property's utility use`,
+        },
+        {
+          details: "Pass thru admin fees to residents*",
+        },
+        {
+          details: "Improve your NOI!",
+        },
+        {
+          details: "Bill Boldy!",
+        },
+      ],
+    },
+  ];
 
-  const setStatus1 = (val) => {
-    setIsSelected(!isSelected);
-  };
+  const [plan, setPlan] = useState(PlanVariant);
 
-  const setStatus2 = (val) => {
-    setIsSelected(!isSelected);
+  const selectSubscription = (val) => {
+    setPlan(
+      plan.map((p) =>
+        p.name === val
+          ? { ...p, isSelected: true }
+          : { ...p, isSelected: false }
+      )
+    );
+    values.subscriptionType = plan.find((p) => p.isSelected).name;
   };
+  console.log(values);
 
   return (
     <>
@@ -52,17 +111,11 @@ function PaymentDetailsCard({
         >
           {/* heading */}
           <Stack direction={"row"} alignItems="center" spacing={1}>
-            <Box
-              // color={setColor}
-              fontSize="20px"
-              fontWeight="700"
-              lineHeight={"30px"}
-            >
+            <Box fontSize="20px" fontWeight="700" lineheight={"30px"}>
               Select Level of Subscription
             </Box>
             <InfoOutlinedIcon fontSize="small" color="gray600" />
           </Stack>
-          {/* card components */}
 
           <Stack
             direction={{ xs: "column", sm: "row" }}
@@ -71,16 +124,20 @@ function PaymentDetailsCard({
             spacing={1.5}
             marginTop={"32px"}
           >
-            {/* {PlanVariant.map((item, index) => {
-              return <h1 key={index}>{item.name}</h1>;
-            })} */}
+            {plan.map((e, index) => (
+              <PlanCard
+                key={index}
+                {...e}
+                selectSubscription={selectSubscription}
+              />
+            ))}
           </Stack>
           {/* billing address */}
           <Box
             color="gray900.main"
             fontSize="20px"
             fontWeight="700"
-            lineHeight={"30px"}
+            lineheight={"30px"}
             marginTop={"30px"}
           >
             Billing Address
@@ -92,16 +149,15 @@ function PaymentDetailsCard({
             color="gray600"
             bordercolor="gray200"
             required
-            id="address"
-            touched
-            value={values.address}
+            id="billingAddress"
+            value={values.billingAddress}
             onChange={handleChange}
             onBlur={handleBlur}
             label="Address"
             variant="outlined"
             placeholder="Street Address"
-            error={errors.address && touched.address}
-            helperText={touched.address ? errors.address : null}
+            error={errors.billingAddress && touched.billingAddress}
+            helperText={touched.billingAddress ? errors.billingAddress : null}
             sx={{ mt: 2 }}
           />
           <Stack direction={{ xs: "column", sm: "row" }}>
@@ -111,15 +167,15 @@ function PaymentDetailsCard({
               color="gray600"
               bordercolor="gray200"
               required
-              id="city"
-              value={values.city}
+              id="billingCity"
+              value={values.billingCity}
               onChange={handleChange}
               onBlur={handleBlur}
               label="City"
               variant="outlined"
               placeholder="City"
-              error={errors.city && touched.city}
-              helperText={touched.city ? errors.city : null}
+              error={errors.billingCity && touched.billingCity}
+              helperText={touched.billingCity ? errors.billingCity : null}
               sx={{ mt: 2, mr: 1 }}
             />
             <TextField
@@ -128,15 +184,15 @@ function PaymentDetailsCard({
               color="gray600"
               bordercolor="gray200"
               required
-              id="state"
-              value={values.state}
+              id="billingState"
+              value={values.billingState}
               onChange={handleChange}
               onBlur={handleBlur}
               label="State"
               variant="outlined"
               placeholder="State"
-              error={errors.state && touched.state}
-              helperText={touched.state ? errors.state : null}
+              error={errors.billingState && touched.billingState}
+              helperText={touched.billingState ? errors.billingState : null}
               sx={{ mb: 2, mt: 2, mr: 1 }}
             />
             <TextField
@@ -146,26 +202,32 @@ function PaymentDetailsCard({
               color="gray600"
               bordercolor="gray200"
               required
-              id="zipCode"
-              value={values.zipCode}
+              id="billingZipCode"
+              value={values.billingZipCode}
               onChange={handleChange}
               onBlur={handleBlur}
               label="Zipcode"
               variant="outlined"
               placeholder="Zipcode"
-              error={errors.zipCode && touched.zipCode}
-              helperText={touched.zipCode ? errors.zipCode : null}
+              error={errors.billingZipCode && touched.billingZipCode}
+              helperText={touched.billingZipCode ? errors.billingZipCode : null}
               sx={{ mb: 2, mt: 2, mr: 1 }}
             />
           </Stack>
           {/* Checkbox */}
           <Stack direction={"row"} alignItems="center">
-            <Checkbox color="secondary" size="small" />
+            <Checkbox
+              color="secondary"
+              size="small"
+              id="isMailingAddress"
+              onChange={handleChange}
+              value={values.isMailingAddress}
+            />
             <Box
               color="gray600.main"
               fontWeight="400"
               fontSize="16px"
-              lineHeight={"24px"}
+              lineheight={"24px"}
             >
               Billing address same as mailing address
             </Box>
@@ -176,7 +238,7 @@ function PaymentDetailsCard({
               sx={{
                 fontSize: "14px",
                 fontWeight: "400",
-                lineHeight: "16px",
+                lineheight: "16px",
                 textAlign: "center",
               }}
               color="gray600.main"
@@ -191,12 +253,17 @@ function PaymentDetailsCard({
               alignItems="center"
               justifyContent={"center"}
             >
-              <Checkbox color="secondary" size="small" />
+              <Checkbox
+                color="secondary"
+                size="small"
+                checked={acknowledgeBtn}
+                onChange={handleAcknowledgeBtn}
+              />
               <Box
                 color="gray600.main"
                 fontWeight="400"
                 fontSize="16px"
-                lineHeight={"24px"}
+                lineheight={"24px"}
               >
                 I acknowledge that I have read and agree to the
                 <Box component={"span"} color={"secondary.main"}>
@@ -212,10 +279,11 @@ function PaymentDetailsCard({
             >
               {/* button */}
 
-              <Button
+              <LoadingButton
                 variant="contained"
                 bgcolor="primary"
                 disableElevation
+                loading={isLoading}
                 sx={{
                   py: "10px",
                   px: "30px",
@@ -225,13 +293,15 @@ function PaymentDetailsCard({
                   },
                   width: { xs: "100%", sm: "auto" },
                 }}
-                onClick={handleSubmit}
+                onClick={onSubmit}
                 fontWeight="500"
                 fontSize="14px"
-                lineHeight={"22px"}
+                lineheight={"22px"}
+                endIcon={<EastIcon />}
+                disabled={!acknowledgeBtn}
               >
                 Get Started
-              </Button>
+              </LoadingButton>
             </Box>
           </Box>
         </Box>

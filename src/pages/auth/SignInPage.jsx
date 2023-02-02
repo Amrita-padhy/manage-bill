@@ -39,8 +39,8 @@ function SignInPage() {
   const { values, handleChange, touched, errors, handleSubmit, handleBlur } =
     useFormik({
       initialValues: {
-        email: "test@1333.com",
-        password: "Test@123",
+        email: "",
+        password: "",
       },
       validationSchema: basicSchema,
       handleLogin,
@@ -183,6 +183,12 @@ function SignInPage() {
                 disableElevation
                 color="primary"
                 onClick={handleLogin}
+                disabled={
+                  !values.email ||
+                  !values.password ||
+                  errors.email ||
+                  errors.password
+                }
               >
                 Submit
               </ButtonMain>

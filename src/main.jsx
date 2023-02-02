@@ -20,6 +20,8 @@ import store from "@/store/store.js";
 import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "react-query";
 import AuthContextProvider from "./context/authContext";
+import PaymentDetailsCard from "./components/onboardPage/plan&PaymentDetails/PaymentDetailsCard";
+import ProfileDetailsCard from "./components/onboardPage/profile&companyDetails/ProfileDetailsCard";
 
 const queryClient = new QueryClient();
 
@@ -35,7 +37,16 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route element={<AuthLayout />}>
                 <Route index element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
-                <Route path="/onboard" element={<OnBoardPage />} />
+                <Route path="/onboard" element={<OnBoardPage />}>
+                  <Route
+                    path="profileDetailsCard"
+                    element={<ProfileDetailsCard />}
+                  />
+                  <Route
+                    path="paymentDetailsCard"
+                    element={<PaymentDetailsCard />}
+                  />
+                </Route>
               </Route>
             </Routes>
           </BrowserRouter>

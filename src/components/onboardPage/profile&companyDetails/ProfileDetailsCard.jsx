@@ -1,10 +1,11 @@
 import { Box, Button, Stack } from "@mui/material";
 import React from "react";
 import PersonalInformationForm from "./PersonalInformationForm";
-
 import CompanyInformationForm from "./CompanyInformationForm";
 import MailingAddressForm from "./MailingAddressForm";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { useNavigate } from "react-router-dom";
+
 function ProfileDetailsCard({
   values,
   handleChange,
@@ -12,7 +13,9 @@ function ProfileDetailsCard({
   errors,
   handleSubmit,
   handleBlur,
+  loading,
 }) {
+  const navigate = useNavigate();
   return (
     <>
       <Box
@@ -29,7 +32,7 @@ function ProfileDetailsCard({
           padding="24px"
           borderRadius="8px"
         >
-          <Box component="form" autoComplete="off" noValidate>
+          <Box autoComplete="off" noValidate>
             {/* personal info */}
             <PersonalInformationForm
               values={values}
@@ -86,37 +89,7 @@ function ProfileDetailsCard({
                 },
               }}
               endIcon={<ArrowForwardIcon />}
-              onClick={handleSubmit}
-              disabled={
-                !values.firstName ||
-                !values.lastName ||
-                !values.email ||
-                !values.mobileNumber ||
-                !values.companyName ||
-                !values.website ||
-                !values.address ||
-                !values.city ||
-                !values.state ||
-                !values.zipCode ||
-                !values.mailingAddress ||
-                !values.mailingCity ||
-                !values.mailingState ||
-                !values.mailingZipCode ||
-                errors.firstName ||
-                errors.lastName ||
-                errors.email ||
-                errors.mobileNumber ||
-                errors.companyName ||
-                errors.website ||
-                errors.address ||
-                errors.city ||
-                errors.state ||
-                errors.zipCode ||
-                errors.mailingAddress ||
-                errors.mailingCity ||
-                errors.mailingState ||
-                errors.mailingZipCode
-              }
+              onClick={() => navigate("/onboard/paymentDetailsCard")}
             >
               NEXT: Plan & Payment
             </Button>

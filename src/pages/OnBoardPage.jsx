@@ -1,18 +1,16 @@
 import React, { useState } from "react";
-import { Box } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { Box, Button, IconButton, Snackbar } from "@mui/material";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { Link, useNavigate, Outlet } from "react-router-dom";
-
-import Typography from "@mui/material/Typography";
-
 import ProfileDetailsCard from "../components/onboardPage/profile&companyDetails/ProfileDetailsCard";
 import PaymentDetailsCard from "../components/onboardPage/plan&PaymentDetails/PaymentDetailsCard";
-import { Padding } from "@mui/icons-material";
 import { useFormik } from "formik";
 import { basicSchema } from "../common/validators";
+import { useSelector } from "react-redux";
+import { updateUser } from "../api/user/userApi";
+import CloseIcon from "@mui/icons-material/Close";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -27,7 +25,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <Box>{children}</Box>
         </Box>
       )}
     </div>
@@ -48,53 +46,147 @@ function a11yProps(index) {
 }
 
 function OnBoardPage() {
-  const [formData, setFormData] = useState({});
+  const [acknowledgeBtn, setAcknowledgeBtn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+  const { user } = useSelector((state) => state.user);
+  console.log(user);
+  const [checked, setChecked] = useState(true);
+  const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    setFormData(values);
+  // handleAcknowledgeBtn
+  const handleAcknowledgeBtn = (event) => {
+    setAcknowledgeBtn(event.target.checked);
   };
-  console.log(formData);
+  console.log(checked);
+  // handleChecked
+  const handleChecked = () => {
+    setChecked(!checked);
+    console.log(checked);
+  };
+  const onSubmit = async () => {
+    const payload = {
+      lastName: values.lastName,
+      firstName: values.firstName,
+      companyInformation: {
+        address: values.companyName,
+        state: values.state,
+        zipcode: values.zipCode,
+        companyName: values.companyName,
+        isMailingAddress: false,
+        website: values.website,
+        city: values.city,
+        maillingAddress: {
+          zipcode: values.mailingZipCode,
+          state: values.mailingState,
+          city: values.mailingCity,
+          address: values.mailingAddress,
+        },
+      },
+      subscription: {
+        subscriptionType: values.subscriptionType,
+        billingAddress: {
+          zipcode: values.billingZipCode,
+          address: values.billingAddress,
+          state: values.billingState,
+          city: values.billingCity,
+        },
+      },
+      mobileNumber: values.mobileNumber,
+      email: values.email,
+      uid: user.uid,
+    };
+    console.log(payload);
+    try {
+      setIsLoading(true);
+      const { response } = await updateUser(payload);
+      console.log(response);
+      setIsLoading(false);
+      if (!response) {
+        // TODO implement snack bar
+        setSnackbarOpen(true);
+      } else {
+        // TODO on success navigate user to home page
+        navigate("/");
+      }
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
+
   const { values, handleChange, touched, errors, handleBlur } = useFormik({
     initialValues: {
-      PersonalInformation: {
-        firstName: "",
-        lastName: "",
-        email: "",
-        mobileNumber: "",
-      },
-      companyInformation: {
-        companyName: "",
-        website: "",
-        address: "",
-        city: "",
-        state: "",
-        zipCode: "",
-      },
-      mailingInformation: {
-        mailingAddress: "",
-        mailingCity: "",
-        mailingState: "",
-        mailingZipCode: "",
-      },
-      billingInformation: {
-        billingAddress: "",
-        billingCity: "",
-        billingState: "",
-        billingZipCode: "",
-      },
+      firstName: "test",
+      lastName: "test",
+      email: "test@1333.com",
+      mobileNumber: "23445667655",
+
+      companyName: "",
+      website: "",
+      address: "",
+      city: "",
+      state: "",
+      zipCode: "",
+
+      mailingAddress: "",
+      mailingCity: "",
+      mailingState: "",
+      mailingZipCode: "",
+
+      billingAddress: "",
+      billingCity: "",
+      billingState: "",
+      billingZipCode: "",
+      isMailingAddress: true,
     },
 
     validationSchema: basicSchema,
-    // onSubmit,
+    onSubmit,
   });
-  // console.log(values);
+
   const [value, setValue] = useState(0);
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const handleSnackbar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const action = (
+    <React.Fragment>
+      <Button color="secondary" size="small" onClick={handleSnackbar}>
+        UNDO
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleSnackbar}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
   return (
     <>
+      {/* snackbar */}
+      <div>
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={3000}
+          onClose={handleSnackbar}
+          message="Note archived"
+          action={action}
+        />
+      </div>
       <Box width={"100vw"} height={"auto"} bgcolor="background.main" sx={{}}>
         <Box
           className="navbar"
@@ -102,7 +194,7 @@ function OnBoardPage() {
           height="80px"
           display="flex"
           justifyContent="center"
-          alignItems="center"
+          alignitems="center"
           fontSize="24px"
           lineheight="24px"
           fontWeight="500"
@@ -116,7 +208,7 @@ function OnBoardPage() {
           width="100vw"
           display="flex"
           justifyContent="center"
-          alignItems="center"
+          alignitems="center"
         >
           <Tabs
             centered
@@ -125,7 +217,7 @@ function OnBoardPage() {
             aria-label="basic tabs example"
             textColor="secondary"
             indicatorColor="secondary"
-            alignItems="center"
+            alignitems="center"
           >
             <Tab
               style={{ textTransform: "none" }}
@@ -155,7 +247,6 @@ function OnBoardPage() {
             handleChange={handleChange}
             touched={touched}
             errors={errors}
-            handleSubmit={handleSubmit}
             handleBlur={handleBlur}
           />
         </TabPanel>
@@ -166,8 +257,13 @@ function OnBoardPage() {
             handleChange={handleChange}
             touched={touched}
             errors={errors}
-            handleSubmit={handleSubmit}
+            onSubmit={onSubmit}
             handleBlur={handleBlur}
+            checked={checked}
+            handleChecked={handleChecked}
+            handleAcknowledgeBtn={handleAcknowledgeBtn}
+            acknowledgeBtn={acknowledgeBtn}
+            isLoading={isLoading}
           />
         </TabPanel>
       </Box>

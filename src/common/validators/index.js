@@ -43,6 +43,12 @@ export const basicSchema = yup.object().shape({
         .max(30)
         .min(5, "Address  must be at lest 5 characters at minimum")
         .required("This field is required"),
+    billingAddress: yup
+        .string()
+        .matches(/^[A-Za-z ]*$/, 'Please enter correct address')
+        .max(30)
+        .min(5, "Address  must be at lest 5 characters at minimum")
+        .required("This field is required"),
     city: yup
         .string()
         .matches(/^[A-Za-z ]*$/, 'Please enter correct city name')
@@ -50,6 +56,12 @@ export const basicSchema = yup.object().shape({
         .min(2, "City name must be at lest 2 characters at minimum")
         .required("This field is required"),
     mailingCity: yup
+        .string()
+        .matches(/^[A-Za-z ]*$/, 'Please enter correct city name')
+        .max(30)
+        .min(2, "City name must be at lest 2 characters at minimum")
+        .required("This field is required"),
+    billingCity: yup
         .string()
         .matches(/^[A-Za-z ]*$/, 'Please enter correct city name')
         .max(30)
@@ -67,12 +79,23 @@ export const basicSchema = yup.object().shape({
         .max(30)
         .min(2, "State name must be at lest 2 characters at minimum")
         .required("This field is required"),
+    billingState: yup
+        .string()
+        .matches(/^[A-Za-z ]*$/, 'Please enter correct state name')
+        .max(30)
+        .min(2, "State name must be at lest 2 characters at minimum")
+        .required("This field is required"),
     zipCode: yup
         .string()
         .max(6, "Zip code can not be exceed more than 6 characters")
         .min(6, "Zip code must be at lest 6 characters at minimum")
         .required("This field is required"),
     mailingZipCode: yup
+        .string()
+        .max(6, "Zip code can not be exceed more than 6 characters")
+        .min(6, "Zip code must be at lest 6 characters at minimum")
+        .required("This field is required"),
+    billingZipCode: yup
         .string()
         .max(6, "Zip code can not be exceed more than 6 characters")
         .min(6, "Zip code must be at lest 6 characters at minimum")
