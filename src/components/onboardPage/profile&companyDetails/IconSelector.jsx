@@ -13,7 +13,7 @@ function ImageSelector({}) {
       setImage(e.target.files[0]);
     }
   };
-  console.log(image);
+  // console.log(image);
   return (
     <>
       <Stack>

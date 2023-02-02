@@ -25,15 +25,15 @@ function MailingAddressForm({
         color="gray600"
         bordercolor="gray200"
         required
-        id="address"
-        value={values.address}
+        id="mailingAddress"
+        value={values.mailingAddress}
         onChange={handleChange}
         onBlur={handleBlur}
         label="Address"
         variant="outlined"
         placeholder="Street Address"
-        error={errors.address && touched.address}
-        helperText={touched.address ? errors.address : null}
+        error={errors.mailingAddress && touched.mailingAddress}
+        helperText={touched.mailingAddress ? errors.mailingAddress : null}
         sx={{ mt: 2 }}
       />
       <Stack direction={{ xs: "column", sm: "row" }}>
@@ -43,15 +43,15 @@ function MailingAddressForm({
           color="gray600"
           bordercolor="gray200"
           required
-          id="city"
-          value={values.city}
+          id="mailingCity"
+          value={values.mailingCity}
           onChange={handleChange}
           onBlur={handleBlur}
           label="City"
           variant="outlined"
           placeholder="City"
-          error={errors.city && touched.city}
-          helperText={touched.city ? errors.city : null}
+          error={errors.mailingCity && touched.mailingCity}
+          helperText={touched.mailingCity ? errors.mailingCity : null}
           sx={{ mt: 2, mr: 1 }}
         />
         <TextField
@@ -60,15 +60,15 @@ function MailingAddressForm({
           color="gray600"
           bordercolor="gray200"
           required
-          id="state"
-          value={values.state}
+          id="mailingState"
+          value={values.mailingState}
           onChange={handleChange}
           onBlur={handleBlur}
           label="State"
           variant="outlined"
           placeholder="State"
-          error={errors.state && touched.state}
-          helperText={touched.state ? errors.state : null}
+          error={errors.mailingState && touched.mailingState}
+          helperText={touched.mailingState ? errors.mailingState : null}
           sx={{ mb: 2, mt: 2, mr: 1 }}
         />
         <TextField
@@ -78,15 +78,15 @@ function MailingAddressForm({
           color="gray600"
           bordercolor="gray200"
           required
-          id="zipCode"
-          value={values.zipCode}
+          id="billingZipCode"
+          value={values.billingZipCode}
           onChange={handleChange}
           onBlur={handleBlur}
           label="Zipcode"
           variant="outlined"
           placeholder="Zipcode"
-          error={errors.zipCode && touched.zipCode}
-          helperText={touched.zipCode ? errors.zipCode : null}
+          error={errors.billingZipCode && touched.billingZipCode}
+          helperText={touched.billingZipCode ? errors.billingZipCode : null}
           sx={{ mb: 2, mt: 2, mr: 1 }}
         />
       </Stack>

@@ -68,11 +68,11 @@ function SingUp() {
   const { values, handleChange, touched, errors, handleSubmit, handleBlur } =
     useFormik({
       initialValues: {
-        firstName: "test",
-        lastName: "user",
-        email: "test@1234.com",
-        password: "Test@123",
-        confirmPassword: "Test@123",
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
       },
       validationSchema: basicSchema,
       handleRegister,
@@ -289,6 +289,16 @@ function SingUp() {
                 disableElevation
                 color="primary"
                 onClick={handleRegister}
+                disabled={
+                  !values.firstName ||
+                  !values.lastName ||
+                  !values.email ||
+                  !values.password ||
+                  errors.firstName ||
+                  errors.lastName ||
+                  errors.email ||
+                  errors.password
+                }
               >
                 Create account
               </ButtonMain>

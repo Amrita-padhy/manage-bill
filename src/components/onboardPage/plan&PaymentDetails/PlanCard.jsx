@@ -1,9 +1,5 @@
-import React, { useState } from "react";
-import { MdWaterDrop } from "react-icons/md";
-import { CiPercent, CiDollar } from "react-icons/ci";
-import { TbCurrencyDollar } from "react-icons/tb";
-import { Box, Button, Card, Stack, Typography } from "@mui/material";
-import Icon from "@mui/material/Icon";
+import React from "react";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import OpacityIcon from "@mui/icons-material/Opacity";
 import PercentIcon from "@mui/icons-material/Percent";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
@@ -12,10 +8,13 @@ function CommanderCard({ selectSubscription, ...props }) {
   return (
     <>
       <Box
+        component="div"
         sx={{
           width: { xs: "307px", sm: "227px" },
+          borderRadius: "2px",
+          boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.25)",
         }}
-        border={props.isSelected ? "1px solid grey" : ""}
+        border={props.isSelected ? "1.7px solid #1971C2" : ""}
       >
         <Stack
           direction={"column"}
@@ -23,6 +22,7 @@ function CommanderCard({ selectSubscription, ...props }) {
           alignItems={"center"}
           sx={{
             width: { xs: "307px", sm: "227px" },
+            padding: "13px",
           }}
         >
           <Typography
@@ -30,8 +30,6 @@ function CommanderCard({ selectSubscription, ...props }) {
               fontSize: "18px",
               fontWeight: "600",
               lineHeight: "22px",
-              paddingX: "20px",
-              paddingTop: "13px",
             }}
             color="gray700.main"
           >
@@ -58,8 +56,9 @@ function CommanderCard({ selectSubscription, ...props }) {
           justifyContent="center"
           alignItems={"center"}
           sx={{
-            width: { xs: "307px", sm: "225px" },
+            width: { xs: "303px", sm: "224px" },
             bgcolor: "primary.main",
+            padding: "13px",
           }}
         >
           <Typography
@@ -109,18 +108,20 @@ function CommanderCard({ selectSubscription, ...props }) {
           flexDirection={"column"}
           justifyContent="flex-start"
           sx={{
-            width: { xs: "307px", sm: "225px" },
+            width: { xs: "303px", sm: "224px" },
+            padding: "13px",
             bgcolor: "gray700.main",
           }}
         >
           {props?.planFeatures?.map((feature, index) => (
             <Stack
+              key={index}
               direction={"row"}
               justifyContent="start"
               alignItems={"center"}
               spacing={1}
               padding="5px"
-              marginTop={"10px"}
+              marginTop={"5px"}
               sx={{
                 fontSize: "16px",
                 fontWeight: "400",
@@ -156,23 +157,27 @@ function CommanderCard({ selectSubscription, ...props }) {
         </Box>
         <Box
           sx={{
-            width: { xs: "305px", sm: "225px" },
+            width: { xs: "303px", sm: "223px" },
+
             bgcolor: "white.main",
           }}
           display={"flex"}
           justifyContent={"center"}
           alignItems={"center"}
+          padding="15px"
         >
           <Box
             component={Button}
             variant="contained"
+            color="white.main"
+            backgroundColor={props.isSelected ? "#1971A1" : "#1971C2"}
             sx={{
-              fontSize: "12px",
+              fontSize: "10px",
               fontWeight: "400",
-              lineHeight: "15px",
+              lineHeight: "13px",
               borderRadius: "22px",
               textAlign: "center",
-              "&:hover": { backgroundColor: "transparent" },
+              "&:hover": { backgroundColor: "secondary.main" },
             }}
             onClick={() => selectSubscription(props.name)}
           >

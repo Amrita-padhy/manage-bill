@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 
 import ImageSelector from "./ImageSelector";
-import { Stack, TextField } from "@mui/material";
+import { Stack, TextField, Typography } from "@mui/material";
 
 function PersonalInformationForm({
   values,
@@ -14,7 +14,7 @@ function PersonalInformationForm({
   handleBlur,
 }) {
   return (
-    <React.Fragment>
+    <>
       <Stack
         direction={{ xs: "column-reverse", sm: "row" }}
         justifyContent={"space-between"}
@@ -95,6 +95,7 @@ function PersonalInformationForm({
             bordercolor="gray200"
             required
             id="email"
+            disabled
             value={values.email}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -129,7 +130,7 @@ function PersonalInformationForm({
           <ImageSelector />
         </Stack>
       </Stack>
-    </React.Fragment>
+    </>
   );
 }
 
