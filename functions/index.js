@@ -50,10 +50,18 @@ const getUserInfo = async (req, res) => {
       return;
     }
 
-    const response = { ...user.data(), uid };
-
+    const { createdAt, updatedAt, ...response } = user.data();
+    response.isOnboard = true;
+    if (
+      !response?.companyInformation ||
+      !response?.subscription ||
+      !response.mobileNumber
+    ) {
+      response.isOnboard = false;
+    }
     res.status(200).send({
-      response,
+      ...response,
+      uid,
     });
   } catch (error) {
     res.status(500).send({ message: error.message });

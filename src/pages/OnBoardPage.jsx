@@ -248,6 +248,7 @@ function OnBoardPage() {
             touched={touched}
             errors={errors}
             handleBlur={handleBlur}
+            setValue={setValue}
           />
         </TabPanel>
 

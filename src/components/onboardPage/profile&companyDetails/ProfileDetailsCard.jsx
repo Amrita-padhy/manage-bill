@@ -14,6 +14,7 @@ function ProfileDetailsCard({
   handleSubmit,
   handleBlur,
   loading,
+  setValue,
 }) {
   const navigate = useNavigate();
   return (
@@ -89,7 +90,7 @@ function ProfileDetailsCard({
                 },
               }}
               endIcon={<ArrowForwardIcon />}
-              onClick={() => navigate("/onboard/paymentDetailsCard")}
+              onClick={() => setValue(1)}
             >
               NEXT: Plan & Payment
             </Button>
