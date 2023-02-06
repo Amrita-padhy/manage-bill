@@ -50,8 +50,6 @@ function OnBoardPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = React.useState(false);
 
-  const { user } = useSelector((state) => state.user);
-
   const [checked, setChecked] = useState(true);
   const [prepopulatedValues, setPrepopulatedValues] = useState(null);
   const navigate = useNavigate();
