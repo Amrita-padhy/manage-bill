@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, IconButton, Snackbar } from "@mui/material";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
@@ -49,8 +49,9 @@ function OnBoardPage() {
   const [acknowledgeBtn, setAcknowledgeBtn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+
   const { user } = useSelector((state) => state.user);
-  console.log(user);
+
   const [checked, setChecked] = useState(true);
   const navigate = useNavigate();
 
@@ -58,7 +59,7 @@ function OnBoardPage() {
   const handleAcknowledgeBtn = (event) => {
     setAcknowledgeBtn(event.target.checked);
   };
-  console.log(checked);
+
   // handleChecked
   const handleChecked = () => {
     setChecked(!checked);
@@ -116,35 +117,46 @@ function OnBoardPage() {
     }
   };
 
-  const { values, handleChange, touched, errors, handleBlur } = useFormik({
-    initialValues: {
-      firstName: "test",
-      lastName: "test",
-      email: "test@1333.com",
-      mobileNumber: "23445667655",
+  const { values, handleChange, touched, errors, handleBlur, setValues } =
+    useFormik({
+      initialValues: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        mobileNumber: "",
 
-      companyName: "",
-      website: "",
-      address: "",
-      city: "",
-      state: "",
-      zipCode: "",
+        companyName: "",
+        website: "",
+        address: "",
+        city: "",
+        state: "",
+        zipCode: "",
 
-      mailingAddress: "",
-      mailingCity: "",
-      mailingState: "",
-      mailingZipCode: "",
+        mailingAddress: "",
+        mailingCity: "",
+        mailingState: "",
+        mailingZipCode: "",
 
-      billingAddress: "",
-      billingCity: "",
-      billingState: "",
-      billingZipCode: "",
-      isMailingAddress: true,
-    },
+        billingAddress: "",
+        billingCity: "",
+        billingState: "",
+        billingZipCode: "",
+        isMailingAddress: true,
+      },
+      validationSchema: basicSchema,
+      onSubmit,
+    });
 
-    validationSchema: basicSchema,
-    onSubmit,
-  });
+  useEffect(() => {
+    if (user) {
+      setValues({
+        ...values,
+        firstName: user?.firstName,
+        lastName: user?.lastName,
+        email: user?.email,
+      });
+    }
+  }, [user]);
 
   const [value, setValue] = useState(0);
 
@@ -248,9 +260,9 @@ function OnBoardPage() {
             touched={touched}
             errors={errors}
             handleBlur={handleBlur}
+            setValue={setValue}
           />
         </TabPanel>
-
         <TabPanel value={value} index={1}>
           <PaymentDetailsCard
             values={values}

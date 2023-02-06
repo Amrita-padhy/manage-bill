@@ -1,37 +1,62 @@
-import { onAuthStateChanged } from "firebase/auth";
-import { useContext } from "react";
-import { createContext, useEffect } from "react";
+import {
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+
+import { createContext, useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { getUserInfo } from "../api/user/userApi";
 import { auth } from "../boot/firebase";
+import { getUserInfo } from "../api/user/userApi";
 import { setUser } from "../store/user/userStore";
+import { useNavigate } from "react-router-dom";
 
-const AuthContext = createContext({
-  // handleAuthErrorMsg: () => Promise,
-});
-// export const useAuth = () => useContext(AuthContext);
+const AuthContext = createContext();
+
 export default function AuthContextProvider({ children }) {
   const dispatch = useDispatch();
+  const [initialUser, setInitialUser] = useState();
+
+  const navigate = useNavigate();
+
+  const login = (body) => {
+    return signInWithEmailAndPassword(auth, body.email, body.password);
+  };
+
+  const logout = () => {
+    return signOut(auth);
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      // console.log(user);
+      console.log(user);
       if (user) {
-        const {
-          data: { response },
-        } = await getUserInfo({ uid: user.uid });
-        dispatch(setUser(response));
-        // TODO navigate user to the home page
+        const { data } = await getUserInfo({ uid: user.uid });
+
+        dispatch(setUser(data));
+        setInitialUser(data);
+        if (data.isOnboard === false) {
+          navigate("/onboard");
+          return;
+        }
+
+        navigate("/main");
       } else {
-        // TODO navigate user to auth page
+        setUser(null);
+        dispatch(setUser(null));
+        navigate("/");
       }
     });
 
-    return () => {
-      unsubscribe();
-    };
+    return () => unsubscribe();
   }, []);
 
-  return <AuthContext.Provider value={{}}> {children} </AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ login, initialUser, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
+
+export const useAuth = () => useContext(AuthContext);

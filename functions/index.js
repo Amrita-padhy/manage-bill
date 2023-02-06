@@ -3,6 +3,7 @@ const admin = require("firebase-admin");
 const cors = require("cors");
 const express = require("express");
 var serviceAccount = require("./service_account.json");
+const { user } = require("firebase-functions/v1/auth");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -29,6 +30,7 @@ const register = async (req, res) => {
       lastName,
       createdAt: new Date(),
       updatedAt: new Date(),
+      isOnboard: false,
     });
     res.status(200).send({ message: "User registration successfully" });
     return;
@@ -49,10 +51,18 @@ const getUserInfo = async (req, res) => {
       return;
     }
 
-    const response = { ...user.data(), uid };
-
+    const { createdAt, updatedAt, ...response } = user.data();
+    response.isOnboard = true;
+    if (
+      !response?.companyInformation ||
+      !response?.subscription ||
+      !response.mobileNumber
+    ) {
+      response.isOnboard = false;
+    }
     res.status(200).send({
-      response,
+      ...response,
+      uid,
     });
   } catch (error) {
     res.status(500).send({ message: error.message });
@@ -61,26 +71,37 @@ const getUserInfo = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { uid, ...userInfo } = req.body;
+  const { uid, email, ...userInfo } = req.body;
   try {
     if (req.method !== "POST") {
       return res.status(405).send("Method not allowed");
     }
-    await db.doc(`users/${uid}`).set(
+
+    if (!uid) {
+      return res.status(400).send({ message: "uid is missing" });
+    }
+
+    const docRef = await db.doc(`users/${uid}`);
+
+    if (!(await docRef.get()).exists) {
+      return res.status(500).send({ message: "Something went wrong !" });
+    }
+    await docRef.set(
       {
         updatedAt: new Date(),
         ...userInfo,
       },
       { merge: true }
     );
-    const user = await db.doc(`users/${uid}`).get();
-    const response = { ...user.data(), uid };
-    res.status(200).send({
-      message: "Successfully",
-      status: true,
-      response,
-    });
-  } catch (error) {}
+
+    const userRef = await docRef.get();
+    const { createdAt, updatedAt, ...user } = userRef.data();
+    const response = { ...user, uid };
+    res.status(200).send(response);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+    return;
+  }
 };
 
 app.post("/register", register);
