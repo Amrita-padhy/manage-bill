@@ -65,6 +65,5 @@ const login = async (body) => {
   }
 };
 export {
-  register,
-  login
+  register
 };

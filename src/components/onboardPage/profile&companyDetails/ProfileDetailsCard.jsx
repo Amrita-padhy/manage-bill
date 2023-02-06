@@ -5,6 +5,7 @@ import CompanyInformationForm from "./CompanyInformationForm";
 import MailingAddressForm from "./MailingAddressForm";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context/authContext";
 
 function ProfileDetailsCard({
   values,
@@ -17,6 +18,7 @@ function ProfileDetailsCard({
   setValue,
 }) {
   const navigate = useNavigate();
+  const { logout } = useAuth();
   return (
     <>
       <Box
@@ -73,6 +75,7 @@ function ProfileDetailsCard({
               variant="outlined"
               color="gray700"
               style={{ textTransform: "none" }}
+              onClick={() => logout()}
             >
               Sign Out
             </Button>

@@ -28,10 +28,10 @@ const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")).render(
   <QueryClientProvider client={queryClient}>
     <Provider store={store}>
-      <AuthContextProvider>
-        <CssBaseline />
-        <ThemeProvider theme={customTheme}>
-          <BrowserRouter>
+      <BrowserRouter>
+        <AuthContextProvider>
+          <CssBaseline />
+          <ThemeProvider theme={customTheme}>
             {/* Auth layout route */}
             <Routes>
               <Route element={<AuthLayout />}>
@@ -49,9 +49,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 </Route>
               </Route>
             </Routes>
-          </BrowserRouter>
-        </ThemeProvider>
-      </AuthContextProvider>
+          </ThemeProvider>
+        </AuthContextProvider>
+      </BrowserRouter>
     </Provider>
   </QueryClientProvider>
 );

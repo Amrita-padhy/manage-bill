@@ -30,6 +30,7 @@ const register = async (req, res) => {
       lastName,
       createdAt: new Date(),
       updatedAt: new Date(),
+      isOnboard: false,
     });
     res.status(200).send({ message: "User registration successfully" });
     return;
@@ -70,7 +71,7 @@ const getUserInfo = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { uid, ...userInfo } = req.body;
+  const { uid, email, ...userInfo } = req.body;
   try {
     if (req.method !== "POST") {
       return res.status(405).send("Method not allowed");

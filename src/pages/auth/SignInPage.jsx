@@ -6,17 +6,20 @@ import { Stack, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { basicSchema } from "@/common/validators";
-import { login } from "@/api/auth/authApi";
 import Snackbar from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 
 import Typography from "@mui/material/Typography";
 
+import { useAuth } from "../../context/authContext";
+
 function SignInPage() {
   const classes = useStyles();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarErrorMsg, setSnackbarErrorMsg] = useState("");
+
+  const { login, logout } = useAuth();
 
   const [state, setState] = React.useState({
     open: false,
@@ -26,14 +29,7 @@ function SignInPage() {
   const { vertical, horizontal, open } = state;
   const navigate = useNavigate();
   const handleLogin = async () => {
-    const result = await login(values);
-
-    if (!result.response) {
-      setSnackbarOpen(true);
-      setSnackbarErrorMsg(result.message);
-    }
-    console.log(result);
-    navigate("/onboard");
+    await login(values);
   };
 
   const { values, handleChange, touched, errors, handleSubmit, handleBlur } =
@@ -211,7 +207,7 @@ function SignInPage() {
                   }}
                   color="secondary"
                   variant="text"
-                  onClick={() => navigate("/signup")}
+                  onClick={() => logout()}
                 >
                   Sign Up
                 </Button>
