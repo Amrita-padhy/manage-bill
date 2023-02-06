@@ -35,12 +35,12 @@ function ProfileDetailsCard({
           <Box autoComplete="off" noValidate>
             {/* personal info */}
             <PersonalInformationForm
-              values={values}
-              handleChange={handleChange}
-              touched={touched}
-              errors={errors}
-              handleSubmit={handleSubmit}
-              handleBlur={handleBlur}
+            // values={values}
+            // handleChange={handleChange}
+            // touched={touched}
+            // errors={errors}
+            // handleSubmit={handleSubmit}
+            // handleBlur={handleBlur}
             />
 
             {/* CompanyInformationForm  */}
@@ -89,7 +89,7 @@ function ProfileDetailsCard({
                 },
               }}
               endIcon={<ArrowForwardIcon />}
-              onClick={() => navigate("/onboard/paymentDetailsCard")}
+              disabled
             >
               NEXT: Plan & Payment
             </Button>

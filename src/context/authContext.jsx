@@ -18,10 +18,9 @@ export default function AuthContextProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       // console.log(user);
       if (user) {
-        const {
-          data: { response },
-        } = await getUserInfo({ uid: user.uid });
-        dispatch(setUser(response));
+        const { data } = await getUserInfo({ uid: user.uid });
+        console.log(data.uid);
+        dispatch(setUser(data));
         // TODO navigate user to the home page
       } else {
         // TODO navigate user to auth page
