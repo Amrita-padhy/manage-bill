@@ -37,17 +37,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route element={<AuthLayout />}>
                 <Route index element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
-                <Route path="/onboard" element={<OnBoardPage />}>
-                  <Route
-                    path="profileDetailsCard"
-                    element={<ProfileDetailsCard />}
-                  />
-                  <Route
-                    path="paymentDetailsCard"
-                    element={<PaymentDetailsCard />}
-                  />
-                </Route>
+                <Route path="/onboard" element={<OnBoardPage />}></Route>
               </Route>
+              <Route path="/main" element={GeneralLayout}></Route>
             </Routes>
           </ThemeProvider>
         </AuthContextProvider>
