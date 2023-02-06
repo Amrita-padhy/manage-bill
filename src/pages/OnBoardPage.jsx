@@ -53,6 +53,7 @@ function OnBoardPage() {
   const { user } = useSelector((state) => state.user);
 
   const [checked, setChecked] = useState(true);
+  const [prepopulatedValues, setPrepopulatedValues] = useState(null);
   const navigate = useNavigate();
 
   // handleAcknowledgeBtn
@@ -65,6 +66,8 @@ function OnBoardPage() {
     setChecked(!checked);
     console.log(checked);
   };
+  const { user } = useSelector((state) => state.user);
+  console.log(user);
   const onSubmit = async () => {
     const payload = {
       lastName: values.lastName,
@@ -101,6 +104,8 @@ function OnBoardPage() {
     try {
       setIsLoading(true);
       const { response } = await updateUser(payload);
+      setPrepopulatedValues(prepopulateValue);
+
       console.log(response);
       setIsLoading(false);
       if (!response) {
@@ -169,7 +174,7 @@ function OnBoardPage() {
       return;
     }
 
-    setOpen(false);
+    setSnackbarOpen(false);
   };
 
   const action = (
@@ -195,7 +200,7 @@ function OnBoardPage() {
           open={snackbarOpen}
           autoHideDuration={3000}
           onClose={handleSnackbar}
-          message="Note archived"
+          message="Something went wrong !"
           action={action}
         />
       </div>

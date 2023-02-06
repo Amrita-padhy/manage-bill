@@ -79,14 +79,14 @@ function MailingAddressForm({
           bordercolor="gray200"
           required
           id="billingZipCode"
-          value={values.billingZipCode}
+          value={values.mailingZipCode}
           onChange={handleChange}
           onBlur={handleBlur}
           label="Zipcode"
           variant="outlined"
           placeholder="Zipcode"
-          error={errors.billingZipCode && touched.billingZipCode}
-          helperText={touched.billingZipCode ? errors.billingZipCode : null}
+          error={errors.mailingZipCode && touched.mailingZipCode}
+          helperText={touched.mailingZipCode ? errors.mailingZipCode : null}
           sx={{ mb: 2, mt: 2, mr: 1 }}
         />
       </Stack>
