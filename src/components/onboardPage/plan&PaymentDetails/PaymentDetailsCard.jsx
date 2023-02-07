@@ -229,7 +229,7 @@ function PaymentDetailsCard({
               fontSize="16px"
               lineheight={"24px"}
             >
-              Billing address same as mailing address
+              Billing address same as billing address
             </Box>
           </Stack>
           {/* footer */}
@@ -298,7 +298,17 @@ function PaymentDetailsCard({
                 fontSize="14px"
                 lineheight={"22px"}
                 endIcon={<EastIcon />}
-                disabled={!acknowledgeBtn}
+                disabled={
+                  !acknowledgeBtn ||
+                  !values.billingAddress ||
+                  errors.billingAddress ||
+                  !values.billingCity ||
+                  errors.billingCity ||
+                  !values.billingState ||
+                  errors.billingState ||
+                  !values.billingZipCode ||
+                  errors.billingZipCode
+                }
               >
                 Get Started
               </LoadingButton>

@@ -35,7 +35,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route element={<AuthLayout />}>
                 <Route index element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
-                <Route path="/onboard" element={<OnBoardPage />}></Route>
+                <Route path="/onboard" element={<OnBoardPage />} />
               </Route>
               <Route path="/main" element={<GeneralLayout />} />
             </Routes>

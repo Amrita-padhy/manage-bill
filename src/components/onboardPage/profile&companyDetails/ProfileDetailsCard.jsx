@@ -38,12 +38,12 @@ function ProfileDetailsCard({
           <Box autoComplete="off" noValidate>
             {/* personal info */}
             <PersonalInformationForm
-            // values={values}
-            // handleChange={handleChange}
-            // touched={touched}
-            // errors={errors}
-            // handleSubmit={handleSubmit}
-            // handleBlur={handleBlur}
+              values={values}
+              handleChange={handleChange}
+              touched={touched}
+              errors={errors}
+              handleSubmit={handleSubmit}
+              handleBlur={handleBlur}
             />
 
             {/* CompanyInformationForm  */}
@@ -94,6 +94,30 @@ function ProfileDetailsCard({
               }}
               endIcon={<ArrowForwardIcon />}
               onClick={() => setValue(1)}
+              disabled={
+                !values.firstName ||
+                errors.firstName ||
+                !values.lastName ||
+                errors.lastName ||
+                !values.email ||
+                errors.email ||
+                !values.address ||
+                errors.address ||
+                !values.city ||
+                errors.city ||
+                !values.state ||
+                errors.state ||
+                !values.zipCode ||
+                errors.zipCode ||
+                !values.mailingAddress ||
+                errors.mailingAddress ||
+                !values.mailingCity ||
+                errors.mailingCity ||
+                !values.mailingState ||
+                errors.mailingState ||
+                !values.mailingZipCode ||
+                errors.mailingZipCode
+              }
             >
               NEXT: Plan & Payment
             </Button>

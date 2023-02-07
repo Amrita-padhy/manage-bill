@@ -49,9 +49,7 @@ function OnBoardPage() {
   const [acknowledgeBtn, setAcknowledgeBtn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = React.useState(false);
-
   const [checked, setChecked] = useState(true);
-  const [prepopulatedValues, setPrepopulatedValues] = useState(null);
   const navigate = useNavigate();
 
   // handleAcknowledgeBtn
@@ -102,7 +100,6 @@ function OnBoardPage() {
     try {
       setIsLoading(true);
       const { response } = await updateUser(payload);
-      setPrepopulatedValues(prepopulateValue);
 
       console.log(response);
       setIsLoading(false);
@@ -152,6 +149,7 @@ function OnBoardPage() {
 
   useEffect(() => {
     if (user) {
+      console.log(user);
       setValues({
         ...values,
         firstName: user?.firstName,

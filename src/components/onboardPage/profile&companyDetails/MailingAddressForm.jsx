@@ -39,7 +39,6 @@ function MailingAddressForm({
       <Stack direction={{ xs: "column", sm: "row" }}>
         <TextField
           fullWidth
-          size="small"
           color="gray600"
           bordercolor="gray200"
           required
@@ -52,7 +51,8 @@ function MailingAddressForm({
           placeholder="City"
           error={errors.mailingCity && touched.mailingCity}
           helperText={touched.mailingCity ? errors.mailingCity : null}
-          sx={{ mt: 2, mr: 1 }}
+          margin="normal"
+          size="small"
         />
         <TextField
           fullWidth
@@ -69,7 +69,8 @@ function MailingAddressForm({
           placeholder="State"
           error={errors.mailingState && touched.mailingState}
           helperText={touched.mailingState ? errors.mailingState : null}
-          sx={{ mb: 2, mt: 2, mr: 1 }}
+          margin="normal"
+          sx={{ ml: "4px" }}
         />
         <TextField
           fullWidth
@@ -78,7 +79,7 @@ function MailingAddressForm({
           color="gray600"
           bordercolor="gray200"
           required
-          id="billingZipCode"
+          id="mailingZipCode"
           value={values.mailingZipCode}
           onChange={handleChange}
           onBlur={handleBlur}
@@ -87,7 +88,8 @@ function MailingAddressForm({
           placeholder="Zipcode"
           error={errors.mailingZipCode && touched.mailingZipCode}
           helperText={touched.mailingZipCode ? errors.mailingZipCode : null}
-          sx={{ mb: 2, mt: 2, mr: 1 }}
+          margin="normal"
+          sx={{ ml: "4px" }}
         />
       </Stack>
     </React.Fragment>

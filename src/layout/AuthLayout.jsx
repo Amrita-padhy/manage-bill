@@ -4,9 +4,9 @@ import { Outlet } from "react-router-dom";
 function AuthLayout() {
   return (
     <>
-      // navbar //menu navbar // sidebar
+      {/* // navbar //menu navbar // sidebar */}
       <Outlet />
-      // footer
+      {/* // footer */}
     </>
   );
 }

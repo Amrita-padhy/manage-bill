@@ -35,7 +35,6 @@ function CompanyInformationForm({
           {/* companyName */}
           <TextField
             fullWidth
-            size="small"
             color="gray600"
             bordercolor="gray200"
             id="companyName"
@@ -47,13 +46,13 @@ function CompanyInformationForm({
             placeholder="Company Name"
             error={errors.companyName && touched.companyName}
             helperText={touched.companyName ? errors.companyName : null}
-            sx={{ mb: 2 }}
+            margin="normal"
+            size="small"
           />
           {/* website */}
 
           <TextField
             fullWidth
-            size="small"
             color="gray600"
             bordercolor="gray200"
             id="website"
@@ -65,7 +64,8 @@ function CompanyInformationForm({
             placeholder="Website"
             error={errors.website && touched.website}
             helperText={touched.website ? errors.website : null}
-            sx={{ mb: 2 }}
+            margin="normal"
+            size="small"
           />
         </Box>
         {/*  ImageSelector */}
@@ -75,7 +75,6 @@ function CompanyInformationForm({
       </Stack>
       <TextField
         fullWidth
-        size="small"
         color="gray600"
         bordercolor="gray200"
         required
@@ -88,12 +87,12 @@ function CompanyInformationForm({
         placeholder="Street Address"
         error={errors.address && touched.address}
         helperText={touched.address ? errors.address : null}
-        sx={{ mt: 2 }}
+        margin="normal"
+        size="small"
       />
       <Stack direction={{ xs: "column", sm: "row" }}>
         <TextField
           fullWidth
-          size="small"
           color="gray600"
           bordercolor="gray200"
           required
@@ -106,11 +105,11 @@ function CompanyInformationForm({
           placeholder="City"
           error={errors.city && touched.city}
           helperText={touched.city ? errors.city : null}
-          sx={{ mt: 2, mr: 1 }}
+          margin="normal"
+          size="small"
         />
         <TextField
           fullWidth
-          size="small"
           color="gray600"
           bordercolor="gray200"
           required
@@ -123,12 +122,13 @@ function CompanyInformationForm({
           placeholder="State"
           error={errors.state && touched.state}
           helperText={touched.state ? errors.state : null}
-          sx={{ mb: 2, mt: 2, mr: 1 }}
+          margin="normal"
+          size="small"
+          sx={{ ml: "4px" }}
         />
         <TextField
           fullWidth
           type="number"
-          size="small"
           color="gray600"
           bordercolor="gray200"
           required
@@ -141,7 +141,9 @@ function CompanyInformationForm({
           placeholder="Zipcode"
           error={errors.zipCode && touched.zipCode}
           helperText={touched.zipCode ? errors.zipCode : null}
-          sx={{ mb: 2, mt: 2, mr: 1 }}
+          margin="normal"
+          size="small"
+          sx={{ ml: "4px" }}
         />
       </Stack>
     </React.Fragment>
