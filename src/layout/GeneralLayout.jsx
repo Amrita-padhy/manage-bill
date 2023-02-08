@@ -6,30 +6,25 @@ import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import { Padding } from "@mui/icons-material";
-import ArrowCircleRightRoundedIcon from "@mui/icons-material/ArrowCircleRightRounded";
-import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
-// import { AppBar } from "@material-ui/core";
 import AppNavbar from "../components/common/AppNavbar";
-const drawerWidth = 240;
+import { Button } from "@mui/material";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import Card from "@mui/material/Card";
+import { borderRadius } from "@mui/system";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import StarIcon from "@mui/icons-material/Star";
+import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
+const drawerWidth = 280;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
     flexGrow: 1,
-    padding: theme.spacing(3),
+    // padding: theme.spacing(3),
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -65,10 +60,11 @@ const AppBar = styled(MuiAppBar, {
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
-  justifyContent: "flex-end",
+  justifyContent: "space-between",
+  padding: "  20px",
+  color: "white",
+  backgroundColor: "gray700",
 }));
 
 function GeneralLayout() {
@@ -85,10 +81,6 @@ function GeneralLayout() {
 
   return (
     <>
-      <AppNavbar />
-      {/* <Box height="50px" bgcolor={"gray700.main"}>
-        hi
-      </Box> */}
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <AppBar open={open}>
@@ -100,18 +92,23 @@ function GeneralLayout() {
               edge="start"
               sx={{ mr: 2, ...(open && { display: "none" }) }}
             >
-              <MenuIcon />
+              <ChevronRightIcon
+                fontSize="large"
+                color="white"
+                bgcolor="gray200"
+              />
             </IconButton>
+
             <Typography variant="h6" noWrap component="div">
               Persistent drawer
             </Typography>
           </Toolbar>
         </AppBar>
+        {/* drawer */}
         <Drawer
           sx={{
             width: drawerWidth,
             flexShrink: 0,
-
             "& .MuiDrawer-paper": {
               width: drawerWidth,
               boxSizing: "border-box",
@@ -121,44 +118,239 @@ function GeneralLayout() {
           anchor="left"
           open={open}
         >
-          <DrawerHeader>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === "ltr" ? (
-                <ChevronLeftIcon />
-              ) : (
-                <ChevronRightIcon />
-              )}
+          <DrawerHeader sx={{ bgcolor: "gray" }}>
+            <IconButton onClick={handleDrawerClose} sx={{ padding: "0px" }}>
+              <ChevronLeftIcon
+                fontSize="large"
+                color="white"
+                bgcolor="gray200"
+              />
             </IconButton>
+            <Typography fontSize={"20px"} fontWeight="700">
+              Mission Tracker
+            </Typography>
           </DrawerHeader>
-          <Divider />
-          <List>
-            {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {["All mail", "Trash", "Spam"].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
+
+          {/* Increase in NOI YTD */}
+          <Box sx={{ bgcolor: "gray", height: "232px" }}>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              justifyContent={"center"}
+              alignItems="center"
+              padding={"16px"}
+            >
+              <Box
+                display={"flex"}
+                gap="10px"
+                justifyContent={"center"}
+                alignItems="center"
+                marginBottom={"4px"}
+              >
+                <Typography color="white.main">Increase in NOI YTD</Typography>
+                <InfoOutlinedIcon color="white" fontSize="small" />
+              </Box>
+              <Button
+                variant="contained"
+                color="white"
+                fullWidth
+                sx={{ height: "48px", padding: "8px" }}
+              >
+                $ 1,000.00
+              </Button>
+            </Box>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              justifyContent={"center"}
+              alignItems="center"
+              padding={"16px"}
+            >
+              <Box
+                display={"flex"}
+                gap="10px"
+                justifyContent={"center"}
+                alignItems="center"
+                marginBottom={"4px"}
+              >
+                <Typography color="white.main">% of bills recovered</Typography>
+                <InfoOutlinedIcon color="white" fontSize="small" />
+              </Box>
+              <Button
+                variant="contained"
+                color="white"
+                fullWidth
+                sx={{ height: "48px", padding: "8px" }}
+              >
+                50%
+              </Button>
+            </Box>
+          </Box>
+          {/* divider card */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Box
+              sx={{
+                bgcolor: "white",
+                height: "120px",
+                width: "248px",
+                borderRadius: "8px",
+                mt: "46px",
+                boxShadow: 1,
+              }}
+            >
+              <Box
+                sx={{
+                  height: "40px",
+                  bgcolor: "primary.main",
+                  borderTopLeftRadius: "8px",
+                  borderTopRightRadius: "8px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: "10px",
+                }}
+              >
+                <Typography
+                  fontSize={"12px"}
+                  fontWeight="500"
+                  color="gray700.main"
+                >
+                  START IT
+                </Typography>
+                <AddCircleOutlineIcon fontSize="small" color="gray700" />
+              </Box>
+              <Box
+                sx={{
+                  height: "40px",
+                  bgcolor: "white",
+                  borderTopLeftRadius: "8px",
+                  borderTopRightRadius: "8px",
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  padding: "10px",
+                  gap: "8px",
+                }}
+              >
+                <StarIcon fontSize="small" color="primary" />
+                <Typography
+                  fontSize={"12px"}
+                  fontWeight="500"
+                  color="gray700.main"
+                >
+                  Manage Properties
+                </Typography>
+              </Box>
+              <Divider />
+              <Box
+                sx={{
+                  height: "40px",
+                  bgcolor: "white",
+                  borderTopLeftRadius: "8px",
+                  borderTopRightRadius: "8px",
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  padding: "10px",
+                  gap: "8px",
+                }}
+              >
+                <StarIcon fontSize="small" color="primary" />
+                <Typography
+                  fontSize={"12px"}
+                  fontWeight="500"
+                  color="gray700.main"
+                >
+                  Add Units
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+          {/* profile card */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Box
+              sx={{
+                bgcolor: "transparent",
+                height: "70px",
+                width: "248px",
+                borderRadius: "8px",
+                mt: "60px",
+                boxShadow: 1,
+              }}
+            >
+              <Box
+                sx={{
+                  height: "30px",
+                  bgcolor: "primary.main",
+                  borderTopLeftRadius: "8px",
+                  borderTopRightRadius: "8px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "10px",
+                }}
+              >
+                <Typography
+                  fontSize={"12px"}
+                  fontWeight="500"
+                  color="gray700.main"
+                >
+                  RANGER
+                </Typography>
+              </Box>
+
+              <Divider />
+              <Box
+                sx={{
+                  height: "35px",
+                  bgcolor: "white",
+                  borderTopLeftRadius: "8px",
+                  borderTopRightRadius: "8px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "10px",
+                  gap: "8px",
+                }}
+              >
+                <Typography
+                  fontSize={"12px"}
+                  fontWeight="500"
+                  color="gray700.main"
+                >
+                  Bill Wattson
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+          {/* sign out button */}
+          <Button
+            variant="outlined"
+            color="gray700"
+            sx={{ margin: "30px", textTransform: "none", color: "gray700" }}
+            endIcon={<SubdirectoryArrowRightIcon color="gray700" />}
+          >
+            Sign Out
+          </Button>
+          {/* <Divider /> */}
         </Drawer>
         <Main open={open}>
           <DrawerHeader />
+          <Box height="50px" bgcolor="gray">
+            hi
+          </Box>
           <Typography paragraph>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus

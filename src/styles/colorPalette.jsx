@@ -53,5 +53,8 @@ export const customTheme = createTheme({
     Success600: {
       main: "#039855",
     },
+    black: {
+      main: "#000000",
+    },
   },
 });
