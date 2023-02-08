@@ -19,6 +19,10 @@ import { borderRadius } from "@mui/system";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import StarIcon from "@mui/icons-material/Star";
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
+import SearchIcon from "@mui/icons-material/Search";
+import InputBase from "@mui/material/InputBase";
+import { customTheme } from "../styles/colorPalette";
+
 const drawerWidth = 280;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -66,6 +70,47 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   color: "white",
   backgroundColor: "gray700",
 }));
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderBottom: "1px",
+  backgroundColor: "transparent",
+  "&:hover": {
+    backgroundColor: "transparent",
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: "300px",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(3),
+    width: "150px",
+  },
+}));
+
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  borderBottom: "1px",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "#FBE122",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "150px",
+    borderBottom: "1px solid yellow",
+    [theme.breakpoints.up("sm")]: {
+      width: "300px",
+    },
+  },
+}));
 
 function GeneralLayout() {
   const theme = useTheme();
@@ -83,7 +128,7 @@ function GeneralLayout() {
     <>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar open={open}>
+        <AppBar open={open} sx={{ bgcolor: "gray700.main", boxShadow: 0 }}>
           <Toolbar>
             <IconButton
               color="inherit"
@@ -98,10 +143,26 @@ function GeneralLayout() {
                 bgcolor="gray200"
               />
             </IconButton>
-
-            <Typography variant="h6" noWrap component="div">
-              Persistent drawer
+            <Typography
+              sx={{
+                display: { xs: "none", sm: "none", md: "block" },
+              }}
+              variant="inherit"
+              color={"primary.main"}
+              fontWeight="700"
+            >
+              MANAGE-BILL
             </Typography>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon color="primary" />
+              </SearchIconWrapper>
+              <StyledInputBase
+                color="primary"
+                placeholder="Welcome, Ranger Bill. Ask me anything."
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
           </Toolbar>
         </AppBar>
         {/* drawer */}
@@ -118,7 +179,7 @@ function GeneralLayout() {
           anchor="left"
           open={open}
         >
-          <DrawerHeader sx={{ bgcolor: "gray" }}>
+          <DrawerHeader sx={{ bgcolor: "gray700.main" }}>
             <IconButton onClick={handleDrawerClose} sx={{ padding: "0px" }}>
               <ChevronLeftIcon
                 fontSize="large"
@@ -132,7 +193,7 @@ function GeneralLayout() {
           </DrawerHeader>
 
           {/* Increase in NOI YTD */}
-          <Box sx={{ bgcolor: "gray", height: "232px" }}>
+          <Box sx={{ bgcolor: "gray700.main", height: "232px" }}>
             <Box
               display={"flex"}
               flexDirection={"column"}
@@ -348,7 +409,7 @@ function GeneralLayout() {
         </Drawer>
         <Main open={open}>
           <DrawerHeader />
-          <Box height="50px" bgcolor="gray">
+          <Box height="50px" bgcolor="primary.main">
             hi
           </Box>
           <Typography paragraph>
