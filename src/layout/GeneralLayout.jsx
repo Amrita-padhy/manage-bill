@@ -1,91 +1,44 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
-import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import AppNavbar from "../components/common/AppNavbar";
-import { Button } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import Card from "@mui/material/Card";
-import { borderRadius } from "@mui/system";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import StarIcon from "@mui/icons-material/Star";
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
-import { customTheme } from "../styles/colorPalette";
+import AppBar from "@material-ui/core/AppBar";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Drawer from "@material-ui/core/Drawer";
+import MenuIcon from "@mui/icons-material/Menu";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import CloseIcon from "@mui/icons-material/Close";
 
-const drawerWidth = 280;
-
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    // padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: `-${drawerWidth}px`,
-    ...(open && {
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    }),
-  })
-);
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  transition: theme.transitions.create(["margin", "width"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  ...theme.mixins.toolbar,
-  justifyContent: "space-between",
-  padding: "  20px",
-  color: "white",
-  backgroundColor: "gray700",
-}));
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
-  borderBottom: "1px",
+  borderRadius: theme.shape.borderRadius,
   backgroundColor: "transparent",
   "&:hover": {
     backgroundColor: "transparent",
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
-  width: "300px",
+  width: "100%",
   [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(3),
-    width: "150px",
+    width: "auto",
   },
 }));
-
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: "100%",
@@ -112,36 +65,93 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+const drawerWidth = 280;
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+  },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
+  drawer: {
+    flexShrink: 0,
+    width: drawerWidth,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
+  },
+  toolbar: {
+    ...theme.mixins.toolbar,
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
+  content: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.default,
+  },
+}));
+
 function GeneralLayout() {
+  const classes = useStyles();
   const theme = useTheme();
+  const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const openMenu = Boolean(anchorEl);
+  const [mobMenu, setMobMenu] = useState(false);
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
   const [open, setOpen] = React.useState(false);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const toggleDrawer = (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setOpen(!open);
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const handleMenuToggle = () => {
+    setMobMenu(!mobMenu);
   };
-
   return (
     <>
-      <Box sx={{ display: "flex" }}>
+      <div className={classes.root}>
         <CssBaseline />
-        <AppBar open={open} sx={{ bgcolor: "gray700.main", boxShadow: 0 }}>
+        <AppBar
+          position="fixed"
+          color="#495057"
+          boxShadow="0px"
+          className={classes.appBar}
+          sx={{ bgcolor: "gray700", boxShadow: 0 }}
+        >
           <Toolbar>
             <IconButton
               color="inherit"
               aria-label="open drawer"
-              onClick={handleDrawerOpen}
               edge="start"
-              sx={{ mr: 2, ...(open && { display: "none" }) }}
+              onClick={toggleDrawer}
+              className={classes.menuButton}
+              sx={{
+                display: { xs: "inline-block", sm: "inline-block", md: "none" },
+              }}
             >
-              <ChevronRightIcon
-                fontSize="large"
-                color="white"
-                bgcolor="gray200"
-              />
+              <MenuIcon />
             </IconButton>
             <Typography
               sx={{
@@ -165,32 +175,17 @@ function GeneralLayout() {
             </Search>
           </Toolbar>
         </AppBar>
-        {/* drawer */}
         <Drawer
-          sx={{
-            width: drawerWidth,
-            flexShrink: 0,
-            "& .MuiDrawer-paper": {
-              width: drawerWidth,
-              boxSizing: "border-box",
-            },
+          className={classes.drawer}
+          variant={isMdUp ? "permanent" : "temporary"}
+          classes={{
+            paper: classes.drawerPaper,
           }}
-          variant="persistent"
           anchor="left"
           open={open}
+          onClose={toggleDrawer}
         >
-          <DrawerHeader sx={{ bgcolor: "gray700.main" }}>
-            <IconButton onClick={handleDrawerClose} sx={{ padding: "0px" }}>
-              <ChevronLeftIcon
-                fontSize="large"
-                color="white"
-                bgcolor="gray200"
-              />
-            </IconButton>
-            <Typography fontSize={"20px"} fontWeight="700">
-              Mission Tracker
-            </Typography>
-          </DrawerHeader>
+          <div className={classes.toolbar} />
 
           {/* Increase in NOI YTD */}
           <Box sx={{ bgcolor: "gray700.main", height: "232px" }}>
@@ -247,7 +242,8 @@ function GeneralLayout() {
               </Button>
             </Box>
           </Box>
-          {/* divider card */}
+          <Divider />
+          {/* card */}
           <Box
             sx={{
               display: "flex",
@@ -333,7 +329,7 @@ function GeneralLayout() {
               </Box>
             </Box>
           </Box>
-          {/* profile card */}
+          {/* account info card */}
           <Box
             sx={{
               display: "flex",
@@ -396,7 +392,7 @@ function GeneralLayout() {
               </Box>
             </Box>
           </Box>
-          {/* sign out button */}
+          {/*  Sign Out  */}
           <Button
             variant="outlined"
             color="gray700"
@@ -405,46 +401,210 @@ function GeneralLayout() {
           >
             Sign Out
           </Button>
-          {/* <Divider /> */}
         </Drawer>
-        <Main open={open}>
-          <DrawerHeader />
-          <Box height="50px" bgcolor="primary.main">
-            hi
-          </Box>
-          <Typography paragraph>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-            dolor purus non enim praesent elementum facilisis leo vel. Risus at
-            ultrices mi tempus imperdiet. Semper risus in hendrerit gravida
-            rutrum quisque non tellus. Convallis convallis tellus id interdum
-            velit laoreet id donec ultrices. Odio morbi quis commodo odio aenean
-            sed adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-            integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-            eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-            quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-            vivamus at augue. At augue eget arcu dictum varius duis at
-            consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-            donec massa sapien faucibus et molestie ac.
-          </Typography>
-          <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-            ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-            elementum integer enim neque volutpat ac tincidunt. Ornare
-            suspendisse sed nisi lacus sed viverra tellus. Purus sit amet
-            volutpat consequat mauris. Elementum eu facilisis sed odio morbi.
-            Euismod lacinia at quis risus sed vulputate odio. Morbi tincidunt
-            ornare massa eget egestas purus viverra accumsan in. In hendrerit
-            gravida rutrum quisque non tellus orci ac. Pellentesque nec nam
-            aliquam sem et tortor. Habitant morbi tristique senectus et.
-            Adipiscing elit duis tristique sollicitudin nibh sit. Ornare aenean
-            euismod elementum nisi quis eleifend. Commodo viverra maecenas
-            accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam
-            ultrices sagittis orci a.
-          </Typography>
-        </Main>
-      </Box>
+        <main className={classes.content}>
+          <Toolbar />
+          <Box
+            height={"50px"}
+            bgcolor="white.main"
+            display={"flex"}
+            alignItems={"center"}
+          >
+            <Box
+              sx={{
+                width: {
+                  xs: "87%",
+                  sm: "87%",
+                  md: "312px",
+                },
+                bgcolor: "primary.main",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Button
+                fullWidth
+                id="basic-button"
+                aria-controls={openMenu ? "basic-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={openMenu ? "true" : undefined}
+                onClick={handleClick}
+                color="gray700"
+                sx={{
+                  bgcolor: "primary.main",
+                  padding: "10px",
+                  fontSize: "16px",
+                  fontWeight: "500",
+                }}
+                endIcon={<KeyboardArrowDownIcon />}
+              >
+                ACCOUNTS
+              </Button>
 
+              <Box
+                onClick={handleMenuToggle}
+                sx={{
+                  display: {
+                    xs: "flex",
+                    sm: "flex",
+                    md: "none",
+                  },
+                }}
+              >
+                {mobMenu ? <CloseIcon /> : <MenuIcon />}
+              </Box>
+
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={openMenu}
+                onClose={handleClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleClose}>Logout</MenuItem>
+              </Menu>
+            </Box>
+            <Box
+              sx={{
+                display: {
+                  xs: "none",
+                  md: "flex",
+                },
+                width: "312px",
+              }}
+            >
+              <Button
+                fullWidth
+                id="basic-button"
+                aria-controls={openMenu ? "basic-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={openMenu ? "true" : undefined}
+                onClick={handleClick}
+                color="gray700"
+                sx={{
+                  bgcolor: "primary.main",
+                  padding: "10px",
+                  fontSize: "16px",
+                  fontWeight: "500",
+                }}
+                endIcon={<KeyboardArrowDownIcon />}
+              >
+                PROPERTIES
+              </Button>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={openMenu}
+                onClose={handleClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleClose}>Logout</MenuItem>
+              </Menu>
+            </Box>
+            <Box
+              sx={{
+                display: {
+                  xs: "none",
+                  md: "flex",
+                },
+                width: "312px",
+              }}
+            >
+              <Button
+                fullWidth
+                id="basic-button"
+                aria-controls={openMenu ? "basic-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={openMenu ? "true" : undefined}
+                onClick={handleClick}
+                color="gray700"
+                sx={{
+                  bgcolor: "primary.main",
+                  padding: "10px",
+                  fontSize: "16px",
+                  fontWeight: "500",
+                }}
+                endIcon={<KeyboardArrowDownIcon />}
+              >
+                BILLS
+              </Button>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={openMenu}
+                onClose={handleClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleClose}>Logout</MenuItem>
+              </Menu>
+            </Box>
+            <Box
+              sx={{
+                display: {
+                  xs: "none",
+                  md: "flex",
+                },
+                width: "312px",
+              }}
+            >
+              <Button
+                fullWidth
+                id="basic-button"
+                aria-controls={openMenu ? "basic-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={openMenu ? "true" : undefined}
+                onClick={handleClick}
+                color="gray700"
+                sx={{
+                  bgcolor: "primary.main",
+                  padding: "10px",
+                  fontSize: "16px",
+                  fontWeight: "500",
+                }}
+                endIcon={<KeyboardArrowDownIcon />}
+              >
+                PAYMENTS
+              </Button>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={openMenu}
+                onClose={handleClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleClose}>Logout</MenuItem>
+              </Menu>
+            </Box>
+          </Box>
+
+          <Typography component="h2" variant="h6" gutterBottom>
+            On small and extra-small screens the sidebar/drawer is temporary and
+            can be opened via the menu icon in the toolbar.
+          </Typography>
+          <Typography component="h2" variant="h6" gutterBottom>
+            On medium, large, and extra-large screens the sidebar/drawer is
+            permanent and there is no menu icon in the toolbar.
+          </Typography>
+          <hr />
+        </main>
+      </div>
       <Outlet />
     </>
   );
