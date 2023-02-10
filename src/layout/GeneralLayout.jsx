@@ -7,7 +7,14 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import { Button, Grid } from "@mui/material";
+import {
+  Button,
+  Grid,
+  ListItemIcon,
+  ListItemText,
+  MenuList,
+  Paper,
+} from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import StarIcon from "@mui/icons-material/Star";
@@ -15,14 +22,16 @@ import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRig
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import AppBar from "@material-ui/core/AppBar";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles, useTheme, withStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Drawer from "@material-ui/core/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import CloseIcon from "@mui/icons-material/Close";
+import { Check } from "@mui/icons-material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -72,6 +81,8 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: "#495057",
+    boxShadow: "0px 0px 0px 0px",
   },
   drawer: {
     flexShrink: 0,
@@ -102,19 +113,19 @@ function GeneralLayout() {
   const classes = useStyles();
   const theme = useTheme();
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const openMenu = Boolean(anchorEl);
   const [mobMenu, setMobMenu] = useState(false);
 
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const [open, setOpen] = React.useState(false);
-
   const toggleDrawer = (event) => {
     if (
       event.type === "keydown" &&
@@ -135,10 +146,9 @@ function GeneralLayout() {
         <CssBaseline />
         <AppBar
           position="fixed"
-          color="#495057"
+          color="gray700.main"
           boxShadow="0px"
           className={classes.appBar}
-          sx={{ bgcolor: "gray700", boxShadow: 0 }}
         >
           <Toolbar>
             <IconButton
@@ -403,21 +413,25 @@ function GeneralLayout() {
           </Button>
         </Drawer>
         <main className={classes.content}>
+          {/* <Toolbar /> */}
+
           <Toolbar />
           <Box
+            onMouseLeave={handleMenuClose}
+            width="100%"
             height={"50px"}
-            bgcolor="white.main"
+            bgcolor="primary.main"
             display={"flex"}
             alignItems={"center"}
           >
             <Box
               sx={{
                 width: {
-                  xs: "87%",
-                  sm: "87%",
+                  xs: "100%",
+                  sm: "100%",
                   md: "312px",
                 },
-                bgcolor: "primary.main",
+                bgcolor: "white.main",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -425,11 +439,11 @@ function GeneralLayout() {
             >
               <Button
                 fullWidth
+                onMouseOver={handleMenuClick}
                 id="basic-button"
                 aria-controls={openMenu ? "basic-menu" : undefined}
                 aria-haspopup="true"
                 aria-expanded={openMenu ? "true" : undefined}
-                onClick={handleClick}
                 color="gray700"
                 sx={{
                   bgcolor: "primary.main",
@@ -437,12 +451,18 @@ function GeneralLayout() {
                   fontSize: "16px",
                   fontWeight: "500",
                 }}
-                endIcon={<KeyboardArrowDownIcon />}
+                endIcon={
+                  openMenu ? (
+                    <KeyboardArrowUpIcon fontSize="large" />
+                  ) : (
+                    <KeyboardArrowDownIcon fontSize="large" />
+                  )
+                }
               >
                 ACCOUNTS
               </Button>
 
-              <Box
+              {/* <Box
                 onClick={handleMenuToggle}
                 sx={{
                   display: {
@@ -453,20 +473,26 @@ function GeneralLayout() {
                 }}
               >
                 {mobMenu ? <CloseIcon /> : <MenuIcon />}
-              </Box>
-
+              </Box> */}
+              {/* menu */}
               <Menu
-                id="basic-menu"
+                className={classes.menu}
                 anchorEl={anchorEl}
-                open={openMenu}
-                onClose={handleClose}
-                MenuListProps={{
-                  "aria-labelledby": "basic-button",
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "top",
+                }}
+                transformOrigin={{ horizontal: "right", vertical: "bottom" }}
+                PaperProps={{
+                  style: {
+                    maxHeight: "300px",
+                    width: "200px",
+                  },
                 }}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={handleMenuClose}>minu</MenuItem>
+                <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+                <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
               </Menu>
             </Box>
             <Box
@@ -484,7 +510,7 @@ function GeneralLayout() {
                 aria-controls={openMenu ? "basic-menu" : undefined}
                 aria-haspopup="true"
                 aria-expanded={openMenu ? "true" : undefined}
-                onClick={handleClick}
+                onClick={handleMenuClick}
                 color="gray700"
                 sx={{
                   bgcolor: "primary.main",
@@ -500,14 +526,14 @@ function GeneralLayout() {
                 id="basic-menu"
                 anchorEl={anchorEl}
                 open={openMenu}
-                onClose={handleClose}
+                onClose={handleMenuClose}
                 MenuListProps={{
                   "aria-labelledby": "basic-button",
                 }}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={handleMenuClose}></MenuItem>
+                <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+                <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
               </Menu>
             </Box>
             <Box
@@ -525,7 +551,7 @@ function GeneralLayout() {
                 aria-controls={openMenu ? "basic-menu" : undefined}
                 aria-haspopup="true"
                 aria-expanded={openMenu ? "true" : undefined}
-                onClick={handleClick}
+                onClick={handleMenuClick}
                 color="gray700"
                 sx={{
                   bgcolor: "primary.main",
@@ -541,14 +567,14 @@ function GeneralLayout() {
                 id="basic-menu"
                 anchorEl={anchorEl}
                 open={openMenu}
-                onClose={handleClose}
+                onClose={handleMenuClose}
                 MenuListProps={{
                   "aria-labelledby": "basic-button",
                 }}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+                <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+                <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
               </Menu>
             </Box>
             <Box
@@ -566,7 +592,7 @@ function GeneralLayout() {
                 aria-controls={openMenu ? "basic-menu" : undefined}
                 aria-haspopup="true"
                 aria-expanded={openMenu ? "true" : undefined}
-                onClick={handleClick}
+                onClick={handleMenuClick}
                 color="gray700"
                 sx={{
                   bgcolor: "primary.main",
@@ -582,26 +608,26 @@ function GeneralLayout() {
                 id="basic-menu"
                 anchorEl={anchorEl}
                 open={openMenu}
-                onClose={handleClose}
+                onClose={handleMenuClose}
                 MenuListProps={{
                   "aria-labelledby": "basic-button",
                 }}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+                <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+                <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
               </Menu>
             </Box>
           </Box>
 
-          <Typography component="h2" variant="h6" gutterBottom>
+          {/* <Typography component="h2" variant="h6" gutterBottom>
             On small and extra-small screens the sidebar/drawer is temporary and
             can be opened via the menu icon in the toolbar.
           </Typography>
           <Typography component="h2" variant="h6" gutterBottom>
             On medium, large, and extra-large screens the sidebar/drawer is
             permanent and there is no menu icon in the toolbar.
-          </Typography>
+          </Typography> */}
           <hr />
         </main>
       </div>
