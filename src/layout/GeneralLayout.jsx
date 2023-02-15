@@ -7,13 +7,25 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
+import PropTypes from "prop-types";
 import {
   Button,
+  Card,
   Grid,
-  ListItemIcon,
-  ListItemText,
-  MenuList,
   Paper,
+  Stack,
+  CardHeader,
+  CardContent,
+  CardActions,
+  TextField,
+  InputAdornment,
+  Input,
+  OutlinedInput,
+  FormControl,
+  InputLabel,
+  Select,
+  Tabs,
+  Tab,
 } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -26,12 +38,14 @@ import { makeStyles, useTheme, withStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Drawer from "@material-ui/core/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import CloseIcon from "@mui/icons-material/Close";
-import { Check } from "@mui/icons-material";
+import { Check, Height } from "@mui/icons-material";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import Header from "../common/Header";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -63,7 +77,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "#FBE122",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "150px",
@@ -73,11 +86,54 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
+const Item = styled(Paper)(() => ({
+  backgroundColor: "white",
+  padding: "8px",
+  border: "1px solid #DBDDDF",
+  borderRadius: "8px",
+  width: { xs: "115px", md: "240px" },
+  height: "92px",
+  margin: "auto",
+}));
+// tab function
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 
 const drawerWidth = 280;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    width: "100vw",
+    height: "auto",
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -107,16 +163,32 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
   },
+  menu: {
+    backgroundColor: "lightblue",
+    "& .MuiMenu-paper": {
+      backgroundColor: "yellow",
+    },
+  },
 }));
 
 function GeneralLayout() {
+  const [value, setValue] = useState(0);
+
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
+  };
+  const [sort, setSort] = useState("");
+
+  const handleSortProperty = (event) => {
+    setSort(event.target.value);
+  };
   const classes = useStyles();
   const theme = useTheme();
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
   const [anchorEl, setAnchorEl] = useState(null);
   const openMenu = Boolean(anchorEl);
   const [mobMenu, setMobMenu] = useState(false);
-
+  const [open, setOpen] = React.useState(false);
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
@@ -140,6 +212,7 @@ function GeneralLayout() {
   const handleMenuToggle = () => {
     setMobMenu(!mobMenu);
   };
+
   return (
     <>
       <div className={classes.root}>
@@ -416,14 +489,13 @@ function GeneralLayout() {
           {/* <Toolbar /> */}
 
           <Toolbar />
-          <Box
-            onMouseLeave={handleMenuClose}
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
             width="100%"
             height={"50px"}
             bgcolor="primary.main"
-            display={"flex"}
-            alignItems={"center"}
           >
+            {/* accounts */}
             <Box
               sx={{
                 width: {
@@ -439,7 +511,7 @@ function GeneralLayout() {
             >
               <Button
                 fullWidth
-                onMouseOver={handleMenuClick}
+                onClick={handleMenuClick}
                 id="basic-button"
                 aria-controls={openMenu ? "basic-menu" : undefined}
                 aria-haspopup="true"
@@ -461,8 +533,7 @@ function GeneralLayout() {
               >
                 ACCOUNTS
               </Button>
-
-              {/* <Box
+              <Box
                 onClick={handleMenuToggle}
                 sx={{
                   display: {
@@ -473,8 +544,9 @@ function GeneralLayout() {
                 }}
               >
                 {mobMenu ? <CloseIcon /> : <MenuIcon />}
-              </Box> */}
+              </Box>
               {/* menu */}
+
               <Menu
                 className={classes.menu}
                 anchorEl={anchorEl}
@@ -495,13 +567,17 @@ function GeneralLayout() {
                 <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
               </Menu>
             </Box>
+
+            {/* menu box */}
+
+            {/* properties */}
             <Box
               sx={{
-                display: {
-                  xs: "none",
-                  md: "flex",
+                width: {
+                  xs: "100%",
+                  sm: "100%",
+                  md: "312px",
                 },
-                width: "312px",
               }}
             >
               <Button
@@ -518,31 +594,25 @@ function GeneralLayout() {
                   fontSize: "16px",
                   fontWeight: "500",
                 }}
-                endIcon={<KeyboardArrowDownIcon />}
+                endIcon={
+                  openMenu ? (
+                    <KeyboardArrowUpIcon fontSize="large" />
+                  ) : (
+                    <KeyboardArrowDownIcon fontSize="large" />
+                  )
+                }
               >
                 PROPERTIES
               </Button>
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={openMenu}
-                onClose={handleMenuClose}
-                MenuListProps={{
-                  "aria-labelledby": "basic-button",
-                }}
-              >
-                <MenuItem onClick={handleMenuClose}></MenuItem>
-                <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-                <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
-              </Menu>
             </Box>
+            {/* bills */}
             <Box
               sx={{
-                display: {
-                  xs: "none",
-                  md: "flex",
+                width: {
+                  xs: "100%",
+                  sm: "100%",
+                  md: "312px",
                 },
-                width: "312px",
               }}
             >
               <Button
@@ -559,7 +629,13 @@ function GeneralLayout() {
                   fontSize: "16px",
                   fontWeight: "500",
                 }}
-                endIcon={<KeyboardArrowDownIcon />}
+                endIcon={
+                  openMenu ? (
+                    <KeyboardArrowUpIcon fontSize="large" />
+                  ) : (
+                    <KeyboardArrowDownIcon fontSize="large" />
+                  )
+                }
               >
                 BILLS
               </Button>
@@ -577,13 +653,14 @@ function GeneralLayout() {
                 <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
               </Menu>
             </Box>
+            {/* PAYMENTS */}
             <Box
               sx={{
-                display: {
-                  xs: "none",
-                  md: "flex",
+                width: {
+                  xs: "100%",
+                  sm: "100%",
+                  md: "312px",
                 },
-                width: "312px",
               }}
             >
               <Button
@@ -600,7 +677,13 @@ function GeneralLayout() {
                   fontSize: "16px",
                   fontWeight: "500",
                 }}
-                endIcon={<KeyboardArrowDownIcon />}
+                endIcon={
+                  openMenu ? (
+                    <KeyboardArrowUpIcon fontSize="large" />
+                  ) : (
+                    <KeyboardArrowDownIcon fontSize="large" />
+                  )
+                }
               >
                 PAYMENTS
               </Button>
@@ -618,17 +701,349 @@ function GeneralLayout() {
                 <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
               </Menu>
             </Box>
-          </Box>
+          </Stack>
+          <Box
+            sx={{
+              px: "48px",
+              py: "40px",
+              bgcolor: "#F3F4F4",
+              justifyContent: "center",
+            }}
+          >
+            {/* heading */}
+            <Stack
+              direction={{ xs: "column", sm: "row" }}
+              justifyContent="space-between"
+            >
+              <Header heading=" Properties:" title="Manage Properties" />
+              <Button
+                variant="contained"
+                color="secondary"
+                sx={{
+                  width: "184px",
+                  height: "40px",
+                  fontSize: "14px",
+                  fontWeight: "500",
+                  textTransform: "none",
+                }}
+                startIcon={<AddCircleOutlineIcon />}
+              >
+                Add New Property
+              </Button>
+            </Stack>
+            {/* property card */}
+            <Box justifyContent={"center"}>
+              <Card
+                sx={{
+                  height: "auto",
+                  mt: "35px",
+                  padding: "24px",
+                }}
+              >
+                {/* Overview */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography
+                    fontSize={"20px"}
+                    fontWeight="700"
+                    color={"gray900.main"}
+                  >
+                    Overview
+                  </Typography>
+                  <KeyboardArrowUpIcon fontSize="medium" color="gray900,main" />
+                </Box>
+                {/* Overview card main */}
+                <Box width={"100%"} marginTop="16px">
+                  <Grid container>
+                    {/* Properties */}
+                    <Grid xs={6} md={3}>
+                      <Item>
+                        <Typography
+                          sx={{
+                            fontSize: "12px",
+                            fontWeight: "500",
+                            color: "gray600.main",
+                          }}
+                        >
+                          Properties
+                        </Typography>
 
-          {/* <Typography component="h2" variant="h6" gutterBottom>
-            On small and extra-small screens the sidebar/drawer is temporary and
-            can be opened via the menu icon in the toolbar.
-          </Typography>
-          <Typography component="h2" variant="h6" gutterBottom>
-            On medium, large, and extra-large screens the sidebar/drawer is
-            permanent and there is no menu icon in the toolbar.
-          </Typography> */}
-          <hr />
+                        <Typography
+                          sx={{
+                            fontSize: "30px",
+                            fontWeight: "700",
+                            color: "gray900.main",
+                            mt: "6px",
+                          }}
+                        >
+                          00
+                        </Typography>
+                      </Item>
+                    </Grid>
+
+                    {/* Units */}
+                    <Grid xs={6} md={3}>
+                      <Item>
+                        <Typography
+                          sx={{
+                            fontSize: "12px",
+                            fontWeight: "500",
+                            color: "gray600.main",
+                          }}
+                        >
+                          Units
+                        </Typography>
+
+                        <Typography
+                          sx={{
+                            fontSize: "30px",
+                            fontWeight: "700",
+                            color: "gray900.main",
+                            mt: "6px",
+                          }}
+                        >
+                          00
+                        </Typography>
+                      </Item>
+                    </Grid>
+                    {/* Residents */}
+
+                    <Grid xs={6} md={3}>
+                      <Item>
+                        <Typography
+                          sx={{
+                            fontSize: "12px",
+                            fontWeight: "500",
+                            color: "gray600.main",
+                          }}
+                        >
+                          Residents
+                        </Typography>
+
+                        <Typography
+                          sx={{
+                            fontSize: "30px",
+                            fontWeight: "700",
+                            color: "gray900.main",
+                            mt: "6px",
+                          }}
+                        >
+                          00
+                        </Typography>
+                      </Item>
+                    </Grid>
+
+                    {/* Billable Residents */}
+                    <Grid xs={6} md={3}>
+                      <Item>
+                        <Typography
+                          sx={{
+                            fontSize: "12px",
+                            fontWeight: "500",
+                            color: "gray600.main",
+                          }}
+                        >
+                          Billable Residents
+                        </Typography>
+
+                        <Typography
+                          sx={{
+                            fontSize: "30px",
+                            fontWeight: "700",
+                            color: "gray900.main",
+                            mt: "6px",
+                          }}
+                        >
+                          0%
+                        </Typography>
+                      </Item>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Card>
+              {/* tab card */}
+              <Card
+                sx={{
+                  mt: "32px",
+                  bgcolor: "transparent",
+                  height: "auto",
+                  border: "1px solid gray",
+                  width: "100vw- drawerWidth",
+                }}
+              >
+                <CardHeader sx={{ width: "100%", height: "48px" }}>
+                  <Box
+                    bgcolor="white.main"
+                    height="48px"
+                    width="100vw"
+                    display="flex"
+                    justifyContent="center"
+                    alignitems="center"
+                  >
+                    <Tabs
+                      centered
+                      value={value}
+                      onChange={handleTabChange}
+                      aria-label="basic tabs example"
+                      textColor="secondary"
+                      indicatorColor="secondary"
+                      alignitems="center"
+                    >
+                      <Tab
+                        style={{ textTransform: "none" }}
+                        label="Profile & Company"
+                        {...a11yProps(0)}
+                        color="secondary.main"
+                        fontSize="24px"
+                        lineheight="24px"
+                        fontWeight="500"
+                        sx={{ fontSize: "20px", fontWeight: "500" }}
+                      />
+
+                      <Tab
+                        style={{ textTransform: "none" }}
+                        label="Plan & Payment"
+                        {...a11yProps(1)}
+                        color="secondary.main"
+                        lineheight="24px"
+                        sx={{ fontSize: "20px", fontWeight: "500" }}
+                      />
+                    </Tabs>
+                  </Box>
+                </CardHeader>
+                <CardActions
+                  sx={{
+                    // height: "76px",
+                    px: "26px",
+                    py: "20px",
+
+                    display: { xs: "block", md: "flex" },
+                    justifyContent: "space-between",
+                  }}
+                >
+                  {/* search button */}
+                  <Stack
+                    direction={{ xs: "column", md: "row" }}
+                    alignItems="center"
+                    gap={1}
+                  >
+                    <Typography
+                      sx={{
+                        color: "gray600.main",
+                        fontSize: "16px",
+                        fontWeight: "400",
+                      }}
+                    >
+                      Find Property
+                    </Typography>
+                    <TextField
+                      id="input-with-icon-textfield"
+                      placeholder="Search"
+                      size="small"
+                      margin="normal"
+                      sx={{
+                        bgcolor: "white.main",
+                        border: "0.5px solid gray",
+                        borderRadius: "8px",
+                        p: "10px",
+                      }}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <SearchOutlinedIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                      variant="standard"
+                    />
+                  </Stack>
+                  {/* sort button */}
+                  <Stack
+                    direction={{ xs: "column", md: "row" }}
+                    alignItems="center"
+                    gap={1}
+                  >
+                    <Typography
+                      sx={{
+                        color: "gray600.main",
+                        fontSize: "16px",
+                        fontWeight: "500",
+                        width: "92px",
+                      }}
+                    >
+                      Sort By
+                    </Typography>
+
+                    <FormControl
+                      fullWidth
+                      variant="standard"
+                      sx={{
+                        bgcolor: "white.main",
+                        borderRadius: "8px",
+                        p: "6px",
+                        border: "0.5px solid gray",
+                      }}
+                    >
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={sort}
+                        label="A-Z"
+                        onChange={handleSortProperty}
+                      >
+                        <MenuItem value={10}>A-Z</MenuItem>
+                        <MenuItem value={20}>Z-A</MenuItem>
+                        <MenuItem value={30}>LOW-HIGH</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Stack>
+                </CardActions>
+                <Divider />
+
+                <CardContent>
+                  <Stack justifyContent={"center"} alignItems="center">
+                    <TabPanel value={value} index={0}>
+                      Item One
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                      Item Two
+                    </TabPanel>
+                    <Typography
+                      sx={{
+                        color: "gray600.main",
+                        fontSize: "20px",
+                        fontWeight: "500",
+                        width: "340px",
+                      }}
+                    >
+                      {" "}
+                      Currently, No properties are added.
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      sx={{
+                        width: "184px",
+                        height: "40px",
+                        fontSize: "14px",
+                        fontWeight: "500",
+                        textTransform: "none",
+                        mt: "40px",
+                      }}
+                      startIcon={<AddCircleOutlineIcon />}
+                    >
+                      Add New Property
+                    </Button>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </Box>
+          </Box>
         </main>
       </div>
       <Outlet />
