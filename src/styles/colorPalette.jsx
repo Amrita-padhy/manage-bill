@@ -23,6 +23,9 @@ export const customTheme = createTheme({
     gray200: {
       main: "#DBDDDF",
     },
+    gray50: {
+      main: "#F3F4F4",
+    },
     white: {
       main: "#ffffff",
     },

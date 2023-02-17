@@ -19,13 +19,11 @@ import {
   CardActions,
   TextField,
   InputAdornment,
-  Input,
-  OutlinedInput,
   FormControl,
-  InputLabel,
   Select,
   Tabs,
   Tab,
+  CardMedia,
 } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -34,18 +32,19 @@ import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRig
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import AppBar from "@material-ui/core/AppBar";
-import { makeStyles, useTheme, withStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Drawer from "@material-ui/core/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import CloseIcon from "@mui/icons-material/Close";
-import { Check, Height } from "@mui/icons-material";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Header from "../common/Header";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import Footer from "../common/Footer";
+// import { TabPanel } from "@mui/lab";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -95,38 +94,6 @@ const Item = styled(Paper)(() => ({
   height: "92px",
   margin: "auto",
 }));
-// tab function
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
 
 const drawerWidth = 280;
 const useStyles = makeStyles((theme) => ({
@@ -170,12 +137,15 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
+function TabPanel(props) {
+  const { children, value, index } = props;
+  return <div>{value === index && <h1>{children}</h1>}</div>;
+}
 function GeneralLayout() {
-  const [value, setValue] = useState(0);
-
-  const handleTabChange = (event, newValue) => {
-    setValue(newValue);
+  const [activeTab, setActiveTab] = useState(0);
+  const handleTabChange = (e, val) => {
+    console.log(val);
+    setActiveTab(val);
   };
   const [sort, setSort] = useState("");
 
@@ -868,57 +838,49 @@ function GeneralLayout() {
               </Card>
               {/* tab card */}
               <Card
+                variant="outlined"
                 sx={{
                   mt: "32px",
                   bgcolor: "transparent",
                   height: "auto",
-                  border: "1px solid gray",
-                  width: "100vw- drawerWidth",
+                  mb: "40px",
                 }}
               >
-                <CardHeader sx={{ width: "100%", height: "48px" }}>
-                  <Box
-                    bgcolor="white.main"
-                    height="48px"
-                    width="100vw"
-                    display="flex"
-                    justifyContent="center"
-                    alignitems="center"
+                {/* tab  */}
+                <Box
+                  sx={{
+                    width: "100%",
+                    height: "48px",
+                    bgcolor: "white.main",
+                  }}
+                >
+                  <Tabs
+                    variant="fullWidth"
+                    value={activeTab}
+                    onChange={handleTabChange}
+                    textColor="secondary"
+                    indicatorColor="secondary"
                   >
-                    <Tabs
-                      centered
-                      value={value}
-                      onChange={handleTabChange}
-                      aria-label="basic tabs example"
-                      textColor="secondary"
-                      indicatorColor="secondary"
-                      alignitems="center"
-                    >
-                      <Tab
-                        style={{ textTransform: "none" }}
-                        label="Profile & Company"
-                        {...a11yProps(0)}
-                        color="secondary.main"
-                        fontSize="24px"
-                        lineheight="24px"
-                        fontWeight="500"
-                        sx={{ fontSize: "20px", fontWeight: "500" }}
-                      />
-
-                      <Tab
-                        style={{ textTransform: "none" }}
-                        label="Plan & Payment"
-                        {...a11yProps(1)}
-                        color="secondary.main"
-                        lineheight="24px"
-                        sx={{ fontSize: "20px", fontWeight: "500" }}
-                      />
-                    </Tabs>
-                  </Box>
-                </CardHeader>
+                    <Tab
+                      label="Active Properties"
+                      sx={{
+                        fontSize: "16px",
+                        fontWeight: "600",
+                        textTransform: "none",
+                      }}
+                    />
+                    <Tab
+                      label=" Inactive Properties"
+                      sx={{
+                        fontSize: "16px",
+                        fontWeight: "600",
+                        textTransform: "none",
+                      }}
+                    />
+                  </Tabs>
+                </Box>
                 <CardActions
                   sx={{
-                    // height: "76px",
                     px: "26px",
                     py: "20px",
 
@@ -937,11 +899,13 @@ function GeneralLayout() {
                         color: "gray600.main",
                         fontSize: "16px",
                         fontWeight: "400",
+                        whiteSpace: "nowrap",
                       }}
                     >
                       Find Property
                     </Typography>
                     <TextField
+                      fullWidth
                       id="input-with-icon-textfield"
                       placeholder="Search"
                       size="small"
@@ -973,7 +937,7 @@ function GeneralLayout() {
                         color: "gray600.main",
                         fontSize: "16px",
                         fontWeight: "500",
-                        width: "92px",
+                        whiteSpace: "nowrap",
                       }}
                     >
                       Sort By
@@ -981,6 +945,8 @@ function GeneralLayout() {
 
                     <FormControl
                       fullWidth
+                      size="small"
+                      margin="normal"
                       variant="standard"
                       sx={{
                         bgcolor: "white.main",
@@ -990,6 +956,7 @@ function GeneralLayout() {
                       }}
                     >
                       <Select
+                        autoWidth
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={sort}
@@ -1007,11 +974,158 @@ function GeneralLayout() {
 
                 <CardContent>
                   <Stack justifyContent={"center"} alignItems="center">
-                    <TabPanel value={value} index={0}>
-                      Item One
+                    {/* property card */}
+                    <Card
+                      variant="outlined"
+                      sx={{
+                        display: "flex",
+                        flexDirection: { xs: "column", md: "row" },
+                        width: "100%",
+                        padding: "24px",
+                        borderRadius: "8px",
+                        gap: "24px",
+                      }}
+                    >
+                      <CardMedia
+                        component="img"
+                        sx={{
+                          width: { xs: "100%", md: "200px" },
+                          height: "136px",
+                          borderRadius: "8px",
+                        }}
+                        image="live-from-space.jpg"
+                        alt="Live from space album cover"
+                      />
+                      <CardContent sx={{ flex: "1", p: "0px" }}>
+                        {/* heading */}
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: { xs: "column", md: "row" },
+
+                            justifyContent: {
+                              xs: "flex-start",
+                              md: "space-between",
+                            },
+                            alignItems: { xs: "flex-start", md: "center" },
+                          }}
+                        >
+                          <Box>
+                            <Typography
+                              sx={{
+                                color: "gray900.main",
+                                fontSize: "24px",
+                                fontWeight: "700",
+                                whiteSpace: "nowrap",
+                              }}
+                            >
+                              Colonial Gardens
+                            </Typography>
+                            {/* subheading */}
+                            <Typography
+                              sx={{
+                                color: "gray600.main",
+                                fontSize: "14px",
+                                fontWeight: "500",
+                                whiteSpace: "nowrap",
+                              }}
+                            >
+                              123 B Street, San Diego, CA 92101
+                            </Typography>
+                          </Box>
+
+                          <Button
+                            variant="contained"
+                            color="gray50"
+                            disableElevation
+                            sx={{
+                              color: "gray600.main",
+                              fontSize: "14px",
+                              fontWeight: "500",
+                              textTransform: "none",
+                            }}
+                          >
+                            Property ID 123456
+                          </Button>
+                        </Box>
+                        {/*  */}
+                        <Stack
+                          direction={{ xs: "column", md: "row" }}
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            mt: "24px",
+                          }}
+                        >
+                          <Box width={"100%"} m="6px">
+                            <Typography
+                              sx={{
+                                color: "gray700.main",
+                                fontSize: "14px",
+                                fontWeight: "500",
+                              }}
+                            >
+                              Property Type
+                            </Typography>
+                            <Typography
+                              sx={{
+                                color: "gray900.main",
+                                fontSize: "16px",
+                                fontWeight: "900",
+                              }}
+                            >
+                              Apartment
+                            </Typography>
+                          </Box>
+                          <Box width={"100%"} m="6px">
+                            <Typography
+                              sx={{
+                                color: "gray700.main",
+                                fontSize: "14px",
+                                fontWeight: "500",
+                              }}
+                            >
+                              Number of Units
+                            </Typography>
+                            <Typography
+                              sx={{
+                                color: "gray900.main",
+                                fontSize: "16px",
+                                fontWeight: "900",
+                              }}
+                            >
+                              {" "}
+                              100
+                            </Typography>
+                          </Box>
+                          <Box width={"100%"} m="6px">
+                            <Typography
+                              sx={{
+                                color: "gray700.main",
+                                fontSize: "14px",
+                                fontWeight: "500",
+                              }}
+                            >
+                              Deposit Bank Account
+                            </Typography>
+                            <Typography
+                              sx={{
+                                color: "gray900.main",
+                                fontSize: "16px",
+                                fontWeight: "900",
+                              }}
+                            >
+                              xxxxxx3234
+                            </Typography>
+                          </Box>
+                        </Stack>
+                      </CardContent>
+                    </Card>
+                    <TabPanel value={activeTab} index={0}>
+                      Active Properties
                     </TabPanel>
-                    <TabPanel value={value} index={1}>
-                      Item Two
+                    <TabPanel value={activeTab} index={1}>
+                      Inactive Properties
                     </TabPanel>
                     <Typography
                       sx={{
@@ -1021,7 +1135,6 @@ function GeneralLayout() {
                         width: "340px",
                       }}
                     >
-                      {" "}
                       Currently, No properties are added.
                     </Typography>
                     <Button
