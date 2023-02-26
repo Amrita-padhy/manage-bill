@@ -7,7 +7,6 @@ function CompanyInformationForm({
   handleChange,
   touched,
   errors,
-
   handleBlur,
 }) {
   return (
