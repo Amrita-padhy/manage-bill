@@ -21,6 +21,8 @@ import ForgetPasswordEmailSentPage from "./pages/auth/ForgetPasswordEmailSentPag
 import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
 import SetNewPasswordPage from "./pages/auth/SetNewPasswordPage";
 import ManageProperty from "./pages/property/ManageProperty";
+import AddProperty from "./pages/property/AddProperty";
+import PropertyDetailCard from "./components/PropertyDetailCard";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +42,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               </Route>
               <Route element={<GeneralLayout />}>
                 <Route index path="/main" element={<ManageProperty />} />
+                <Route path="/add-property" element={<AddProperty />} />
+                <Route
+                  path="/detail-property-card"
+                  element={<PropertyDetailCard />}
+                />
               </Route>
             </Routes>
           </ThemeProvider>

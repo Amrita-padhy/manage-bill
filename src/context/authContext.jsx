@@ -33,7 +33,7 @@ export default function AuthContextProvider({ children }) {
       console.log(user);
       if (user) {
         const { data } = await getUserInfo({ uid: user.uid });
-
+        console.log(data);
         dispatch(setUser(data));
         setInitialUser(data);
         if (data.isOnboard === false) {

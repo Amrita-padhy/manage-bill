@@ -10,7 +10,6 @@ import IconButton from "@mui/material/IconButton";
 
 import { Button, Stack } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import StarIcon from "@mui/icons-material/Star";
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
@@ -490,10 +489,19 @@ function GeneralLayout() {
               </Button>
             </Stack>
           </Box>
-          <ManageProperty />
+          {/* <ManageProperty /> */}
+          <Box
+            sx={{
+              px: "48px",
+              py: "40px",
+              bgcolor: "#F3F4F4",
+              justifyContent: "center",
+            }}
+          >
+            <Outlet />
+          </Box>
         </main>
       </div>
-      {/* <Outlet /> */}
     </>
   );
 }

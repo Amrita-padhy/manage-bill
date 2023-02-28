@@ -4,11 +4,57 @@ import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 import { useFormik } from "formik";
 import { basicSchema } from "@/common/validators";
 import { Box, Stack } from "@mui/system";
-import { Button, Card, MenuItem, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Card,
+  Divider,
+  MenuItem,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Header from "../../common/Header";
 import { styled } from "@mui/material/styles";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useNavigate } from "react-router-dom";
+import ManageProperty from "./ManageProperty";
+import { useState } from "react";
+import { Login } from "@mui/icons-material";
+import { useSelector } from "react-redux";
 
 function AddProperty() {
+  const { user } = useSelector((state) => state.user);
+  console.log(user);
+
+  const [noteText, setNoteText] = useState("");
+  const [notes, setNotes] = useState([]);
+  const noteTextHandler = (e) => {
+    console.log(setNoteText(e.target.value));
+  };
+  console.log(notes);
+
+  const addNotes = (e) => {
+    e.preventDefault();
+    setNotes([
+      ...notes,
+      {
+        text: noteText,
+        completed: false,
+        id: Math.random() * 1000,
+      },
+    ]);
+    setNoteText("");
+  };
+  const deleteNote = () => {
+    setNoteText("");
+  };
+
+  const currentDate = new Date().toLocaleDateString();
+  const currentTime = new Date().toLocaleString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  });
+
   // formik
   const { values, handleChange, touched, errors, handleSubmit, handleBlur } =
     useFormik({
@@ -38,20 +84,9 @@ function AddProperty() {
       Property: "Single room",
     },
   ];
-  const depositAccountType = [
-    {
-      value: "1",
-      account: "SBI",
-    },
-    {
-      value: "2",
-      account: "HDFC",
-    },
-    {
-      value: "3",
-      account: "UNION",
-    },
-  ];
+
+  const navigate = useNavigate();
+
   return (
     <Box sx={{ width: "100%" }}>
       <Button
@@ -59,6 +94,9 @@ function AddProperty() {
         color="secondary"
         startIcon={<ArrowBackIcon />}
         sx={{ textTransform: "none" }}
+        onClick={() => {
+          navigate("/main");
+        }}
       >
         Back
       </Button>
@@ -107,16 +145,17 @@ function AddProperty() {
               margin="normal"
               variant="outlined"
               type={"text"}
-              id="depositAccount"
-              label="Deposit Account"
+              id="PropertyType"
+              name={"PropertyType"}
+              label="Property Type"
               placeholder="Add/Select a deposit account"
               bordercolor="gray200"
               color="gray600"
-              value={values.depositAccount}
+              value={values.PropertyType}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={errors.depositAccount && touched.depositAccount}
-              helperText={touched.depositAccount ? errors.depositAccount : null}
+              error={errors.PropertyType && touched.PropertyType}
+              helperText={touched.PropertyType ? errors.PropertyType : null}
             >
               {selectPropertyType.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
@@ -245,97 +284,7 @@ function AddProperty() {
         </Box>
       </Card>
       {/* Receive Payments card */}
-      <Card sx={{ height: "auto", my: "16px", p: "24px" }}>
-        <Box display={"flex"} gap={1} alignItems={"center"}>
-          <Typography
-            sx={{
-              fontSize: "20px",
-              fontWeight: "700",
-              color: "gray900.main",
-            }}
-          >
-            Receive Payments
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: "16px",
-              fontWeight: "400",
-              color: "secondary.main",
-            }}
-          >
-            payload.co
-          </Typography>
-        </Box>
-        <Typography
-          sx={{
-            fontSize: "16px",
-            fontWeight: "400",
-            color: "gray600.main",
-          }}
-        >
-          Create a merchant account with payload to receive online payments from
-          your residents.
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: "16px",
-            fontWeight: "400",
-            color: "gray600.main",
-            mt: "15px",
-          }}
-        >
-          Utility Ranger does not record any of the information collected in
-          this process.
-        </Typography>
-        {/* form */}
-        <Box component="form" noValidate autoComplete="off">
-          <Stack direction={{ xs: "column", md: "row" }} gap={{ xs: 1, md: 3 }}>
-            <TextField
-              required
-              fullWidth
-              select
-              size="small"
-              margin="normal"
-              variant="outlined"
-              type={"text"}
-              id="depositAccount"
-              label="Deposit Account"
-              placeholder="Add/Select a deposit account"
-              bordercolor="gray200"
-              color="gray600"
-              value={values.depositAccount}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={errors.depositAccount && touched.depositAccount}
-              helperText={touched.depositAccount ? errors.depositAccount : null}
-            >
-              {depositAccountType.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.account}
-                </MenuItem>
-              ))}
-            </TextField>
-            <TextField
-              required
-              fullWidth
-              size="small"
-              margin="normal"
-              variant="outlined"
-              type={"text"}
-              id="displayName"
-              label="Add a display name to appear on resident bills"
-              placeholder="Enter display name"
-              bordercolor="gray200"
-              color="gray600"
-              value={values.displayName}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={errors.displayName && touched.displayName}
-              helperText={touched.displayName ? errors.displayName : null}
-            />
-          </Stack>
-        </Box>
-      </Card>
+
       {/* property image card */}
       <Card sx={{ height: "auto", my: "16px", p: "24px" }}>
         <Typography
@@ -431,10 +380,13 @@ function AddProperty() {
           maxRows={4}
           aria-label="maximum height"
           placeholder="Additional notes"
+          value={noteText}
+          onChange={noteTextHandler}
         />
+
         <Box
           display={"flex"}
-          justifyContent={{ xs: "center", md: "flex-end" }}
+          justifyContent={{ xs: "space-evenly", md: "flex-end" }}
           alignItems={"center"}
           gap="10px"
           mt="10px"
@@ -443,6 +395,7 @@ function AddProperty() {
             variant="outlined"
             color="gray700"
             sx={{ textTransform: "none", bgcolor: "gray200" }}
+            onClick={deleteNote}
           >
             Cancel
           </Button>
@@ -450,11 +403,127 @@ function AddProperty() {
             variant="contained"
             color="secondary"
             sx={{ textTransform: "none" }}
+            onClick={addNotes}
+            disabled={noteText.length === 0}
           >
             Add Notes
           </Button>
         </Box>
+        <Typography
+          sx={{
+            fontSize: "20px",
+            fontWeight: "700",
+            color: "gray600.main",
+          }}
+        >
+          Past Notes
+        </Typography>
+        <Card
+          sx={{
+            bgcolor: "gray200.main",
+            height: "auto",
+            mt: "10px",
+          }}
+          variant="outlined"
+          disableElevation
+        >
+          {notes.map((note) => (
+            <>
+              <Typography
+                sx={{
+                  fontSize: "14px",
+                  fontWeight: "400",
+                  color: "gray700.main",
+                  m: "12px",
+                }}
+              >
+                {note.text}
+                <Box
+                  display={{ xs: "block", md: "flex" }}
+                  justifyContent={"flex-start"}
+                  alignItems="center"
+                  gap={"10px"}
+                >
+                  <Typography
+                    sx={{
+                      fontSize: "12px",
+
+                      fontWeight: "400",
+                      color: "gray600.main",
+                    }}
+                  >
+                    {currentDate}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "12px",
+                      fontWeight: "400",
+                      color: "gray600.main",
+                    }}
+                  >
+                    {currentTime}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "12px",
+                      fontWeight: "500",
+                      color: "gray900.main",
+                    }}
+                  >
+                    Entered By:
+                    <Box
+                      component={"span"}
+                      sx={{
+                        fontSize: "12px",
+                        fontWeight: "400",
+                        color: "gray600.main",
+                      }}
+                    >
+                      {user.firstName}
+                    </Box>
+                  </Typography>
+                </Box>
+              </Typography>
+              <Divider />
+            </>
+          ))}
+        </Card>
       </Card>
+      <Box
+        display={"flex"}
+        justifyContent={{ xs: "center", md: "space-between" }}
+        alignItems={"center"}
+        flexDirection={{ xs: "column", md: "row" }}
+        gap="20px"
+      >
+        <Button
+          variant="contained"
+          color="white"
+          sx={{
+            textTransform: "none",
+            width: {
+              xs: "100%",
+              md: "103px",
+            },
+          }}
+        >
+          Cancel
+        </Button>
+        <Button
+          variant="contained"
+          color="white"
+          sx={{
+            textTransform: "none",
+            width: {
+              xs: "100%",
+              md: "103px",
+            },
+          }}
+          disabled
+        >
+          Save
+        </Button>
+      </Box>
     </Box>
   );
 }
