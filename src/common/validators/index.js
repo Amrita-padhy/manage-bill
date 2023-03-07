@@ -148,4 +148,25 @@ export const basicSchema = yup.object().shape({
         .max(6, "Zip code can not be exceed more than 6 characters")
         .min(6, "Zip code must be at lest 6 characters at minimum")
         .required("This field is required"),
+
+    providerName: yup
+        .string()
+        .matches(/^[A-Za-z ]*$/, 'Please enter valid first name')
+        .max(30)
+        .min(1, "First name must be 1 characters at minimum")
+        .required("This field is required"),
+    accountNickname: yup
+        .string()
+        .matches(/^[A-Za-z ]*$/, 'Please enter valid first name')
+        .max(30)
+        .min(1, "First name must be 1 characters at minimum")
+        .required("This field is required"),
+    ownerPortion: yup
+        .string()
+        .matches(/^[A-Za-z ]*$/, 'Please enter valid first name')
+        .max(30)
+        .min(1, "First name must be 1 characters at minimum")
+        .required("This field is required"),
+    billingCycle: yup.string().required("required"),
+    billingBy: yup.string().required("required"),
 })

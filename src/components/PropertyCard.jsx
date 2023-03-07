@@ -4,20 +4,37 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Divider,
+  IconButton,
+  Menu,
+  MenuItem,
   Stack,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Link, useNavigate } from "react-router-dom";
 
+const menuItems = [
+  { label: "Edit Property Details", url: "/add-property" },
+  { label: "Edit Utilities & Fees Details" },
+  { label: "Edit Resident Details" },
+];
+const ITEM_HEIGHT = 140;
 function PropertyCard() {
   const navigate = useNavigate();
-
+  const [menuEl, setMenuEl] = useState(null);
+  const openMenu = Boolean(menuEl);
+  const handleMenuClick = (event) => {
+    setMenuEl(event.currentTarget);
+  };
+  const handleMenuClose = () => {
+    setMenuEl(null);
+  };
   return (
     <>
       <Card
-        onClick={() => navigate("/detail-property-card")}
+        onClick={() => navigate("/property-details")}
         variant="outlined"
         sx={{
           display: "flex",
@@ -26,6 +43,7 @@ function PropertyCard() {
           padding: "24px",
           borderRadius: "8px",
           gap: "24px",
+          mt: "6px",
         }}
       >
         <CardMedia
@@ -94,8 +112,47 @@ function PropertyCard() {
               >
                 Property ID 123456
               </Button>
-              {/*  */}
-              <MoreVertIcon fontSize="medium" color="gray600" />
+              {/* menu icon */}
+              <Box onClick={(e) => e.stopPropagation()}>
+                <IconButton
+                  aria-label="more"
+                  id="long-button"
+                  aria-controls={open ? "long-menu" : undefined}
+                  aria-expanded={open ? "true" : undefined}
+                  aria-haspopup="true"
+                  onClick={handleMenuClick}
+                >
+                  <MoreVertIcon fontSize="medium" color="gray600" />
+                </IconButton>
+                <Menu
+                  anchorEl={menuEl}
+                  open={openMenu}
+                  onClose={handleMenuClose}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                  PaperProps={{
+                    style: {
+                      maxHeight: ITEM_HEIGHT,
+                      width: "25ch",
+                      borderRadius: "8px",
+                    },
+                  }}
+                >
+                  {menuItems.map((menuItem) => (
+                    <Link
+                      to={menuItem.url}
+                      style={{
+                        textDecoration: "none",
+                        color: "#495057",
+                      }}
+                    >
+                      <MenuItem key={menuItem}>{menuItem.label}</MenuItem>
+                    </Link>
+                  ))}
+                </Menu>
+              </Box>
             </Box>
           </Box>
           {/*  */}

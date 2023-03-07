@@ -5,7 +5,7 @@ import StarOutlineIcon from "@mui/icons-material/StarOutline";
 function Header(prop) {
   return (
     <>
-      <Stack direction={{ xs: "column", sm: "row" }}>
+      <Stack direction={{ xs: "column", sm: "row" }} sx={{ mt: "6px" }}>
         <Box
           sx={{
             fontSize: "	1.875rem",
@@ -26,7 +26,7 @@ function Header(prop) {
         >
           {prop.title}
 
-          <StarOutlineIcon fontSize="20px" color="gray900.main" />
+          <StarOutlineIcon fontSize="20px" color="gray900" />
         </Box>
       </Stack>
     </>

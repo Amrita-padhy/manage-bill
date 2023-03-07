@@ -22,7 +22,8 @@ import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
 import SetNewPasswordPage from "./pages/auth/SetNewPasswordPage";
 import ManageProperty from "./pages/property/ManageProperty";
 import AddProperty from "./pages/property/AddProperty";
-import PropertyDetailCard from "./components/PropertyDetailCard";
+import PropertyDetails from "./components/PropertyDetails";
+import AddUtility from "./pages/property/AddUtility";
 
 const queryClient = new QueryClient();
 
@@ -43,10 +44,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route element={<GeneralLayout />}>
                 <Route index path="/main" element={<ManageProperty />} />
                 <Route path="/add-property" element={<AddProperty />} />
-                <Route
-                  path="/detail-property-card"
-                  element={<PropertyDetailCard />}
-                />
+                <Route path="/property-details" element={<PropertyDetails />} />
+                <Route path="add-utility" element={<AddUtility />} />
               </Route>
             </Routes>
           </ThemeProvider>

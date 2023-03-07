@@ -14,12 +14,13 @@ import {
 } from "@mui/material";
 import Header from "../../common/Header";
 import { styled } from "@mui/material/styles";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import ManageProperty from "./ManageProperty";
 import { useState } from "react";
 import { Login } from "@mui/icons-material";
 import { useSelector } from "react-redux";
+import BackButton from "../../common/BackButton";
+// import UtilityButtons from "../../components/common/UtilityButtons";
 
 function AddProperty() {
   const { user } = useSelector((state) => state.user);
@@ -89,17 +90,8 @@ function AddProperty() {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Button
-        variant="text"
-        color="secondary"
-        startIcon={<ArrowBackIcon />}
-        sx={{ textTransform: "none" }}
-        onClick={() => {
-          navigate("/main");
-        }}
-      >
-        Back
-      </Button>
+      {/* back btn */}
+      <BackButton />
       {/*Properties heading  */}
       <Header heading=" Properties:" title=" Add Property" />
       {/* Properties details card */}
@@ -489,12 +481,15 @@ function AddProperty() {
           ))}
         </Card>
       </Card>
+      {/* <UtilityButtons /> */}
+      {/* utility button */}
       <Box
         display={"flex"}
         justifyContent={{ xs: "center", md: "space-between" }}
         alignItems={"center"}
         flexDirection={{ xs: "column", md: "row" }}
         gap="20px"
+        marginTop={"16px"}
       >
         <Button
           variant="contained"

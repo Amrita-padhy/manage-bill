@@ -8,6 +8,7 @@ import {
   Divider,
   FormControl,
   Grid,
+  IconButton,
   InputAdornment,
   MenuItem,
   Paper,
@@ -21,6 +22,7 @@ import {
 import React, { useState } from "react";
 import Header from "../../common/Header";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -33,7 +35,7 @@ const Item = styled(Paper)(() => ({
   padding: "8px",
   border: "1px solid #DBDDDF",
   borderRadius: "8px",
-  width: { xs: "115px", md: "240px" },
+  width: "90%",
   height: "92px",
   margin: "auto",
 }));
@@ -42,6 +44,26 @@ function TabPanel(props) {
   return <div>{value === index && <h1>{children}</h1>}</div>;
 }
 function ManageProperty() {
+  const overViewCard = [
+    { id: 1, label: "Properties", value: "00" },
+    { id: 2, label: "Units", value: "00" },
+    { id: 3, label: "Residents", value: "00" },
+    { id: 4, label: "Billable Residents", value: "0%" },
+    { id: 5, label: "Properties", value: "00" },
+    { id: 6, label: "Units", value: "00" },
+    { id: 7, label: "Residents", value: "00" },
+    { id: 8, label: "Billable Residents", value: "0%" },
+  ];
+
+  const [showOverviewCards, setShowOverviewCards] = useState(false);
+  const shownCards = overViewCard.slice(0, 4);
+  const hiddenCards = overViewCard.slice(4);
+  console.log(hiddenCards);
+
+  const toggleOverviewCards = () => {
+    setShowOverviewCards(!showOverviewCards);
+  };
+
   const [activeTab, setActiveTab] = useState(0);
   const handleTabChange = (e, val) => {
     console.log(val);
@@ -61,6 +83,7 @@ function ManageProperty() {
       <Stack
         direction={{ xs: "column", sm: "row" }}
         justifyContent="space-between"
+        alignItems={"center"}
       >
         <Header heading=" Properties:" title="Manage Properties" />
         <Button
@@ -74,7 +97,7 @@ function ManageProperty() {
             textTransform: "none",
           }}
           startIcon={<AddCircleOutlineIcon />}
-          onClick={() => navigate("/add-property          ")}
+          onClick={() => navigate("/add-property")}
         >
           Add New Property
         </Button>
@@ -103,114 +126,70 @@ function ManageProperty() {
             >
               Overview
             </Typography>
-            <KeyboardArrowUpIcon fontSize="medium" color="gray900,main" />
+            <IconButton onClick={toggleOverviewCards}>
+              {showOverviewCards ? (
+                <KeyboardArrowDownIcon fontSize="medium" color="gray900,main" />
+              ) : (
+                <KeyboardArrowUpIcon fontSize="medium" color="gray900,main" />
+              )}
+            </IconButton>
           </Box>
           {/* Overview card main */}
           <Box width={"100%"} marginTop="16px">
-            <Grid container>
-              {/* Properties */}
-              <Grid xs={6} md={3}>
-                <Item>
-                  <Typography
-                    sx={{
-                      fontSize: "12px",
-                      fontWeight: "500",
-                      color: "gray600.main",
-                    }}
-                  >
-                    Properties
-                  </Typography>
+            <Grid container rowGap={"15px"}>
+              {/* {overViewCard.map((item, index) => (
+                <Grid xs={6} md={3}>
+                  <Item key={index}>
+                    <Typography
+                      sx={{
+                        fontSize: "12px",
+                        fontWeight: "500",
+                        color: "gray600.main",
+                      }}
+                    >
+                      {item.label}
+                    </Typography>
 
-                  <Typography
-                    sx={{
-                      fontSize: "30px",
-                      fontWeight: "700",
-                      color: "gray900.main",
-                      mt: "6px",
-                    }}
-                  >
-                    00
-                  </Typography>
-                </Item>
-              </Grid>
+                    <Typography
+                      sx={{
+                        fontSize: "30px",
+                        fontWeight: "700",
+                        color: "gray900.main",
+                        mt: "6px",
+                      }}
+                    >
+                      {item.value}
+                    </Typography>
+                  </Item>
+                </Grid>
+              ))} */}
+              {shownCards.map((item, index) => (
+                <Grid xs={6} md={3}>
+                  <Item key={index}>
+                    <Typography
+                      sx={{
+                        fontSize: "12px",
+                        fontWeight: "500",
+                        color: "gray600.main",
+                      }}
+                    >
+                      {item.label}
+                    </Typography>
 
-              {/* Units */}
-              <Grid xs={6} md={3}>
-                <Item>
-                  <Typography
-                    sx={{
-                      fontSize: "12px",
-                      fontWeight: "500",
-                      color: "gray600.main",
-                    }}
-                  >
-                    Units
-                  </Typography>
-
-                  <Typography
-                    sx={{
-                      fontSize: "30px",
-                      fontWeight: "700",
-                      color: "gray900.main",
-                      mt: "6px",
-                    }}
-                  >
-                    00
-                  </Typography>
-                </Item>
-              </Grid>
-              {/* Residents */}
-
-              <Grid xs={6} md={3}>
-                <Item>
-                  <Typography
-                    sx={{
-                      fontSize: "12px",
-                      fontWeight: "500",
-                      color: "gray600.main",
-                    }}
-                  >
-                    Residents
-                  </Typography>
-
-                  <Typography
-                    sx={{
-                      fontSize: "30px",
-                      fontWeight: "700",
-                      color: "gray900.main",
-                      mt: "6px",
-                    }}
-                  >
-                    00
-                  </Typography>
-                </Item>
-              </Grid>
-
-              {/* Billable Residents */}
-              <Grid xs={6} md={3}>
-                <Item>
-                  <Typography
-                    sx={{
-                      fontSize: "12px",
-                      fontWeight: "500",
-                      color: "gray600.main",
-                    }}
-                  >
-                    Billable Residents
-                  </Typography>
-
-                  <Typography
-                    sx={{
-                      fontSize: "30px",
-                      fontWeight: "700",
-                      color: "gray900.main",
-                      mt: "6px",
-                    }}
-                  >
-                    0%
-                  </Typography>
-                </Item>
-              </Grid>
+                    <Typography
+                      sx={{
+                        fontSize: "30px",
+                        fontWeight: "700",
+                        color: "gray900.main",
+                        mt: "6px",
+                      }}
+                    >
+                      {item.value}
+                    </Typography>
+                  </Item>
+                </Grid>
+              ))}
+              {/*  */}
             </Grid>
           </Box>
         </Card>
@@ -384,7 +363,7 @@ function ManageProperty() {
                   mt: "40px",
                 }}
                 startIcon={<AddCircleOutlineIcon />}
-                onClick={() => navigate("/add-property          ")}
+                onClick={() => navigate("/add-property")}
               >
                 Add New Property
               </Button>
