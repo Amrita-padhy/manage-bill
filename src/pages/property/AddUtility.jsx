@@ -8,6 +8,7 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
+  IconButton,
   InputLabel,
   MenuItem,
   Modal,
@@ -18,7 +19,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import BackButton from "../../common/BackButton";
 import Header from "../../common/Header";
 import PropertyCard from "../../components/PropertyCard";
@@ -37,6 +38,7 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { useState } from "react";
 import { residentFees, residentUtilities } from "../utilities/Utilies";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
+import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 
 import Switch from "@mui/material/Switch";
 import { useFormik } from "formik";
@@ -53,16 +55,46 @@ const modalStyle = {
   borderRadius: "8px",
 };
 function AddUtility() {
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const handleDeleteModalOpen = () => {
+    console.log("hi");
+    setDeleteModalOpen(true);
+  };
+
+  const handleDeleteModalClose = () => setDeleteModalOpen(false);
+
+  const navigate = useNavigate();
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const [utilityCards, setUtilityCards] = useState(residentUtilities);
 
+  const [selectedUtilityCard, setSelectedUtilityCard] = useState({});
+
   const onSubmit = (id) => {
     console.log(values, notes, checked);
+    console.log(selectedUtilityCard.account.push(values, notes, checked));
+    console.log(selectedUtilityCard.account);
+    if (selectedUtilityCard.account) {
+      console.log("hi");
+      setUtilityCards(
+        utilityCards.map((card) => {
+          if (card.id === id) {
+            card.isSelected = !card.isSelected;
+          }
+          return card;
+        })
+      );
+      setOpen(true);
+      console.log(values.providerName);
+    }
 
-    setOpenModal(false);
+    //  onclick on save button save the lode data to the account array
+    // the check if account has length then show the card selected.
+
+    // setOpenModal(false);
   };
 
   const [cards, setCards] = useState(residentFees);
@@ -70,15 +102,17 @@ function AddUtility() {
   const [openModal, setOpenModal] = useState(false);
   const handleModalOpen = (id) => {
     setOpenModal(true);
-    setUtilityCards(
-      utilityCards.map((card) => {
-        if (card.id === id) {
-          card.isSelected = !card.isSelected;
-          console.log(card);
-        }
-        return card;
-      })
-    );
+    setSelectedUtilityCard(utilityCards.find((card) => card.id === id));
+    console.log(selectedUtilityCard);
+    // setUtilityCards(
+    //   utilityCards.map((card) => {
+    //     if (card.id === id) {
+    //       card.isSelected = !card.isSelected;
+
+    //     }
+    //     return card;
+    //   })
+    // );
   };
   const handleModalClose = () => setOpenModal(false);
 
@@ -121,7 +155,9 @@ function AddUtility() {
       },
       validationSchema: basicSchema,
     });
+  const [inputValue, setInputValue] = useState(values);
 
+  console.log(inputValue);
   const [checked, setChecked] = useState(false);
   const handleSwitch = (event) => {
     setChecked(event.target.checked);
@@ -140,9 +176,90 @@ function AddUtility() {
 5-on save button click,push the data to array and show another modal
 for now save button click show card active
 */
-
+  const backToUtilityPage = () => {
+    setOpen(false);
+    setOpenModal(false);
+  };
   return (
     <>
+      {/* delete popup modal */}
+      <Modal
+        open={deleteModalOpen}
+        onClose={handleDeleteModalClose}
+        sx={{ margin: { xs: "10px", md: "0px" } }}
+      >
+        <Box sx={modalStyle}>
+          <Card>
+            <Stack
+              sx={{
+                height: "50px",
+                bgcolor: "#495057",
+                color: "white.main",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Typography
+                id="modal-modal-title"
+                sx={{ fontSize: "18px", fontWeight: "600" }}
+                color={"white.main"}
+              >
+                Delete
+              </Typography>
+            </Stack>
+
+            <Box padding={"10px"} textAlign="center">
+              <Typography
+                id="modal-modal-title"
+                sx={{ fontSize: "18px", fontWeight: "600" }}
+                color={"gray900.main"}
+              >
+                Delete Utility?
+              </Typography>
+              <Typography
+                id="modal-modal-title"
+                sx={{ fontSize: "18px", fontWeight: "600" }}
+                color={"gray600.main"}
+              >
+                Are you sure you want to delete Account nickname utility from
+                records?
+              </Typography>
+            </Box>
+
+            {/* buttons */}
+            <Stack
+              sx={{ p: "16px" }}
+              width={"100%"}
+              direction={"row"}
+              justifyContent="space-between"
+              alignItems={"center"}
+              marginTop="15px"
+            >
+              <Button
+                onClick={backToUtilityPage}
+                variant="outlined"
+                sx={{
+                  textTransform: "none",
+                  color: "gray",
+                  border: "1px solid gray",
+                }}
+              >
+                Cancel
+              </Button>
+
+              <Button
+                variant="contained"
+                color="error"
+                sx={{ textTransform: "none" }}
+                // onClick={handleDeleteModalClose && backToUtilityPage}
+              >
+                Yes, delete
+              </Button>
+            </Stack>
+          </Card>
+        </Box>
+      </Modal>
+      {/* 2nd */}
       <Modal
         open={open}
         onClose={handleClose}
@@ -171,7 +288,18 @@ for now save button click show card active
             <Box sx={{ p: "16px" }}>
               {/* box */}
               <Stack sx={{ border: "1px solid gray", borderRadius: "8px" }}>
-                <Box sx={{ p: "8px" }}>Gas</Box>
+                <Box sx={{ p: "8px" }}>
+                  <Stack alignItems={"center"} direction={"row"} gap={"10px"}>
+                    {selectedUtilityCard.icon}
+                    <Typography
+                      fontSize={"18px"}
+                      fontWeight="600"
+                      color={"gray700.main"}
+                    >
+                      {selectedUtilityCard.label}
+                    </Typography>
+                  </Stack>
+                </Box>
                 <Divider />
                 <Box
                   sx={{
@@ -195,7 +323,8 @@ for now save button click show card active
                       variant="outlined"
                     />
                   </Box>
-                  <Box display={"flex"} gap={"10px"}>
+                  {/* buttons */}
+                  <Box display={{ xs: "none", md: "flex" }} gap={"10px"}>
                     <Button
                       variant="outlined"
                       color="secondary"
@@ -209,9 +338,18 @@ for now save button click show card active
                       variant="outlined"
                       color="error"
                       sx={{ textTransform: "none", fontWeight: "500" }}
+                      onClick={handleDeleteModalOpen}
                     >
                       Delete
                     </Button>
+                  </Box>
+                  <Box display={{ xs: "flex", md: "none" }} gap={"10px"}>
+                    <IconButton aria-label="edit">
+                      <BorderColorOutlinedIcon color="secondary" />
+                    </IconButton>
+                    <IconButton aria-label="delete">
+                      <DeleteOutlineOutlinedIcon color="error" />
+                    </IconButton>
                   </Box>
                 </Box>
               </Stack>
@@ -226,6 +364,7 @@ for now save button click show card active
               marginTop="15px"
             >
               <Button
+                onClick={backToUtilityPage}
                 variant="outlined"
                 sx={{
                   textTransform: "none",
@@ -240,7 +379,7 @@ for now save button click show card active
                 variant="contained"
                 color="secondary"
                 sx={{ textTransform: "none" }}
-                onClick={onSubmit}
+                // onClick={onSubmit}
               >
                 Add New
               </Button>
@@ -272,15 +411,23 @@ for now save button click show card active
               Add Property Utility
             </Typography>
           </Stack>
-          <Box sx={{ p: "16px" }}>
-            {utilityCards.map((card) => {
-              {
-                if (card.isSelected) {
-                  console.log(card);
-                  <Box>{card.label}</Box>;
-                }
-              }
-            })}
+          <Box
+            sx={{
+              p: "16px",
+            }}
+          >
+            <Stack alignItems={"center"} direction={"row"} gap={"10px"}>
+              {selectedUtilityCard.icon}
+              <Typography
+                fontSize={"18px"}
+                fontWeight="600"
+                color={"gray700.main"}
+              >
+                {selectedUtilityCard.label}
+              </Typography>
+            </Stack>
+            {/* gas */}
+
             <Box>
               <FormControlLabel
                 control={
@@ -440,7 +587,7 @@ for now save button click show card active
             >
               <Button
                 variant="outlined"
-                onClick={handleModalClose}
+                onClick={backToUtilityPage}
                 sx={{
                   textTransform: "none",
                   color: "gray",
@@ -466,7 +613,7 @@ for now save button click show card active
                 variant="contained"
                 color="secondary"
                 sx={{ textTransform: "none" }}
-                onClick={onSubmit}
+                onClick={() => onSubmit(selectedUtilityCard.id)}
               >
                 Save
               </Button>
@@ -518,7 +665,6 @@ for now save button click show card active
               rowGap={"10px"}
             >
               {utilityCards.map((item, index) => (
-                // console.log(item),
                 <Grid
                   xs={2}
                   sm={4}
@@ -528,12 +674,11 @@ for now save button click show card active
                   alignItems={"center"}
                 >
                   <Item
+                    variant="elevation"
                     onClick={() => handleModalOpen(item.id)}
                     key={index}
                     style={{
-                      border: item.isSelected
-                        ? "1px solid black"
-                        : "1px solid gray",
+                      border: item.isSelected ? "1px solid black" : "null",
                     }}
                   >
                     <Box>{item.icon}</Box>
@@ -669,3 +814,6 @@ for now save button click show card active
 }
 
 export default AddUtility;
+
+// when ever u click the modal a modal will appear
+//
