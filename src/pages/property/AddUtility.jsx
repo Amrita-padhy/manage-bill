@@ -2,83 +2,72 @@ import {
   Box,
   Button,
   Card,
-  CardHeader,
-  Chip,
-  Divider,
-  FormControl,
-  FormControlLabel,
   Grid,
-  IconButton,
-  InputLabel,
-  MenuItem,
-  Modal,
   Paper,
-  Select,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
 import React from "react";
-import { Outlet, useNavigate } from "react-router-dom";
 import BackButton from "../../common/BackButton";
 import Header from "../../common/Header";
 import PropertyCard from "../../components/PropertyCard";
-import PropertyUtilitiesCard from "../../components/PropertyUtilitiesCard";
-import ResidentFeesCard from "../../components/ResidentFeesCard";
-import ShowerIcon from "@mui/icons-material/Shower";
-import OpacityOutlinedIcon from "@mui/icons-material/OpacityOutlined";
-import WaterDamageOutlinedIcon from "@mui/icons-material/WaterDamageOutlined";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import PowerOutlinedIcon from "@mui/icons-material/PowerOutlined";
-import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
-import PestControlIcon from "@mui/icons-material/PestControl";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import styled from "@emotion/styled";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { useState } from "react";
 import { residentFees, residentUtilities } from "../utilities/Utilies";
-import TextareaAutosize from "@mui/base/TextareaAutosize";
-import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
-
-import Switch from "@mui/material/Switch";
 import { useFormik } from "formik";
 import { basicSchema } from "../../common/validators";
+import AddPropertyUtilityModal from "../../components/AddPropertyUtilityModal";
+import EditUtilityModal from "../../components/EditUtilityModal";
+import DeleteUtilityModal from "../../components/DeleteUtilityModal";
 
-const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: { xs: "100%", md: "600px" },
-  height: "auto",
-  bgcolor: "background.paper",
-  borderRadius: "8px",
-};
+const Item = styled(Paper)(() => ({
+  width: "95%",
+  height: "100px",
+  border: "1px solid gray",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "12px",
+}));
+
 function AddUtility() {
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  // delete modal
+  const [deleteUtilityModalOpen, setDeleteUtilityModalOpen] = useState(false);
   const handleDeleteModalOpen = () => {
-    console.log("hi");
-    setDeleteModalOpen(true);
+    setDeleteUtilityModalOpen(true);
   };
-
-  const handleDeleteModalClose = () => setDeleteModalOpen(false);
-
-  const navigate = useNavigate();
-
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
+  const handleDeleteModalClose = () => setDeleteUtilityModalOpen(false);
+  // edit modal
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const handleEditModalOpen = () => setEditModalOpen(true);
+  const handleEditModalClose = () => setEditModalOpen(false);
+  // add utility modal
+  const [addUtilityModalOpen, setAddUtilityModalOpen] = useState(false);
+  const handleAddUtilityModalOpen = (id) => {
+    setAddUtilityModalOpen(true);
+    setSelectedUtilityCard(utilityCards.find((card) => card.id === id));
+    console.log(selectedUtilityCard);
+  };
+  const handleAddUtilityModalClose = () => setAddUtilityModalOpen(false);
+  //
   const [utilityCards, setUtilityCards] = useState(residentUtilities);
-
   const [selectedUtilityCard, setSelectedUtilityCard] = useState({});
-
+  const [cards, setCards] = useState(residentFees);
+  const [checked, setChecked] = useState(false);
+  const handleSwitch = (event) => {
+    setChecked(event.target.checked);
+  };
+  const [notes, setNotes] = useState("");
+  const handleNotes = (e) => {
+    setNotes(e.target.value);
+  };
   const onSubmit = (id) => {
     console.log(values, notes, checked);
     console.log(selectedUtilityCard.account.push(values, notes, checked));
     console.log(selectedUtilityCard.account);
     if (selectedUtilityCard.account) {
-      console.log("hi");
       setUtilityCards(
         utilityCards.map((card) => {
           if (card.id === id) {
@@ -87,34 +76,10 @@ function AddUtility() {
           return card;
         })
       );
-      setOpen(true);
-      console.log(values.providerName);
+      setEditModalOpen(true);
     }
-
-    //  onclick on save button save the lode data to the account array
-    // the check if account has length then show the card selected.
-
-    // setOpenModal(false);
+    setAddUtilityModalOpen(false);
   };
-
-  const [cards, setCards] = useState(residentFees);
-
-  const [openModal, setOpenModal] = useState(false);
-  const handleModalOpen = (id) => {
-    setOpenModal(true);
-    setSelectedUtilityCard(utilityCards.find((card) => card.id === id));
-    console.log(selectedUtilityCard);
-    // setUtilityCards(
-    //   utilityCards.map((card) => {
-    //     if (card.id === id) {
-    //       card.isSelected = !card.isSelected;
-
-    //     }
-    //     return card;
-    //   })
-    // );
-  };
-  const handleModalClose = () => setOpenModal(false);
 
   const handleClick = (id) => {
     // cards[cardIndex] = {
@@ -129,498 +94,68 @@ function AddUtility() {
         return card;
       })
     );
-    setOpenModal(false);
+    setAddUtilityModalOpen(false);
   };
 
-  const Item = styled(Paper)(() => ({
-    width: "95%",
-    height: "100px",
-    border: "1px solid gray",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: "12px",
-  }));
-  // modal
   // formik
-  const { values, handleChange, touched, errors, handleSubmit, handleBlur } =
-    useFormik({
-      initialValues: {
-        providerName: "",
-        accountNickname: "",
-        ownerPortion: "",
-        billingCycle: "",
-        billingBy: "",
-      },
-      validationSchema: basicSchema,
-    });
-  const [inputValue, setInputValue] = useState(values);
+  const { values, handleChange, touched, errors, handleBlur } = useFormik({
+    initialValues: {
+      providerName: "",
+      accountNickname: "",
+      ownerPortion: "",
+      billingCycle: "",
+      billingBy: "",
+    },
+    validationSchema: basicSchema,
+  });
 
-  console.log(inputValue);
-  const [checked, setChecked] = useState(false);
-  const handleSwitch = (event) => {
-    setChecked(event.target.checked);
+  //handle delete ,delete utility page
+  const handleDeleteModals = () => {
+    setEditModalOpen(false);
+    setDeleteUtilityModalOpen(false);
   };
-
-  const [notes, setNotes] = useState("");
-  const handleNotes = (e) => {
-    setNotes(e.target.value);
-  };
-
-  /* 
-1-on card click modal open 
-2-on particular card click show particular icon 
-3-get all the input data 
-4-after getting all the input data unable save button 
-5-on save button click,push the data to array and show another modal
-for now save button click show card active
-*/
-  const backToUtilityPage = () => {
-    setOpen(false);
-    setOpenModal(false);
+  // handle delete edit utility page
+  const handleOnDeleteClick = () => {
+    setDeleteUtilityModalOpen(true);
+    setEditModalOpen(false);
   };
   return (
     <>
       {/* delete popup modal */}
-      <Modal
-        open={deleteModalOpen}
-        onClose={handleDeleteModalClose}
-        sx={{ margin: { xs: "10px", md: "0px" } }}
-      >
-        <Box sx={modalStyle}>
-          <Card>
-            <Stack
-              sx={{
-                height: "50px",
-                bgcolor: "#495057",
-                color: "white.main",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Typography
-                id="modal-modal-title"
-                sx={{ fontSize: "18px", fontWeight: "600" }}
-                color={"white.main"}
-              >
-                Delete
-              </Typography>
-            </Stack>
-
-            <Box padding={"10px"} textAlign="center">
-              <Typography
-                id="modal-modal-title"
-                sx={{ fontSize: "18px", fontWeight: "600" }}
-                color={"gray900.main"}
-              >
-                Delete Utility?
-              </Typography>
-              <Typography
-                id="modal-modal-title"
-                sx={{ fontSize: "18px", fontWeight: "600" }}
-                color={"gray600.main"}
-              >
-                Are you sure you want to delete Account nickname utility from
-                records?
-              </Typography>
-            </Box>
-
-            {/* buttons */}
-            <Stack
-              sx={{ p: "16px" }}
-              width={"100%"}
-              direction={"row"}
-              justifyContent="space-between"
-              alignItems={"center"}
-              marginTop="15px"
-            >
-              <Button
-                onClick={backToUtilityPage}
-                variant="outlined"
-                sx={{
-                  textTransform: "none",
-                  color: "gray",
-                  border: "1px solid gray",
-                }}
-              >
-                Cancel
-              </Button>
-
-              <Button
-                variant="contained"
-                color="error"
-                sx={{ textTransform: "none" }}
-                // onClick={handleDeleteModalClose && backToUtilityPage}
-              >
-                Yes, delete
-              </Button>
-            </Stack>
-          </Card>
-        </Box>
-      </Modal>
-      {/* 2nd */}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        sx={{ margin: { xs: "10px", md: "0px" } }}
-      >
-        <Box sx={modalStyle}>
-          <Card>
-            <Stack
-              sx={{
-                height: "50px",
-                bgcolor: "#495057",
-                color: "white.main",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Typography
-                id="modal-modal-title"
-                sx={{ fontSize: "18px", fontWeight: "600" }}
-                color={"white.main"}
-              >
-                Property Utility
-              </Typography>
-            </Stack>
-
-            <Box sx={{ p: "16px" }}>
-              {/* box */}
-              <Stack sx={{ border: "1px solid gray", borderRadius: "8px" }}>
-                <Box sx={{ p: "8px" }}>
-                  <Stack alignItems={"center"} direction={"row"} gap={"10px"}>
-                    {selectedUtilityCard.icon}
-                    <Typography
-                      fontSize={"18px"}
-                      fontWeight="600"
-                      color={"gray700.main"}
-                    >
-                      {selectedUtilityCard.label}
-                    </Typography>
-                  </Stack>
-                </Box>
-                <Divider />
-                <Box
-                  sx={{
-                    p: "8px",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <Box
-                    display={"flex"}
-                    justifyContent={"center"}
-                    alignItems="center"
-                    gap={"10px"}
-                  >
-                    <Typography>SV & Co.</Typography>
-                    <Chip
-                      label="Active"
-                      color="success"
-                      size="small"
-                      variant="outlined"
-                    />
-                  </Box>
-                  {/* buttons */}
-                  <Box display={{ xs: "none", md: "flex" }} gap={"10px"}>
-                    <Button
-                      variant="outlined"
-                      color="secondary"
-                      sx={{
-                        textTransform: "none",
-                      }}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      sx={{ textTransform: "none", fontWeight: "500" }}
-                      onClick={handleDeleteModalOpen}
-                    >
-                      Delete
-                    </Button>
-                  </Box>
-                  <Box display={{ xs: "flex", md: "none" }} gap={"10px"}>
-                    <IconButton aria-label="edit">
-                      <BorderColorOutlinedIcon color="secondary" />
-                    </IconButton>
-                    <IconButton aria-label="delete">
-                      <DeleteOutlineOutlinedIcon color="error" />
-                    </IconButton>
-                  </Box>
-                </Box>
-              </Stack>
-            </Box>
-            {/* buttons */}
-            <Stack
-              sx={{ p: "16px" }}
-              width={"100%"}
-              direction={"row"}
-              justifyContent="space-between"
-              alignItems={"center"}
-              marginTop="15px"
-            >
-              <Button
-                onClick={backToUtilityPage}
-                variant="outlined"
-                sx={{
-                  textTransform: "none",
-                  color: "gray",
-                  border: "1px solid gray",
-                }}
-              >
-                Cancel
-              </Button>
-
-              <Button
-                variant="contained"
-                color="secondary"
-                sx={{ textTransform: "none" }}
-                // onClick={onSubmit}
-              >
-                Add New
-              </Button>
-            </Stack>
-          </Card>
-        </Box>
-      </Modal>
-      {/*  */}
-      <Modal
-        open={openModal}
-        onClose={handleModalClose}
-        sx={{ margin: { xs: "10px", md: "0px" } }}
-      >
-        <Card sx={modalStyle}>
-          <Stack
-            sx={{
-              height: "50px",
-              bgcolor: "#495057",
-              color: "white.main",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Typography
-              id="modal-modal-title"
-              sx={{ fontSize: "18px", fontWeight: "600" }}
-              color={"white.main"}
-            >
-              Add Property Utility
-            </Typography>
-          </Stack>
-          <Box
-            sx={{
-              p: "16px",
-            }}
-          >
-            <Stack alignItems={"center"} direction={"row"} gap={"10px"}>
-              {selectedUtilityCard.icon}
-              <Typography
-                fontSize={"18px"}
-                fontWeight="600"
-                color={"gray700.main"}
-              >
-                {selectedUtilityCard.label}
-              </Typography>
-            </Stack>
-            {/* gas */}
-
-            <Box>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={checked}
-                    onChange={handleSwitch}
-                    color="secondary"
-                  />
-                }
-                label="Active"
-              />
-              {/* form */}
-            </Box>
-            <Grid container rowGap={"15px"}>
-              <Grid xs={12} md={6}>
-                <TextField
-                  required
-                  variant="outlined"
-                  margin="normal"
-                  type={"text"}
-                  sx={{ width: "97%" }}
-                  id="providerName"
-                  label="Provider Name"
-                  placeholder="Provider Name"
-                  bordercolor="gray200"
-                  color="gray600"
-                  value={values.providerName}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={errors.providerName && touched.providerName}
-                  helperText={touched.providerName ? errors.providerName : null}
-                />
-              </Grid>
-              <Grid xs={12} md={6}>
-                <TextField
-                  required
-                  variant="outlined"
-                  margin="normal"
-                  type={"text"}
-                  sx={{ width: "97%" }}
-                  id="accountNickname"
-                  label="Account Nickname / Number"
-                  placeholder="Account Nickname"
-                  bordercolor="gray200"
-                  color="gray600"
-                  value={values.accountNickname}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={errors.accountNickname && touched.accountNickname}
-                  helperText={
-                    touched.accountNickname ? errors.accountNickname : null
-                  }
-                />
-              </Grid>
-              <Grid xs={12} md={6}>
-                <TextField
-                  required
-                  variant="outlined"
-                  margin="normal"
-                  type={"text"}
-                  sx={{ width: "97%" }}
-                  id="ownerPortion"
-                  label="Owner’s Portion"
-                  placeholder="% Owner portion"
-                  bordercolor="gray200"
-                  color="gray600"
-                  value={values.ownerPortion}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={errors.ownerPortion && touched.ownerPortion}
-                  helperText={touched.ownerPortion ? errors.ownerPortion : null}
-                />
-              </Grid>
-              <Grid xs={12} md={6}>
-                <Box
-                  sx={{
-                    width: "97%",
-
-                    mt: "15px",
-                  }}
-                >
-                  <TextField
-                    required
-                    fullWidth
-                    select
-                    variant="outlined"
-                    type={"text"}
-                    id="billingCycle"
-                    name={"billingCycle"}
-                    label="billing Cycle"
-                    placeholder="billingCycle"
-                    bordercolor="gray200"
-                    color="gray600"
-                    value={values.billingCycle}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={errors.billingCycle && touched.billingCycle}
-                    helperText={
-                      touched.billingCycle ? errors.billingCycle : null
-                    }
-                  >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </TextField>
-                </Box>
-              </Grid>
-              <Grid xs={12} md={6}>
-                <Box sx={{ width: "97%", mt: "15px" }}>
-                  <TextField
-                    required
-                    fullWidth
-                    select
-                    variant="outlined"
-                    type={"text"}
-                    id="billingBy"
-                    name={"billingBy"}
-                    label="Bill By"
-                    placeholder="Select bill by unit"
-                    bordercolor="gray200"
-                    color="gray600"
-                    value={values.billingBy}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={errors.billingBy && touched.billingBy}
-                    helperText={touched.billingBy ? errors.billingBy : null}
-                  >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </TextField>
-                </Box>
-              </Grid>
-            </Grid>
-            <TextareaAutosize
-              value={notes}
-              onChange={handleNotes}
-              style={{
-                width: "97%",
-                height: "60px",
-                border: "1px solid gray",
-                color: "gray600.main",
-                padding: "15px",
-                marginTop: "24px",
-                fontWeight: 400,
-              }}
-              maxRows={4}
-              aria-label="maximum height"
-              placeholder="Additional notes"
-            />
-            <Stack
-              width={"100%"}
-              direction={"row"}
-              justifyContent="space-between"
-              alignItems={"center"}
-              marginTop="15px"
-            >
-              <Button
-                variant="outlined"
-                onClick={backToUtilityPage}
-                sx={{
-                  textTransform: "none",
-                  color: "gray",
-                  border: "1px solid gray",
-                }}
-              >
-                Cancel
-              </Button>
-
-              <Button
-                // disabled={
-                //   !values.providerName ||
-                //   !values.accountNickname ||
-                //   !values.ownerPortion ||
-                //   !values.billingCycle ||
-                //   !values.billingBy ||
-                //   errors.providerName ||
-                //   errors.accountNickname ||
-                //   errors.ownerPortion ||
-                //   errors.billingCycle ||
-                //   errors.billingBy
-                // }
-                variant="contained"
-                color="secondary"
-                sx={{ textTransform: "none" }}
-                onClick={() => onSubmit(selectedUtilityCard.id)}
-              >
-                Save
-              </Button>
-            </Stack>
-          </Box>
-        </Card>
-      </Modal>
+      <DeleteUtilityModal
+        deleteUtilityModalOpen={deleteUtilityModalOpen}
+        handleDeleteModalClose={handleDeleteModalClose}
+        handleDeleteModals={handleDeleteModals}
+        setEditModalOpen={setEditModalOpen}
+        setDeleteUtilityModalOpen={setDeleteUtilityModalOpen}
+      />
+      {/* edit utility */}
+      <EditUtilityModal
+        editModalOpen={editModalOpen}
+        handleEditModalClose={handleEditModalClose}
+        selectedUtilityCard={selectedUtilityCard}
+        handleDeleteModalOpen={handleDeleteModalOpen}
+        handleOnDeleteClick={handleOnDeleteClick}
+        setAddUtilityModalOpen={setAddUtilityModalOpen}
+      />
+      {/* add utility modal */}
+      <AddPropertyUtilityModal
+        values={values}
+        handleChange={handleChange}
+        touched={touched}
+        errors={errors}
+        onSubmit={onSubmit}
+        handleBlur={handleBlur}
+        handleAddUtilityModalOpen={handleAddUtilityModalOpen}
+        setAddUtilityModalOpen={setAddUtilityModalOpen}
+        selectedUtilityCard={selectedUtilityCard}
+        checked={checked}
+        handleSwitch={handleSwitch}
+        handleNotes={handleNotes}
+        notes={notes}
+        addUtilityModalOpen={addUtilityModalOpen}
+        handleAddUtilityModalClose={handleAddUtilityModalClose}
+      />
       <Box width="100%">
         {/* back btn */}
         <BackButton />
@@ -675,7 +210,7 @@ for now save button click show card active
                 >
                   <Item
                     variant="elevation"
-                    onClick={() => handleModalOpen(item.id)}
+                    onClick={() => handleAddUtilityModalOpen(item.id)}
                     key={index}
                     style={{
                       border: item.isSelected ? "1px solid black" : "null",
@@ -814,6 +349,3 @@ for now save button click show card active
 }
 
 export default AddUtility;
-
-// when ever u click the modal a modal will appear
-//
