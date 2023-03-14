@@ -29,6 +29,9 @@ function EditUtilityModal({
   selectedUtilityCard,
   handleOnDeleteClick,
   setAddUtilityModalOpen,
+  utilityInputs,
+  handleEditInput,
+  values,
 }) {
   const handleAddNew = () => {
     setAddUtilityModalOpen(true);
@@ -108,6 +111,7 @@ function EditUtilityModal({
                       sx={{
                         textTransform: "none",
                       }}
+                      onClick={() => handleEditInput(utilityInputs)}
                     >
                       Edit
                     </Button>

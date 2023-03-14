@@ -44,6 +44,7 @@ function PropertyCard() {
           borderRadius: "8px",
           gap: "24px",
           mt: "6px",
+          cursor: "pointer",
         }}
       >
         <CardMedia

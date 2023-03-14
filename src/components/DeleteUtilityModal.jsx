@@ -17,6 +17,7 @@ function DeleteUtilityModal({
   handleDeleteModals,
   setEditModalOpen,
   setDeleteUtilityModalOpen,
+  selectedUtilityCard,
 }) {
   const handleDeleteUtility = () => {
     setDeleteUtilityModalOpen(false);
@@ -93,7 +94,7 @@ function DeleteUtilityModal({
                 variant="contained"
                 color="error"
                 sx={{ textTransform: "none" }}
-                onClick={handleDeleteModals}
+                onClick={() => handleDeleteModals(selectedUtilityCard.id)}
               >
                 Yes, delete
               </Button>

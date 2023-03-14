@@ -38,6 +38,7 @@ const Item = styled(Paper)(() => ({
   width: "90%",
   height: "92px",
   margin: "auto",
+  cursor: "pointer",
 }));
 function TabPanel(props) {
   const { children, value, index } = props;

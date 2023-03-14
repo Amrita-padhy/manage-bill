@@ -24,6 +24,7 @@ function PropertyUtilitiesCard(prop) {
     justifyContent: "center",
     alignItems: "center",
     gap: "12px",
+    cursor: "pointer",
   }));
   const navigate = useNavigate();
   return (

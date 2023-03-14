@@ -13,6 +13,7 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import PowerOutlinedIcon from "@mui/icons-material/PowerOutlined";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import PestControlIcon from "@mui/icons-material/PestControl";
+import { boolean } from "yup";
 export const residentFees = [
   {
     id: 1,
