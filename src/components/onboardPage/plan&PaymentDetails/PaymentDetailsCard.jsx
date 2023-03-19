@@ -4,6 +4,7 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
+  Grid,
   Stack,
   TextField,
   Typography,
@@ -144,11 +145,12 @@ function PaymentDetailsCard({
           </Box>
 
           <TextField
+            required
             fullWidth
-            size="small"
+            size="medium"
             color="gray600"
             bordercolor="gray200"
-            required
+            margin="normal"
             id="billingAddress"
             value={values.billingAddress}
             onChange={handleChange}
@@ -158,62 +160,69 @@ function PaymentDetailsCard({
             placeholder="Street Address"
             error={errors.billingAddress && touched.billingAddress}
             helperText={touched.billingAddress ? errors.billingAddress : null}
-            sx={{ mt: 2 }}
           />
-          <Stack direction={{ xs: "column", sm: "row" }}>
-            <TextField
-              fullWidth
-              size="small"
-              color="gray600"
-              bordercolor="gray200"
-              required
-              id="billingCity"
-              value={values.billingCity}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              label="City"
-              variant="outlined"
-              placeholder="City"
-              error={errors.billingCity && touched.billingCity}
-              helperText={touched.billingCity ? errors.billingCity : null}
-              sx={{ mt: 2, mr: 1 }}
-            />
-            <TextField
-              fullWidth
-              size="small"
-              color="gray600"
-              bordercolor="gray200"
-              required
-              id="billingState"
-              value={values.billingState}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              label="State"
-              variant="outlined"
-              placeholder="State"
-              error={errors.billingState && touched.billingState}
-              helperText={touched.billingState ? errors.billingState : null}
-              sx={{ mb: 2, mt: 2, mr: 1 }}
-            />
-            <TextField
-              fullWidth
-              type="number"
-              size="small"
-              color="gray600"
-              bordercolor="gray200"
-              required
-              id="billingZipCode"
-              value={values.billingZipCode}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              label="Zipcode"
-              variant="outlined"
-              placeholder="Zipcode"
-              error={errors.billingZipCode && touched.billingZipCode}
-              helperText={touched.billingZipCode ? errors.billingZipCode : null}
-              sx={{ mb: 2, mt: 2, mr: 1 }}
-            />
-          </Stack>
+
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                fullWidth
+                required
+                color="gray600"
+                bordercolor="gray200"
+                margin="normal"
+                size="medium"
+                id="billingCity"
+                value={values.billingCity}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label="City"
+                variant="outlined"
+                placeholder="City"
+                error={errors.billingCity && touched.billingCity}
+                helperText={touched.billingCity ? errors.billingCity : null}
+              />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                fullWidth
+                required
+                color="gray600"
+                bordercolor="gray200"
+                margin="normal"
+                size="medium"
+                id="billingState"
+                value={values.billingState}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label="State"
+                variant="outlined"
+                placeholder="State"
+                error={errors.billingState && touched.billingState}
+                helperText={touched.billingState ? errors.billingState : null}
+              />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                fullWidth
+                required
+                color="gray600"
+                bordercolor="gray200"
+                margin="normal"
+                size="medium"
+                id="billingZipCode"
+                value={values.billingZipCode}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label="ZipCode"
+                variant="outlined"
+                placeholder="ZipCode"
+                error={errors.billingZipCode && touched.billingZipCode}
+                helperText={
+                  touched.billingZipCode ? errors.billingZipCode : null
+                }
+              />
+            </Grid>
+          </Grid>
           {/* Checkbox */}
           <Stack direction={"row"} alignItems="center">
             <Checkbox

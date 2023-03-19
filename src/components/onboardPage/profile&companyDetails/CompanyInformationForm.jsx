@@ -1,6 +1,13 @@
-import { Box, Checkbox, Input, Stack, TextField } from "@mui/material";
+import {
+  Box,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  Input,
+  Stack,
+  TextField,
+} from "@mui/material";
 import React from "react";
-import IconSelector from "./IconSelector";
 
 function CompanyInformationForm({
   values,
@@ -19,23 +26,14 @@ function CompanyInformationForm({
       >
         Company Information
       </Box>
-
-      <Stack
-        direction={{ xs: "column", sm: "row" }}
-        justifyContent={"space-between"}
-        alignItems="center"
-      >
-        {/* input section */}
-        <Box
-          sx={{
-            width: { xs: "100%", sm: "50%", md: "50%", p: 1, mt: 12 },
-          }}
-        >
-          {/* companyName */}
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6} md={6}>
           <TextField
             fullWidth
             color="gray600"
             bordercolor="gray200"
+            margin="normal"
+            size="medium"
             id="companyName"
             value={values.companyName}
             onChange={handleChange}
@@ -45,15 +43,15 @@ function CompanyInformationForm({
             placeholder="Company Name"
             error={errors.companyName && touched.companyName}
             helperText={touched.companyName ? errors.companyName : null}
-            margin="normal"
-            size="small"
           />
-          {/* website */}
-
+        </Grid>
+        <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
             color="gray600"
             bordercolor="gray200"
+            margin="normal"
+            size="medium"
             id="website"
             value={values.website}
             onChange={handleChange}
@@ -63,20 +61,15 @@ function CompanyInformationForm({
             placeholder="Website"
             error={errors.website && touched.website}
             helperText={touched.website ? errors.website : null}
-            margin="normal"
-            size="small"
           />
-        </Box>
-        {/*  ImageSelector */}
-        <Stack width={"50%"} justifyContent={"center"} alignItems={"center"}>
-          <IconSelector />
-        </Stack>
-      </Stack>
+        </Grid>
+      </Grid>
       <TextField
         fullWidth
         color="gray600"
         bordercolor="gray200"
-        required
+        margin="normal"
+        size="medium"
         id="address"
         value={values.address}
         onChange={handleChange}
@@ -86,65 +79,72 @@ function CompanyInformationForm({
         placeholder="Street Address"
         error={errors.address && touched.address}
         helperText={touched.address ? errors.address : null}
-        margin="normal"
-        size="small"
       />
-      <Stack direction={{ xs: "column", sm: "row" }}>
-        <TextField
-          fullWidth
-          color="gray600"
-          bordercolor="gray200"
-          required
-          id="city"
-          value={values.city}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          label="City"
-          variant="outlined"
-          placeholder="City"
-          error={errors.city && touched.city}
-          helperText={touched.city ? errors.city : null}
-          margin="normal"
-          size="small"
-        />
-        <TextField
-          fullWidth
-          color="gray600"
-          bordercolor="gray200"
-          required
-          id="state"
-          value={values.state}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          label="State"
-          variant="outlined"
-          placeholder="State"
-          error={errors.state && touched.state}
-          helperText={touched.state ? errors.state : null}
-          margin="normal"
-          size="small"
-          sx={{ ml: "4px" }}
-        />
-        <TextField
-          fullWidth
-          type="number"
-          color="gray600"
-          bordercolor="gray200"
-          required
-          id="zipCode"
-          value={values.zipCode}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          label="Zipcode"
-          variant="outlined"
-          placeholder="Zipcode"
-          error={errors.zipCode && touched.zipCode}
-          helperText={touched.zipCode ? errors.zipCode : null}
-          margin="normal"
-          size="small"
-          sx={{ ml: "4px" }}
-        />
-      </Stack>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={4}>
+          <TextField
+            fullWidth
+            required
+            color="gray600"
+            bordercolor="gray200"
+            margin="normal"
+            size="medium"
+            id="city"
+            value={values.city}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            label="City"
+            variant="outlined"
+            placeholder="City"
+            error={errors.city && touched.city}
+            helperText={touched.city ? errors.city : null}
+          />
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <TextField
+            fullWidth
+            required
+            color="gray600"
+            bordercolor="gray200"
+            margin="normal"
+            size="medium"
+            id="state"
+            value={values.state}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            label="State"
+            variant="outlined"
+            placeholder="State"
+            error={errors.state && touched.state}
+            helperText={touched.state ? errors.state : null}
+          />
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <TextField
+            fullWidth
+            color="gray600"
+            bordercolor="gray200"
+            margin="normal"
+            size="medium"
+            required
+            id="zipCode"
+            value={values.zipCode}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            label="ZipCode"
+            variant="outlined"
+            placeholder="ZipCode"
+            error={errors.zipCode && touched.zipCode}
+            helperText={touched.zipCode ? errors.zipCode : null}
+          />
+        </Grid>
+      </Grid>
+
+      <FormControlLabel
+        sx={{ color: "gray600.main" }}
+        control={<Checkbox color="secondary" size="small" />}
+        label="Mailing Address same as above"
+      />
     </React.Fragment>
   );
 }

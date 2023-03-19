@@ -12,6 +12,8 @@ import {
 import React from "react";
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import EditAndDeleteCard from "../common/EditAndDeleteCard";
+import { useState } from "react";
 
 const modalStyle = {
   position: "absolute",
@@ -27,14 +29,30 @@ function EditUtilityModal({
   editModalOpen,
   handleEditModalClose,
   selectedUtilityCard,
-  handleOnDeleteClick,
   setAddUtilityModalOpen,
-  utilityInputs,
-  handleEditInput,
-  values,
+  checked,
+  setSelectedUtilityCard,
+  handleDeleteModalOpen,
+  editAccount,
 }) {
+  const handleOnDelete = (id) => {
+    console.log(id);
+    acc = selectedUtilityCard.account.filter((acc) => acc.id !== id);
+    console.log(acc);
+    // utilsAccount = acc;
+    // setAccount(acc);
+    setSelectedUtilityCard(acc);
+    console.log(selectedUtilityCard);
+  };
+  console.log(selectedUtilityCard?.account);
+
   const handleAddNew = () => {
     setAddUtilityModalOpen(true);
+    handleEditModalClose();
+  };
+
+  const deleteModalOpen = () => {
+    handleDeleteModalOpen();
     handleEditModalClose();
   };
 
@@ -65,10 +83,20 @@ function EditUtilityModal({
               </Typography>
             </Stack>
 
-            <Box sx={{ p: "16px" }}>
+            <Box
+              sx={{
+                px: "16px",
+                py: "32px",
+              }}
+            >
               {/* box */}
-              <Stack sx={{ border: "1px solid gray", borderRadius: "8px" }}>
-                <Box sx={{ p: "8px" }}>
+              <Stack
+                sx={{
+                  border: "1px solid #DBDDDF",
+                  borderRadius: "4px",
+                }}
+              >
+                <Box sx={{ p: "8px", bgcolor: "#F3F4F4" }}>
                   <Stack alignItems={"center"} direction={"row"} gap={"10px"}>
                     {selectedUtilityCard.icon}
                     <Typography
@@ -81,61 +109,17 @@ function EditUtilityModal({
                   </Stack>
                 </Box>
                 <Divider />
-                <Box
-                  sx={{
-                    p: "8px",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <Box
-                    display={"flex"}
-                    justifyContent={"center"}
-                    alignItems="center"
-                    gap={"10px"}
-                  >
-                    <Typography>SV & Co.</Typography>
-                    <Chip
-                      label="Active"
-                      color="success"
-                      size="small"
-                      variant="outlined"
-                    />
-                  </Box>
-                  {/* buttons */}
-                  <Box display={{ xs: "none", md: "flex" }} gap={"10px"}>
-                    <Button
-                      variant="outlined"
-                      color="secondary"
-                      sx={{
-                        textTransform: "none",
-                      }}
-                      onClick={() => handleEditInput(utilityInputs)}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      sx={{ textTransform: "none", fontWeight: "500" }}
-                      onClick={handleOnDeleteClick}
-                    >
-                      Delete
-                    </Button>
-                  </Box>
-                  <Box display={{ xs: "flex", md: "none" }} gap={"10px"}>
-                    <IconButton aria-label="edit">
-                      <BorderColorOutlinedIcon color="secondary" />
-                    </IconButton>
-                    <IconButton
-                      aria-label="delete"
-                      onClick={handleOnDeleteClick}
-                    >
-                      <DeleteOutlineOutlinedIcon color="error" />
-                    </IconButton>
-                  </Box>
-                </Box>
+
+                {selectedUtilityCard.account?.map((item) => (
+                  <EditAndDeleteCard
+                    key={item.id}
+                    id={item.id}
+                    item={item}
+                    checked={checked}
+                    editAccount={() => editAccount(item.id)}
+                    deleteModalOpen={deleteModalOpen}
+                  />
+                ))}
               </Stack>
             </Box>
             {/* buttons */}
@@ -177,3 +161,7 @@ function EditUtilityModal({
 }
 
 export default EditUtilityModal;
+/*
+on edit click open utility modal 
+how to set form values on edit 
+*/

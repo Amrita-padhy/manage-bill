@@ -34,6 +34,29 @@ const Item = styled(Paper)(() => ({
 }));
 
 function AddUtility() {
+  const [checked, setChecked] = useState(false);
+
+  // formik
+  const {
+    values,
+    handleChange,
+    touched,
+    errors,
+    handleBlur,
+    setValues,
+    resetForm,
+  } = useFormik({
+    initialValues: {
+      providerName: "",
+      accountNickname: "",
+      ownerPortion: "",
+      billingCycle: "",
+      billingBy: "",
+      checked,
+    },
+    validationSchema: basicSchema,
+  });
+
   // delete modal
   const [deleteUtilityModalOpen, setDeleteUtilityModalOpen] = useState(false);
   const handleDeleteModalOpen = () => {
@@ -46,23 +69,26 @@ function AddUtility() {
   const handleEditModalClose = () => setEditModalOpen(false);
   // add utility modal
   const [addUtilityModalOpen, setAddUtilityModalOpen] = useState(false);
+  const [utilityCards, setUtilityCards] = useState(residentUtilities);
+  const [selectedUtilityCard, setSelectedUtilityCard] = useState({});
+  const [cards, setCards] = useState(residentFees);
+
   //handleAddUtilityModalOpen
   const handleAddUtilityModalOpen = (id) => {
-    setSelectedUtilityCard(utilityCards.find((card) => card.id === id));
+    setAddUtilityModalOpen(false);
+    setEditModalOpen(false);
+    const selectedCard = utilityCards.find((card) => card.id === id);
 
-    {
-      selectedUtilityCard.isSelected === true
-        ? setEditModalOpen(true) && setAddUtilityModalOpen(false)
-        : setAddUtilityModalOpen(true) && setEditModalOpen(false);
+    setSelectedUtilityCard(selectedCard);
+    if (selectedCard.account.length > 0) {
+      setEditModalOpen(true);
+    } else {
+      setAddUtilityModalOpen(true);
     }
   };
   const handleAddUtilityModalClose = () => setAddUtilityModalOpen(false);
   //
-  const [utilityCards, setUtilityCards] = useState(residentUtilities);
-  const [selectedUtilityCard, setSelectedUtilityCard] = useState({});
 
-  const [cards, setCards] = useState(residentFees);
-  const [checked, setChecked] = useState(false);
   const handleSwitch = (event) => {
     setChecked(event.target.checked);
   };
@@ -72,10 +98,11 @@ function AddUtility() {
   };
 
   const onSubmit = (id) => {
-    console.log(selectedUtilityCard.isSelected);
-
-    selectedUtilityCard.account.push(utilityInputs);
-    console.log(selectedUtilityCard.account);
+    console.log(selectedUtilityCard);
+    selectedUtilityCard.account.push({
+      ...values,
+      id: Math.random(),
+    });
 
     if (selectedUtilityCard.account) {
       setUtilityCards(
@@ -94,33 +121,7 @@ function AddUtility() {
     //  empty all input fields
     resetForm();
   };
-  // console.log(selectedUtilityCard.isSelected);
-  //handle delete ,delete utility  ( yes delete btn)
-  const handleDeleteModals = (id) => {
-    setEditModalOpen(false);
-    setDeleteUtilityModalOpen(false);
-    /* on yes delete click account length is greater then 0 
-    if it is equal to 1 then delete that,and set isSelected false
-    if it is greater the one then delete the lastly added object
-    */
-    console.log(selectedUtilityCard.account.length);
 
-    if (selectedUtilityCard.account.length > 0) {
-      let n = selectedUtilityCard.account.length - 1;
-      selectedUtilityCard.account.splice(n, 1);
-      console.log(selectedUtilityCard.account);
-
-      /*if account is empty then isSelected  === false
-      if  isSelected  === false then border clr back to gray
-      
-       */
-    } else {
-      if (selectedUtilityCard.account.length === 0) {
-        setSelectedUtilityCard(selectedUtilityCard.isSelected === false);
-      }
-    }
-    console.log(selectedUtilityCard);
-  };
   const handleClick = (id) => {
     // cards[cardIndex] = {
     //   ...cards[cardIndex],
@@ -137,28 +138,6 @@ function AddUtility() {
     setAddUtilityModalOpen(false);
   };
 
-  // formik
-  const {
-    values,
-    handleChange,
-    touched,
-    errors,
-    handleBlur,
-    setValues,
-    resetForm,
-  } = useFormik({
-    initialValues: {
-      providerName: "",
-      accountNickname: "",
-      ownerPortion: "",
-      billingCycle: "",
-      billingBy: "",
-    },
-    validationSchema: basicSchema,
-  });
-
-  const [utilityInputs, setUtilityInputs] = useState(values);
-
   // editInputValues
   const handleEditInput = (data) => {
     setAddUtilityModalOpen(true);
@@ -166,10 +145,21 @@ function AddUtility() {
     setUtilityInputs({ ...data });
   };
 
-  // handle delete edit utility page
-  const handleOnDeleteClick = () => {
-    setDeleteUtilityModalOpen(true);
-    setEditModalOpen(false);
+  const handleOnDelete = (id) => {
+    console.log("hi");
+    console.log(selectedUtilityCard.account);
+    const account = selectedUtilityCard.account?.filter((acc) => acc.id !== id);
+    console.log(account);
+  };
+  // edit
+  const editAccount = (id) => {
+    console.log("hi");
+    console.log(selectedUtilityCard.account);
+
+    setAddUtilityModalOpen(true);
+    handleEditModalClose();
+    const editAcc = selectedUtilityCard.account.filter((acc) => acc.id === id);
+    console.log(editAcc);
   };
   return (
     <>
@@ -177,23 +167,27 @@ function AddUtility() {
       <DeleteUtilityModal
         deleteUtilityModalOpen={deleteUtilityModalOpen}
         handleDeleteModalClose={handleDeleteModalClose}
-        handleDeleteModals={handleDeleteModals}
         setEditModalOpen={setEditModalOpen}
         setDeleteUtilityModalOpen={setDeleteUtilityModalOpen}
         selectedUtilityCard={selectedUtilityCard}
+        handleOnDelete={handleOnDelete}
       />
       {/* edit utility */}
-      <EditUtilityModal
-        editModalOpen={editModalOpen}
-        handleEditModalClose={handleEditModalClose}
-        selectedUtilityCard={selectedUtilityCard}
-        handleDeleteModalOpen={handleDeleteModalOpen}
-        handleOnDeleteClick={handleOnDeleteClick}
-        setAddUtilityModalOpen={setAddUtilityModalOpen}
-        handleEditInput={handleEditInput}
-        utilityInputs={utilityInputs}
-        values={values}
-      />
+      {editModalOpen && (
+        <EditUtilityModal
+          editModalOpen={editModalOpen}
+          handleEditModalClose={handleEditModalClose}
+          selectedUtilityCard={selectedUtilityCard}
+          setSelectedUtilityCard={setSelectedUtilityCard}
+          setAddUtilityModalOpen={setAddUtilityModalOpen}
+          handleEditInput={handleEditInput}
+          checked={checked}
+          values={values}
+          handleDeleteModalOpen={handleDeleteModalOpen}
+          editAccount={editAccount}
+        />
+      )}
+
       {/* add utility modal */}
       <AddPropertyUtilityModal
         values={values}

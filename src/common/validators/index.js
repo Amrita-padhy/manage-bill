@@ -1,7 +1,7 @@
 import * as yup from 'yup'
 
 const passwordRules = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/
-const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+const phoneRegExp = /^\d{10}$/
 
 export const basicSchema = yup.object().shape({
 
@@ -23,7 +23,10 @@ export const basicSchema = yup.object().shape({
     }).required("This field is required"),
     confirmPassword: yup.string().oneOf([yup.ref('password'), null], "password must match ").required("This field is required"),
 
-    mobileNumber: yup.string().matches(phoneRegExp, 'Phone number is not valid').required('This field is required'),
+    mobileNumber: yup.string().matches(phoneRegExp, 'Phone number is not valid')
+        .max(10, "Mobile Number can not exceed more than 10 Numbers at maximum")
+        .min(6, "Mobile Number must be 6 Numbers at minimum")
+        .required('This field is required'),
     companyName: yup
         .string()
         .matches(/^[A-Za-z ]*$/, 'Please enter valid company name')
