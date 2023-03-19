@@ -20,6 +20,7 @@ import { useState } from "react";
 import { Login } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import BackButton from "../../common/BackButton";
+
 // import UtilityButtons from "../../components/common/UtilityButtons";
 
 function AddProperty() {
@@ -350,15 +351,6 @@ function AddProperty() {
       </Card>
       {/*  Additional notes card */}
       <Card sx={{ height: "auto", my: "16px", p: "24px" }}>
-        <Typography
-          sx={{
-            fontSize: "20px",
-            fontWeight: "700",
-            color: "gray900.main",
-          }}
-        >
-          Notes
-        </Typography>
         <TextareaAutosize
           style={{
             width: "100%",
@@ -401,22 +393,25 @@ function AddProperty() {
             Add Notes
           </Button>
         </Box>
-        <Typography
-          sx={{
-            fontSize: "20px",
-            fontWeight: "700",
-            color: "gray600.main",
-          }}
-        >
-          Past Notes
-        </Typography>
+        {notes.length ? (
+          <Typography
+            sx={{
+              fontSize: "20px",
+              fontWeight: "700",
+              color: "gray600.main",
+            }}
+          >
+            Past Notes
+          </Typography>
+        ) : null}
+
         <Card
           sx={{
             bgcolor: "gray200.main",
             height: "auto",
             mt: "10px",
           }}
-          variant="outlined"
+          // variant="outlined"
           disableElevation
         >
           {notes.map((note) => (
@@ -492,6 +487,7 @@ function AddProperty() {
         marginTop={"16px"}
       >
         <Button
+          onClick={() => navigate("/main")}
           variant="contained"
           color="white"
           sx={{
@@ -504,20 +500,36 @@ function AddProperty() {
         >
           Cancel
         </Button>
-        <Button
-          variant="contained"
-          color="white"
-          sx={{
-            textTransform: "none",
-            width: {
-              xs: "100%",
-              md: "103px",
-            },
-          }}
-          disabled
-        >
-          Save
-        </Button>
+        <Box sx={{ display: "flex", gap: "10px" }}>
+          <Button
+            variant="contained"
+            color="success"
+            sx={{
+              textTransform: "none",
+              width: {
+                xs: "100%",
+                md: "103px",
+              },
+            }}
+            disabled
+          >
+            Save
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            sx={{
+              textTransform: "none",
+              width: {
+                xs: "100%",
+                md: "auto",
+              },
+            }}
+            disabled
+          >
+            Next : Add Utilities & Fees
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

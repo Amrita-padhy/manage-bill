@@ -6,7 +6,7 @@ const modalStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: { xs: "100%", md: "600px" },
+  width: { xs: "100%", sm: "400px" },
   height: "auto",
   bgcolor: "background.paper",
   borderRadius: "8px",
@@ -18,8 +18,9 @@ function DeleteUtilityModal({
   setEditModalOpen,
   setDeleteUtilityModalOpen,
   selectedUtilityCard,
+  handleOnDelete,
 }) {
-  const handleDeleteUtility = () => {
+  const handleCancel = () => {
     setDeleteUtilityModalOpen(false);
     setEditModalOpen(true);
   };
@@ -85,7 +86,7 @@ function DeleteUtilityModal({
                   color: "gray",
                   border: "1px solid gray",
                 }}
-                onClick={handleDeleteUtility}
+                onClick={handleCancel}
               >
                 Cancel
               </Button>
@@ -94,7 +95,7 @@ function DeleteUtilityModal({
                 variant="contained"
                 color="error"
                 sx={{ textTransform: "none" }}
-                onClick={() => handleDeleteModals(selectedUtilityCard.id)}
+                onClick={() => handleOnDelete()}
               >
                 Yes, delete
               </Button>

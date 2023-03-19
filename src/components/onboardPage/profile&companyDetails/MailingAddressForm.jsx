@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Checkbox, Input, Stack, TextField } from "@mui/material";
+import { Box, Checkbox, Grid, Input, Stack, TextField } from "@mui/material";
 
 function MailingAddressForm({
   values,
@@ -20,11 +20,12 @@ function MailingAddressForm({
       </Box>
 
       <TextField
+        required
         fullWidth
-        size="small"
+        size="medium"
         color="gray600"
         bordercolor="gray200"
-        required
+        margin="normal"
         id="mailingAddress"
         value={values.mailingAddress}
         onChange={handleChange}
@@ -34,64 +35,67 @@ function MailingAddressForm({
         placeholder="Street Address"
         error={errors.mailingAddress && touched.mailingAddress}
         helperText={touched.mailingAddress ? errors.mailingAddress : null}
-        sx={{ mt: 2 }}
       />
-      <Stack direction={{ xs: "column", sm: "row" }}>
-        <TextField
-          fullWidth
-          color="gray600"
-          bordercolor="gray200"
-          required
-          id="mailingCity"
-          value={values.mailingCity}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          label="City"
-          variant="outlined"
-          placeholder="City"
-          error={errors.mailingCity && touched.mailingCity}
-          helperText={touched.mailingCity ? errors.mailingCity : null}
-          margin="normal"
-          size="small"
-        />
-        <TextField
-          fullWidth
-          size="small"
-          color="gray600"
-          bordercolor="gray200"
-          required
-          id="mailingState"
-          value={values.mailingState}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          label="State"
-          variant="outlined"
-          placeholder="State"
-          error={errors.mailingState && touched.mailingState}
-          helperText={touched.mailingState ? errors.mailingState : null}
-          margin="normal"
-          sx={{ ml: "4px" }}
-        />
-        <TextField
-          fullWidth
-          type="number"
-          size="small"
-          color="gray600"
-          bordercolor="gray200"
-          required
-          id="mailingZipCode"
-          value={values.mailingZipCode}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          label="Zipcode"
-          variant="outlined"
-          placeholder="Zipcode"
-          error={errors.mailingZipCode && touched.mailingZipCode}
-          helperText={touched.mailingZipCode ? errors.mailingZipCode : null}
-          margin="normal"
-          sx={{ ml: "4px" }}
-        />
-      </Stack>
+
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={4}>
+          <TextField
+            fullWidth
+            required
+            color="gray600"
+            bordercolor="gray200"
+            margin="normal"
+            size="medium"
+            id="mailingCity"
+            value={values.mailingCity}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            label="City"
+            variant="outlined"
+            placeholder="City"
+            error={errors.mailingCity && touched.mailingCity}
+            helperText={touched.mailingCity ? errors.mailingCity : null}
+          />
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <TextField
+            fullWidth
+            required
+            color="gray600"
+            bordercolor="gray200"
+            margin="normal"
+            size="medium"
+            id="mailingState"
+            value={values.mailingState}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            label="State"
+            variant="outlined"
+            placeholder="State"
+            error={errors.mailingState && touched.mailingState}
+            helperText={touched.mailingState ? errors.mailingState : null}
+          />
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <TextField
+            fullWidth
+            required
+            color="gray600"
+            bordercolor="gray200"
+            margin="normal"
+            size="medium"
+            id="mailingZipCode"
+            value={values.mailingZipCode}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            label="ZipCode"
+            variant="outlined"
+            placeholder="ZipCode"
+            error={errors.mailingZipCode && touched.mailingZipCode}
+            helperText={touched.mailingZipCode ? errors.mailingZipCode : null}
+          />
+        </Grid>
+      </Grid>
     </React.Fragment>
   );
 }

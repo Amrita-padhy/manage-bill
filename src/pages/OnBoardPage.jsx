@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, IconButton, Snackbar } from "@mui/material";
+import { Box, Button, IconButton, Snackbar, Stack } from "@mui/material";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -108,7 +108,7 @@ function OnBoardPage() {
         setSnackbarOpen(true);
       } else {
         // TODO on success navigate user to home page
-        navigate("/");
+        navigate("/main");
       }
       console.log(response);
     } catch (error) {
@@ -175,9 +175,6 @@ function OnBoardPage() {
 
   const action = (
     <React.Fragment>
-      <Button color="secondary" size="small" onClick={handleSnackbar}>
-        UNDO
-      </Button>
       <IconButton
         size="small"
         aria-label="close"
@@ -201,20 +198,19 @@ function OnBoardPage() {
         />
       </div>
       <Box width={"100vw"} height={"auto"} bgcolor="background.main" sx={{}}>
-        <Box
+        <Stack
+          alignItems={"center"}
+          justifyContent={"center"}
           className="navbar"
           bgcolor="gray700.main"
           height="80px"
-          display="flex"
-          justifyContent="center"
-          alignitems="center"
           fontSize="24px"
           lineheight="24px"
           fontWeight="500"
           color="white.main"
         >
           Create Your Account
-        </Box>
+        </Stack>
         <Box
           bgcolor="white.main"
           height="48px"

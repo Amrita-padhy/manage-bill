@@ -9,6 +9,7 @@ import { basicSchema } from "@/common/validators";
 import Snackbar from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 import Typography from "@mui/material/Typography";
 
@@ -18,6 +19,7 @@ function SignInPage() {
   const classes = useStyles();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarErrorMsg, setSnackbarErrorMsg] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const { login, logout } = useAuth();
 
@@ -29,7 +31,21 @@ function SignInPage() {
   const { vertical, horizontal, open } = state;
   const navigate = useNavigate();
   const handleLogin = async () => {
-    await login(values);
+    try {
+      setIsLoading(true);
+      const result = await login(values);
+      console.log(result);
+    } catch (error) {
+      setIsLoading(false);
+      setSnackbarOpen(true);
+      console.log(error.message);
+      if (
+        error.message ===
+        "Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests)."
+      ) {
+        setSnackbarErrorMsg("Try a different user and password combination");
+      } else setSnackbarErrorMsg("Authentication Error");
+    }
   };
 
   const { values, handleChange, touched, errors, handleSubmit, handleBlur } =
@@ -42,10 +58,11 @@ function SignInPage() {
       handleLogin,
     });
 
-  const handleClose = (event, reason) => {
+  const handleSnackbar = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
+
     setSnackbarOpen(false);
   };
   const action = (
@@ -54,8 +71,7 @@ function SignInPage() {
         size="small"
         aria-label="close"
         color="inherit"
-        onClick={handleClose}
-        bgcolor="white.main"
+        onClick={handleSnackbar}
       >
         <CloseIcon fontSize="small" />
       </IconButton>
@@ -67,17 +83,11 @@ function SignInPage() {
       <Box>
         <Snackbar
           open={snackbarOpen}
-          autoHideDuration={6000}
-          onClose={handleClose}
+          autoHideDuration={3000}
+          onClose={handleSnackbar}
           message={snackbarErrorMsg}
           action={action}
-          anchorOrigin={{ vertical, horizontal }}
-          key={vertical + horizontal}
-          sx={{
-            width: { xs: "250px", sm: "300px" },
-            height: "auto",
-            padding: "10px",
-          }}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
         />
       </Box>
       <Box className={classes.root}>
@@ -141,6 +151,7 @@ function SignInPage() {
                 bordercolor="gray200"
                 required
                 id="password"
+                type="password"
                 value={values.password}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -168,11 +179,17 @@ function SignInPage() {
                 </Link>
               </Box>
               {/* Submit button */}
-              <ButtonMain
-                style={{
+              <LoadingButton
+                loading={isLoading}
+                sx={{
+                  py: "10px",
+                  px: "30px",
                   textTransform: "none",
-                  marginTop: "16px",
                   color: "gray700.main",
+                  "&:hover": {
+                    backgroundColor: "#FBE122",
+                  },
+                  width: { xs: "100%", sm: "100%" },
                 }}
                 variant="contained"
                 fullWidth
@@ -187,7 +204,7 @@ function SignInPage() {
                 }
               >
                 Submit
-              </ButtonMain>
+              </LoadingButton>
             </Box>
             <Stack
               direction={"row"}
