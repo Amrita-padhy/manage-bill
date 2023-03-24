@@ -78,6 +78,8 @@ function MailingAddressForm({
         </Grid>
         <Grid item xs={12} sm={4}>
           <TextField
+            inputProps={{ maxLength: 6 }}
+            // type="number"
             fullWidth
             required
             color="gray600"

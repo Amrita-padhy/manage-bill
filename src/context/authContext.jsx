@@ -37,7 +37,7 @@ export default function AuthContextProvider({ children }) {
         dispatch(setUser(data));
         setInitialUser(data);
         if (data.isOnboard === false) {
-          navigate("/main");
+          navigate("/onboard");
           return;
         }
 

@@ -100,6 +100,8 @@ function PersonalInformationForm({
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
             <TextField
+              inputProps={{ maxLength: 10 }}
+              // type="number"
               fullWidth
               size="medium"
               color="gray600"

@@ -24,8 +24,8 @@ export const basicSchema = yup.object().shape({
     confirmPassword: yup.string().oneOf([yup.ref('password'), null], "password must match ").required("This field is required"),
 
     mobileNumber: yup.string().matches(phoneRegExp, 'Phone number is not valid')
-        .max(10, "Mobile Number can not exceed more than 10 Numbers at maximum")
-        .min(6, "Mobile Number must be 6 Numbers at minimum")
+        .max(10)
+        .min(10)
         .required('This field is required'),
     companyName: yup
         .string()

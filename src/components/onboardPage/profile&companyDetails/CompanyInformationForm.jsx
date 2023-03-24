@@ -121,6 +121,8 @@ function CompanyInformationForm({
         </Grid>
         <Grid item xs={12} sm={4}>
           <TextField
+            inputProps={{ maxLength: 6 }}
+            // type="number"
             fullWidth
             color="gray600"
             bordercolor="gray200"
