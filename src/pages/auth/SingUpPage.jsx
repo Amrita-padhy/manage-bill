@@ -164,7 +164,7 @@ function SingUp() {
           }}
         >
           <Stack spacing={2}>
-            <Box mt="80px">
+            <Box mt="50px">
               <Stack justifyContent={"center"} alignItems={"center"}>
                 <Box
                   color="gray900.main"
@@ -187,7 +187,8 @@ function SingUp() {
             <Box component="form" noValidate autoComplete="off">
               <TextField
                 fullWidth
-                size="small"
+                size="medium"
+                margin="normal"
                 color="gray600"
                 bordercolor="gray200"
                 required
@@ -201,11 +202,11 @@ function SingUp() {
                 placeholder="Enter your email address"
                 error={errors.firstName && touched.firstName}
                 helperText={touched.firstName ? errors.firstName : null}
-                sx={{ mb: 2 }}
               />
               <TextField
                 fullWidth
-                size="small"
+                size="medium"
+                margin="normal"
                 color="gray600"
                 bordercolor="gray200"
                 required
@@ -219,11 +220,11 @@ function SingUp() {
                 placeholder="Enter your last name"
                 error={errors.lastName && touched.lastName}
                 helperText={touched.lastName ? errors.lastName : null}
-                sx={{ mb: 2 }}
               />
               <TextField
                 fullWidth
-                size="small"
+                size="medium"
+                margin="normal"
                 color="gray600"
                 bordercolor="gray200"
                 required
@@ -237,11 +238,11 @@ function SingUp() {
                 placeholder="Enter your email address"
                 error={errors.email && touched.email}
                 helperText={touched.email ? errors.email : null}
-                sx={{ mb: 2 }}
               />
               <TextField
                 fullWidth
-                size="small"
+                size="medium"
+                margin="normal"
                 color="gray600"
                 bordercolor="gray200"
                 required
@@ -255,11 +256,11 @@ function SingUp() {
                 placeholder="Create new password"
                 error={errors.password && touched.password}
                 helperText={touched.password ? errors.password : null}
-                sx={{ mb: 2 }}
               />
               <TextField
                 fullWidth
-                size="small"
+                size="medium"
+                margin="normal"
                 color="gray600"
                 bordercolor="gray200"
                 required

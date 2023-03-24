@@ -44,7 +44,7 @@ function SignInPage() {
         "Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests)."
       ) {
         setSnackbarErrorMsg("Try a different user and password combination");
-      } else setSnackbarErrorMsg("Authentication Error");
+      } else setSnackbarErrorMsg("user-not-found");
     }
   };
 
@@ -167,6 +167,7 @@ function SignInPage() {
                 display={"flex"}
                 justifyContent={"flex-end"}
                 marginTop="10px"
+                marginBottom={"10px"}
               >
                 <Link to="/forgetPassword">
                   <Button
@@ -224,7 +225,7 @@ function SignInPage() {
                   }}
                   color="secondary"
                   variant="text"
-                  onClick={() => logout()}
+                  onClick={() => navigate("signup")}
                 >
                   Sign Up
                 </Button>

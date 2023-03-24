@@ -401,5 +401,3 @@ function AddUtility() {
 }
 
 export default AddUtility;
-
-// if isSlected is true the shpw edit modal card

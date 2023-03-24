@@ -203,6 +203,7 @@ function PaymentDetailsCard({
             </Grid>
             <Grid item xs={12} sm={4}>
               <TextField
+                inputProps={{ maxLength: 6 }}
                 fullWidth
                 required
                 color="gray600"
