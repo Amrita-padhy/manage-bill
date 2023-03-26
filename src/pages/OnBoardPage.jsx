@@ -96,7 +96,7 @@ function OnBoardPage() {
       email: values.email,
       uid: user.uid,
     };
-    console.log(payload);
+    // console.log(payload);
     try {
       setIsLoading(true);
       const { response } = await updateUser(payload);

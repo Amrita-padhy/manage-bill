@@ -20,19 +20,27 @@ import { useState } from "react";
 import { Login } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import BackButton from "../../common/BackButton";
+import { addProperty } from "../../api/property/property";
+import { LoadingButton } from "@mui/lab";
 
 // import UtilityButtons from "../../components/common/UtilityButtons";
 
 function AddProperty() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccessFull, setIsSuccessFull] = useState(false);
+  const [isDisable, setIsDisable] = useState(false);
+
+  console.log(isSuccessFull);
+
   const { user } = useSelector((state) => state.user);
-  console.log(user);
+  // console.log(user);
 
   const [noteText, setNoteText] = useState("");
   const [notes, setNotes] = useState([]);
   const noteTextHandler = (e) => {
     console.log(setNoteText(e.target.value));
   };
-  console.log(notes);
+  console.log(noteText);
 
   const addNotes = (e) => {
     e.preventDefault();
@@ -56,7 +64,46 @@ function AddProperty() {
     minute: "numeric",
     hour12: true,
   });
+  // body
 
+  const onSubmit = async () => {
+    const body = {
+      uid: user.uid,
+      address: values.propertyAddress,
+      city: values.propertyCity,
+      state: values.propertyState,
+      zipcode: values.propertyZipcode,
+      propertyId: values.PropertyID,
+      propertyName: values.PropertyName,
+      propertyType: values.PropertyType,
+      units: values.NumberOfUnits,
+      notes: [
+        {
+          note: noteText,
+          createdAt: currentDate,
+          userName: user.firstName,
+        },
+      ],
+    };
+    console.log(body);
+    try {
+      setIsLoading(true);
+      const { response } = await addProperty(body);
+      setIsLoading(false);
+
+      console.log(response);
+
+      if (response === true) {
+        setIsSuccessFull(true);
+        setIsDisable(true);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
+  };
+
+  // console.log(data.response);
   // formik
   const { values, handleChange, touched, errors, handleSubmit, handleBlur } =
     useFormik({
@@ -65,6 +112,11 @@ function AddProperty() {
         PropertyType: "",
         PropertyID: "",
         NumberOfUnits: "",
+        propertyAddress: "",
+        propertyState: "",
+        propertyCity: "",
+        propertyZipcode: "",
+        noteText: "",
       },
       validationSchema: basicSchema,
       onSubmit: (values) => {
@@ -112,6 +164,7 @@ function AddProperty() {
           {/* Property Name ,type*/}
           <Stack direction={{ xs: "column", md: "row" }} gap={{ xs: 1, md: 3 }}>
             <TextField
+              disabled={isDisable}
               required
               fullWidth
               size="small"
@@ -131,6 +184,7 @@ function AddProperty() {
             />
 
             <TextField
+              disabled={isDisable}
               required
               fullWidth
               select
@@ -160,6 +214,7 @@ function AddProperty() {
           {/*  Property id ,unit */}
           <Stack direction={{ xs: "column", md: "row" }} gap={{ xs: 1, md: 3 }}>
             <TextField
+              disabled={isDisable}
               required
               fullWidth
               size="small"
@@ -178,6 +233,7 @@ function AddProperty() {
               helperText={touched.PropertyID ? errors.PropertyID : null}
             />
             <TextField
+              disabled={isDisable}
               required
               fullWidth
               size="small"
@@ -199,79 +255,87 @@ function AddProperty() {
           {/* address */}
           <Stack direction={{ xs: "column", md: "row" }} gap={{ xs: 1, md: 3 }}>
             <TextField
+              disabled={isDisable}
               required
               fullWidth
               size="small"
               margin="normal"
               variant="outlined"
               type={"text"}
-              id="address"
+              id="propertyAddress"
               label="Address"
               placeholder="Address"
               bordercolor="gray200"
               color="gray600"
-              value={values.address}
+              value={values.propertyAddress}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={errors.address && touched.address}
-              helperText={touched.address ? errors.address : null}
+              error={errors.propertyAddress && touched.propertyAddress}
+              helperText={
+                touched.propertyAddress ? errors.propertyAddress : null
+              }
             />
           </Stack>
           {/* city,state ,zipcode */}
           <Stack direction={{ xs: "column", md: "row" }} gap={{ xs: 1, md: 3 }}>
             <TextField
+              disabled={isDisable}
               required
               fullWidth
               size="small"
               margin="normal"
               variant="outlined"
               type={"text"}
-              id="city"
+              id="propertyCity"
               label="City"
               placeholder="City Name"
               bordercolor="gray200"
               color="gray600"
-              value={values.city}
+              value={values.propertyCity}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={errors.city && touched.city}
-              helperText={touched.city ? errors.city : null}
+              error={errors.propertyCity && touched.propertyCity}
+              helperText={touched.propertyCity ? errors.propertyCity : null}
             />
             <TextField
+              disabled={isDisable}
               required
               fullWidth
               size="small"
               margin="normal"
               variant="outlined"
-              type={"number"}
-              id="state"
+              type={"text"}
+              id="propertyState"
               label="State"
               placeholder="State"
               bordercolor="gray200"
               color="gray600"
-              value={values.state}
+              value={values.propertyState}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={errors.state && touched.state}
-              helperText={touched.state ? errors.state : null}
+              error={errors.propertyState && touched.propertyState}
+              helperText={touched.propertyState ? errors.propertyState : null}
             />
             <TextField
+              disabled={isDisable}
               required
               fullWidth
               size="small"
               margin="normal"
               variant="outlined"
               type={"number"}
-              id="zipcode"
+              id="propertyZipcode"
               label="Zipcode"
               placeholder="Zipcode"
               bordercolor="gray200"
               color="gray600"
-              value={values.zipcode}
+              value={values.propertyZipcode}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={errors.zipcode && touched.zipcode}
-              helperText={touched.zipcode ? errors.zipcode : null}
+              error={errors.propertyZipcode && touched.propertyZipcode}
+              helperText={
+                touched.propertyZipcode ? errors.propertyZipcode : null
+              }
             />
           </Stack>
         </Box>
@@ -351,7 +415,18 @@ function AddProperty() {
       </Card>
       {/*  Additional notes card */}
       <Card sx={{ height: "auto", my: "16px", p: "24px" }}>
+        <Typography
+          sx={{
+            fontSize: "20px",
+
+            fontWeight: "600",
+            color: "gray900.main",
+          }}
+        >
+          Add notes
+        </Typography>
         <TextareaAutosize
+          disabled={isDisable}
           style={{
             width: "100%",
             height: "120px",
@@ -414,9 +489,10 @@ function AddProperty() {
           // variant="outlined"
           disableElevation
         >
-          {notes.map((note) => (
-            <>
+          {notes.map((note, index) => (
+            <Box key={index}>
               <Typography
+                disabled={isDisable}
                 sx={{
                   fontSize: "14px",
                   fontWeight: "400",
@@ -450,16 +526,18 @@ function AddProperty() {
                   >
                     {currentTime}
                   </Typography>
-                  <Typography
-                    sx={{
-                      fontSize: "12px",
-                      fontWeight: "500",
-                      color: "gray900.main",
-                    }}
-                  >
-                    Entered By:
-                    <Box
-                      component={"span"}
+                  <Stack direction={"row"}>
+                    <Typography
+                      sx={{
+                        fontSize: "12px",
+                        fontWeight: "500",
+                        color: "gray900.main",
+                      }}
+                    >
+                      Entered By:
+                    </Typography>
+
+                    <Typography
                       sx={{
                         fontSize: "12px",
                         fontWeight: "400",
@@ -467,12 +545,12 @@ function AddProperty() {
                       }}
                     >
                       {user.firstName}
-                    </Box>
-                  </Typography>
+                    </Typography>
+                  </Stack>
                 </Box>
               </Typography>
               <Divider />
-            </>
+            </Box>
           ))}
         </Card>
       </Card>
@@ -500,36 +578,74 @@ function AddProperty() {
         >
           Cancel
         </Button>
-        <Box sx={{ display: "flex", gap: "10px" }}>
-          <Button
-            variant="contained"
-            color="success"
-            sx={{
-              textTransform: "none",
-              width: {
-                xs: "100%",
-                md: "103px",
-              },
-            }}
-            disabled
-          >
-            Save
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            sx={{
-              textTransform: "none",
-              width: {
-                xs: "100%",
-                md: "auto",
-              },
-            }}
-            disabled
-          >
-            Next : Add Utilities & Fees
-          </Button>
-        </Box>
+        {isSuccessFull ? (
+          <Stack direction={"row"} gap={"10px"}>
+            <Button
+              variant="contained"
+              color="success"
+              sx={{
+                textTransform: "none",
+                width: {
+                  xs: "100%",
+                  md: "103px",
+                },
+              }}
+              disabled
+            >
+              Saved
+            </Button>
+
+            <Button
+              variant="contained"
+              color="secondary"
+              sx={{
+                textTransform: "none",
+                width: {
+                  xs: "100%",
+                  md: "auto",
+                },
+              }}
+            >
+              Next : Add Utilities & Fees
+            </Button>
+          </Stack>
+        ) : (
+          <Box sx={{ display: "flex", gap: "10px" }}>
+            <LoadingButton
+              onClick={onSubmit}
+              loading={isLoading}
+              variant="contained"
+              color="success"
+              sx={{
+                textTransform: "none",
+                width: {
+                  xs: "100%",
+                  md: "103px",
+                },
+              }}
+              disabled={
+                !values.PropertyName ||
+                !values.PropertyType ||
+                !values.PropertyID ||
+                !values.NumberOfUnits ||
+                !values.propertyAddress ||
+                !values.propertyCity ||
+                !values.propertyState ||
+                !values.propertyZipcode ||
+                errors.PropertyName ||
+                errors.PropertyType ||
+                errors.PropertyID ||
+                errors.NumberOfUnits ||
+                errors.propertyAddress ||
+                errors.propertyCity ||
+                errors.propertyState ||
+                errors.propertyZipcode
+              }
+            >
+              Save
+            </LoadingButton>
+          </Box>
+        )}
       </Box>
     </Box>
   );
