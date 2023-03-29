@@ -21,7 +21,7 @@ const menuItems = [
   { label: "Edit Resident Details" },
 ];
 const ITEM_HEIGHT = 140;
-function PropertyCard() {
+function PropertyCard({ item }) {
   const navigate = useNavigate();
   const [menuEl, setMenuEl] = useState(null);
   const openMenu = Boolean(menuEl);
@@ -38,9 +38,17 @@ function PropertyCard() {
         variant="outlined"
         sx={{
           display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          width: "100%",
-          padding: "24px",
+          alignItems: { xs: "flex-start", lg: "center" },
+          // justifyContent: "center",
+          flexDirection: {
+            xs: "column",
+            sm: "column",
+            md: "row",
+            lg: "row",
+          },
+          width: "160%",
+          height: "auto",
+          padding: "18px",
           borderRadius: "8px",
           gap: "24px",
           mt: "6px",
@@ -59,17 +67,10 @@ function PropertyCard() {
         />
         <CardContent sx={{ flex: "1", p: "0px" }}>
           {/* heading */}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: { xs: "column", md: "row" },
-
-              justifyContent: {
-                xs: "flex-start",
-                md: "space-between",
-              },
-              alignItems: { xs: "flex-start", md: "center" },
-            }}
+          <Stack
+            direction={{ xs: "column", lg: "row" }}
+            justifyContent="space-between"
+            display={"flex"}
           >
             <Box>
               <Typography
@@ -80,7 +81,7 @@ function PropertyCard() {
                   whiteSpace: "nowrap",
                 }}
               >
-                Colonial Gardens
+                {item.propertyName}
               </Typography>
               {/* subheading */}
               <Typography
@@ -91,15 +92,16 @@ function PropertyCard() {
                   whiteSpace: "nowrap",
                 }}
               >
-                123 B Street, San Diego, CA 92101
+                {item.address}
               </Typography>
             </Box>
             <Box
               display={"flex"}
-              justifyContent={"center"}
-              alignItems="center"
-              gap={"10px"}
+              justifyContent="center"
+              alignContent={"center"}
             >
+              {/* btn */}
+
               <Button
                 variant="contained"
                 color="gray50"
@@ -109,12 +111,17 @@ function PropertyCard() {
                   fontSize: "14px",
                   fontWeight: "500",
                   textTransform: "none",
+                  width: { xs: "100%", lg: "auto" },
                 }}
               >
-                Property ID 123456
+                Property ID {item.propertyId}
               </Button>
+
               {/* menu icon */}
-              <Box onClick={(e) => e.stopPropagation()}>
+              <Box
+                onClick={(e) => e.stopPropagation()}
+                display={{ xs: "none", md: "block" }}
+              >
                 <IconButton
                   aria-label="more"
                   id="long-button"
@@ -155,7 +162,7 @@ function PropertyCard() {
                 </Menu>
               </Box>
             </Box>
-          </Box>
+          </Stack>
           {/*  */}
           <Stack
             direction={{ xs: "column", md: "row" }}
@@ -182,7 +189,8 @@ function PropertyCard() {
                   fontWeight: "900",
                 }}
               >
-                Apartment
+                {/* Apartment */}
+                {item.propertyType}
               </Typography>
             </Box>
             <Box width={"100%"} m="6px">
@@ -202,8 +210,7 @@ function PropertyCard() {
                   fontWeight: "900",
                 }}
               >
-                {" "}
-                100
+                {item.units}
               </Typography>
             </Box>
             <Box width={"100%"} m="6px">

@@ -19,7 +19,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../common/Header";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -29,6 +29,10 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import styled from "@emotion/styled";
 import { Link, useNavigate } from "react-router-dom";
 import PropertyCard from "../../components/PropertyCard";
+import axios from "axios";
+import { getProperty } from "../../api/property/property";
+import { useSelector } from "react-redux";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Item = styled(Paper)(() => ({
   backgroundColor: "white",
@@ -44,43 +48,59 @@ function TabPanel(props) {
   const { children, value, index } = props;
   return <div>{value === index && <h1>{children}</h1>}</div>;
 }
+const overViewCard = [
+  { id: 1, label: "Properties", value: "00" },
+  { id: 2, label: "Units", value: "00" },
+  { id: 3, label: "Residents", value: "00" },
+  { id: 4, label: "Billable Residents", value: "0%" },
+  { id: 5, label: "Properties", value: "00" },
+  { id: 6, label: "Units", value: "00" },
+  { id: 7, label: "Residents", value: "00" },
+  { id: 8, label: "Billable Residents", value: "0%" },
+];
+
 function ManageProperty() {
-  const overViewCard = [
-    { id: 1, label: "Properties", value: "00" },
-    { id: 2, label: "Units", value: "00" },
-    { id: 3, label: "Residents", value: "00" },
-    { id: 4, label: "Billable Residents", value: "0%" },
-    { id: 5, label: "Properties", value: "00" },
-    { id: 6, label: "Units", value: "00" },
-    { id: 7, label: "Residents", value: "00" },
-    { id: 8, label: "Billable Residents", value: "0%" },
-  ];
-
-  const [showOverviewCards, setShowOverviewCards] = useState(false);
-  const shownCards = overViewCard.slice(0, 4);
-  const hiddenCards = overViewCard.slice(4);
-  console.log(hiddenCards);
-
-  const toggleOverviewCards = () => {
-    setShowOverviewCards(!showOverviewCards);
-  };
-
+  const [propertyData, setPropertyData] = useState([]);
+  console.log(propertyData);
   const [activeTab, setActiveTab] = useState(0);
+  const [sort, setSort] = useState("");
+  const [isLading, setIsLoading] = useState(false);
+  const [showProperty, setShowProperty] = useState(4);
+  const handleShowItem = () => {
+    if (showProperty === propertyData.length) {
+      setShowProperty(4);
+    } else {
+      setShowProperty(propertyData.length);
+    }
+  };
   const handleTabChange = (e, val) => {
     console.log(val);
     setActiveTab(val);
   };
-  const [sort, setSort] = useState("");
 
   const handleSortProperty = (event) => {
     setSort(event.target.value);
   };
   const navigate = useNavigate();
+
+  const { user } = useSelector((state) => state.user);
+
+  const getPropertyList = async () => {
+    const uid = user.uid;
+    console.log(uid);
+    setIsLoading(true);
+    const result = await getProperty(uid);
+    setIsLoading(false);
+
+    console.log(result.data);
+    setPropertyData(result.data);
+  };
+  useEffect(() => {
+    getPropertyList();
+  }, []);
+
   return (
     <>
-      {/* Manage Properties */}
-
-      {/* heading */}
       <Stack
         direction={{ xs: "column", sm: "row" }}
         justifyContent="space-between"
@@ -127,69 +147,38 @@ function ManageProperty() {
             >
               Overview
             </Typography>
-            <IconButton onClick={toggleOverviewCards}>
-              {showOverviewCards ? (
-                <KeyboardArrowDownIcon fontSize="medium" color="gray900,main" />
-              ) : (
-                <KeyboardArrowUpIcon fontSize="medium" color="gray900,main" />
-              )}
+            <IconButton>
+              <KeyboardArrowUpIcon />
             </IconButton>
           </Box>
           {/* Overview card main */}
           <Box width={"100%"} marginTop="16px">
             <Grid container rowGap={"15px"}>
-              {/* {overViewCard.map((item, index) => (
-                <Grid xs={6} md={3}>
-                  <Item key={index}>
-                    <Typography
-                      sx={{
-                        fontSize: "12px",
-                        fontWeight: "500",
-                        color: "gray600.main",
-                      }}
-                    >
-                      {item.label}
-                    </Typography>
+              <Grid xs={6} md={3}>
+                <Item>
+                  <Typography
+                    sx={{
+                      fontSize: "12px",
+                      fontWeight: "500",
+                      color: "gray600.main",
+                    }}
+                  >
+                    label
+                  </Typography>
 
-                    <Typography
-                      sx={{
-                        fontSize: "30px",
-                        fontWeight: "700",
-                        color: "gray900.main",
-                        mt: "6px",
-                      }}
-                    >
-                      {item.value}
-                    </Typography>
-                  </Item>
-                </Grid>
-              ))} */}
-              {shownCards.map((item, index) => (
-                <Grid xs={6} md={3}>
-                  <Item key={index}>
-                    <Typography
-                      sx={{
-                        fontSize: "12px",
-                        fontWeight: "500",
-                        color: "gray600.main",
-                      }}
-                    >
-                      {item.label}
-                    </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "30px",
+                      fontWeight: "700",
+                      color: "gray900.main",
+                      mt: "6px",
+                    }}
+                  >
+                    value
+                  </Typography>
+                </Item>
+              </Grid>
 
-                    <Typography
-                      sx={{
-                        fontSize: "30px",
-                        fontWeight: "700",
-                        color: "gray900.main",
-                        mt: "6px",
-                      }}
-                    >
-                      {item.value}
-                    </Typography>
-                  </Item>
-                </Grid>
-              ))}
               {/*  */}
             </Grid>
           </Box>
@@ -331,59 +320,73 @@ function ManageProperty() {
           <Divider />
 
           <CardContent>
-            <Stack justifyContent={"center"} alignItems="center">
-              {/* property card */}
-
-              <PropertyCard />
-
-              <TabPanel value={activeTab} index={0}>
-                Active Properties
-              </TabPanel>
-              <TabPanel value={activeTab} index={1}>
-                Inactive Properties
-              </TabPanel>
-              <Typography
-                sx={{
-                  color: "gray600.main",
-                  fontSize: "20px",
-                  fontWeight: "500",
-                  width: "340px",
-                }}
-              >
-                Currently, No properties are added.
-              </Typography>
-              <Button
-                variant="contained"
-                color="secondary"
-                sx={{
-                  width: "184px",
-                  height: "40px",
-                  fontSize: "14px",
-                  fontWeight: "500",
-                  textTransform: "none",
-                  mt: "40px",
-                }}
-                startIcon={<AddCircleOutlineIcon />}
-                onClick={() => navigate("/add-property")}
-              >
-                Add New Property
-              </Button>
-            </Stack>
+            <TabPanel value={activeTab} index={0}>
+              <Stack justifyContent={"center"} alignItems="center">
+                {isLading ? (
+                  <CircularProgress color="secondary" />
+                ) : (
+                  <Stack justifyContent={"center"} alignItems="center">
+                    {propertyData.slice(0, showProperty).map((item, index) => (
+                      <PropertyCard key={index} item={item} />
+                    ))}
+                    <Button
+                      variant="contained"
+                      onClick={handleShowItem}
+                      color={"secondary"}
+                      disableElevation
+                      sx={{
+                        textTransform: "none",
+                        mt: "20px",
+                        width: "200px",
+                        fontSize: "14px",
+                        fontWeight: "500",
+                      }}
+                    >
+                      {showProperty === propertyData.length
+                        ? "Show Less"
+                        : "Load More"}
+                    </Button>
+                  </Stack>
+                )}
+              </Stack>
+              {/*  */}
+              <Stack justifyContent={"center"} alignItems="center">
+                {!propertyData.length && (
+                    <Typography
+                      sx={{
+                        color: "gray600.main",
+                        fontSize: "20px",
+                        fontWeight: "500",
+                        width: "340px",
+                      }}
+                    >
+                      Currently, No properties are added.
+                    </Typography>
+                  ) && (
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      sx={{
+                        width: "184px",
+                        height: "40px",
+                        fontSize: "14px",
+                        fontWeight: "500",
+                        textTransform: "none",
+                        mt: "20px",
+                      }}
+                      startIcon={<AddCircleOutlineIcon />}
+                      onClick={() => navigate("/add-property")}
+                    >
+                      Add New Property
+                    </Button>
+                  )}
+              </Stack>
+            </TabPanel>
+            <TabPanel value={activeTab} index={1}>
+              Inactive Properties
+            </TabPanel>
           </CardContent>
         </Card>
-      </Box>
-
-      {/*Save button  */}
-      <Box display={"flex"} justifyContent="flex-end">
-        <Button
-          variant="contained"
-          color="secondary"
-          sx={{
-            textTransform: "none",
-          }}
-        >
-          Save
-        </Button>
       </Box>
     </>
   );
