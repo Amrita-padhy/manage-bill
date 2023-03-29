@@ -1,8 +1,13 @@
+import {
+    useSelector
+} from "react-redux";
 import api from "../api";
+
+
 
 const URLS = {
     addProperty: "/addProperty",
-    getProperty: "/getPropertyList?uid=kdElw3ez68QmU6Twp6Ic6W2SNgi2"
+    getProperty: "/getPropertyList"
 }
 
 
@@ -25,15 +30,16 @@ const addProperty = async (body) => {
     };
 }
 
-const getProperty = async () => {
+const getProperty = async (uid) => {
+
     const result = {
         response: true
     }
     try {
         const {
             data
-        } = await api.get(URL.getProperty)
-        console.log(data);
+        } = await api.get(`${URLS.getProperty}?uid=${uid}`)
+        return result.data = data;
     } catch (error) {
         console.error(error)
         result.response = false;
