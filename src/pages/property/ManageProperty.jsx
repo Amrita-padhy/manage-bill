@@ -393,3 +393,12 @@ function ManageProperty() {
 }
 
 export default ManageProperty;
+
+/*
+1- check the issue list
+2-make disable a function 
+3- payload name change
+4-make separate component for add utility page
+5-button type be submit
+6-
+*/

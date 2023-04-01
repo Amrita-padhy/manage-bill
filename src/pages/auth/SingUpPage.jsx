@@ -280,6 +280,7 @@ function SingUp() {
 
               {/* Create account button */}
               <ButtonMain
+                type="submit"
                 style={{
                   textTransform: "none",
                   marginTop: "16px",
