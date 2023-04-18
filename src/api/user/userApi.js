@@ -9,33 +9,18 @@ const getUserInfo = (body) => {
   return api.post(URLS.getUserInfo, body);
 };
 
-
-
-
 const updateUser = async (body) => {
   const result = {
-    response: true
-  }
+    response: true,
+  };
   try {
-
-    const {
-      data
-    } = await api.post(URLS.updateUser, body);
-    console.log(data);
-
+    await api.post(URLS.updateUser, body);
   } catch (error) {
-    console.error(error)
+    console.error(error);
     result.response = false;
-
-
   } finally {
     return result;
-  };
-
+  }
 };
 
-
-export {
-  getUserInfo,
-  updateUser
-};
+export { getUserInfo, updateUser };
