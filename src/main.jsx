@@ -9,7 +9,7 @@ import { CssBaseline } from "@mui/material";
 import { Provider } from "react-redux";
 
 import "./index.css";
-import { AppRouter, router } from "./routes/Root";
+import { AppRouter } from "./routes/Root";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

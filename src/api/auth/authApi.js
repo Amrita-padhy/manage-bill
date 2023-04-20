@@ -1,11 +1,6 @@
 import api from "../api";
-import {
-  signInWithEmailAndPassword
-} from "firebase/auth";
-import {
-  auth
-} from "@/boot/firebase";
-
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/boot/firebase";
 
 const URLS = {
   register: "/register",
@@ -32,18 +27,16 @@ function handleAuthErrorMsg(msg) {
 
 const register = async (body) => {
   const result = {
-    response: true
-  }
+    response: true,
+  };
   try {
-    const {
-      data
-    } = await api.post(URLS.register, body);
+    const { data } = await api.post(URLS.register, body);
     console.log(data);
     result.message = data.message;
   } catch (error) {
     console.log(error);
     result.response = false;
-    result.message = error.response.data.message
+    result.message = error.response.data.message;
   } finally {
     return result;
   }
@@ -51,19 +44,15 @@ const register = async (body) => {
 
 const login = async (body) => {
   const result = {
-    response: true
-  }
+    response: true,
+  };
   try {
     await signInWithEmailAndPassword(auth, body.email, body.password);
   } catch (error) {
-    console.log(error);
     result.response = false;
-    result.message = handleAuthErrorMsg(error.message)
-    console.log(result.response);
+    result.message = handleAuthErrorMsg(error.message);
   } finally {
     return result;
   }
 };
-export {
-  register
-};
+export { register, login };

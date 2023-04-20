@@ -1,4 +1,9 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  Navigate,
+  RouterProvider,
+  createBrowserRouter,
+  useNavigate,
+} from "react-router-dom";
 
 import * as ROUTE from "../constants/routes.js";
 
@@ -11,39 +16,54 @@ import ManageProperty from "../pages/property/ManageProperty";
 import AddProperty from "../pages/property/AddProperty";
 import PropertyDetails from "../components/PropertyDetails";
 import AddUtility from "../pages/property/AddUtility";
-import { useSelector } from "react-redux";
-import { selectUser } from "../store/user/userStore.js";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser, setUser } from "../store/user/userStore.js";
+import { onAuthStateChanged } from "firebase/auth";
+import { getUserInfo } from "../api/user/userApi.js";
+import { useEffect } from "react";
+import { auth } from "../boot/firebase.js";
+import { App } from "../App.jsx";
+import { ProtectedRoute } from "./ProtectedRoute.jsx";
 
 export const AppRouter = () => {
-  const user = useSelector(selectUser);
-  console.log(user);
+  const { user } = useSelector(selectUser);
 
   const router = createBrowserRouter([
     {
-      element: <AuthLayout />,
-      children: [
-        {
-          index: true,
-          path: ROUTE.SIGNIN,
-          element: <SignIn />,
-        },
-        {
-          path: ROUTE.SIGNUP,
-          element: <SignUp />,
-        },
-      ],
-    },
-    {
       path: "/",
-      element: <GeneralLayout />,
+      element: <App />,
       children: [
         {
-          index: true,
-          element: <ManageProperty />,
+          element: <AuthLayout />,
+          children: [
+            {
+              index: true,
+              path: ROUTE.SIGNIN,
+              element: <SignIn />,
+            },
+            {
+              path: ROUTE.SIGNUP,
+              element: <SignUp />,
+            },
+          ],
         },
         {
-          path: ROUTE.ADD_PROPERTY,
-          element: <AddProperty />,
+          path: "/",
+          element: (
+            <ProtectedRoute>
+              <GeneralLayout />
+            </ProtectedRoute>
+          ),
+          children: [
+            {
+              index: true,
+              element: <ManageProperty />,
+            },
+            {
+              path: ROUTE.ADD_PROPERTY,
+              element: <AddProperty />,
+            },
+          ],
         },
       ],
     },

@@ -22,7 +22,6 @@ export const selectUser = (state) => state.user;
 export const authListener = () => (dispatch) => {
   const unsubscribe = auth.onAuthStateChanged(async (user) => {
     if (user) {
-      console.log(user);
       const { data } = await getUserInfo({ uid: user.uid });
       dispatch(setUser(data));
     } else {

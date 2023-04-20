@@ -15,14 +15,13 @@ import Typography from "@mui/material/Typography";
 
 import { useAuth } from "../../context/authContext";
 import { SIGNUP } from "@/constants/routes";
+import { login } from "../../api/auth/authApi";
 
 function SignInPage() {
   const classes = useStyles();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarErrorMsg, setSnackbarErrorMsg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const { login, logout } = {};
 
   const [state, setState] = React.useState({
     open: false,
@@ -35,7 +34,6 @@ function SignInPage() {
     try {
       setIsLoading(true);
       const result = await login(values);
-      console.log(result);
     } catch (error) {
       setIsLoading(false);
       setSnackbarOpen(true);
