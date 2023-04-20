@@ -15,7 +15,7 @@ function BackButton() {
         startIcon={<ArrowBackIcon />}
         sx={{ textTransform: "none" }}
         onClick={() => {
-          navigate("/main");
+          navigate(-1);
         }}
       >
         Back

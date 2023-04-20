@@ -86,7 +86,7 @@ function ManageProperty() {
   const { user } = useSelector((state) => state.user);
 
   const getPropertyList = async () => {
-    const uid = user.uid;
+    const uid = user?.uid;
     console.log(uid);
     setIsLoading(true);
     const result = await getProperty(uid);
@@ -393,12 +393,3 @@ function ManageProperty() {
 }
 
 export default ManageProperty;
-
-/*
-1- check the issue list
-2-make disable a function 
-3- payload name change
-4-make separate component for add utility page
-5-button type be submit
-6-
-*/

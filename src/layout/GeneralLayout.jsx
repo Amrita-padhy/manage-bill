@@ -28,6 +28,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Header from "../common/Header";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import ManageProperty from "../pages/property/ManageProperty";
+import { useAuth } from "../context/authContext";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -113,6 +114,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function GeneralLayout() {
+  // const { logout } = useAuth();
   const classes = useStyles();
   const theme = useTheme();
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
@@ -412,6 +414,7 @@ function GeneralLayout() {
             color="gray700"
             sx={{ margin: "30px", textTransform: "none", color: "gray700" }}
             endIcon={<SubdirectoryArrowRightIcon color="gray700" />}
+            // onClick={() => logout()}
           >
             Sign Out
           </Button>

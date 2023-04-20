@@ -14,14 +14,14 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Typography from "@mui/material/Typography";
 
 import { useAuth } from "../../context/authContext";
+import { SIGNUP } from "@/constants/routes";
+import { login } from "../../api/auth/authApi";
 
 function SignInPage() {
   const classes = useStyles();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarErrorMsg, setSnackbarErrorMsg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const { login, logout } = useAuth();
 
   const [state, setState] = React.useState({
     open: false,
@@ -34,7 +34,6 @@ function SignInPage() {
     try {
       setIsLoading(true);
       const result = await login(values);
-      console.log(result);
     } catch (error) {
       setIsLoading(false);
       setSnackbarOpen(true);
@@ -225,7 +224,7 @@ function SignInPage() {
                   }}
                   color="secondary"
                   variant="text"
-                  onClick={() => navigate("signup")}
+                  onClick={() => navigate(SIGNUP)}
                 >
                   Sign Up
                 </Button>

@@ -104,8 +104,65 @@ const updateUser = async (req, res) => {
   }
 };
 
+const addProperty = async (req, res) => {
+  try {
+    if (req.method !== "POST") {
+      return res.status(405).send("Method not allowed");
+    }
+    if (!req.body.uid) {
+      return res.status(400).send({ message: "uid is missing" });
+    }
+
+    const docRef = await db.collection("properties").add({
+      ...req.body,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      active: true,
+    });
+    console.log(docRef.id);
+    res.status(200).send({ message: "Property created successfully" });
+  } catch (error) {
+    res.status(500).send({
+      message: "Please refresh an error came while adding a property",
+    });
+    return;
+  }
+};
+
+const getPropertyList = async (req, res) => {
+  const { uid } = req.query;
+
+  try {
+    if (req.method !== "GET") {
+      return res.status(405).send("Method not allowed");
+    }
+    if (!uid) {
+      return res.status(400).send({ message: "uid is missing" });
+    }
+
+    const listRef = await db
+      .collection("properties")
+      .where("uid", "==", uid)
+      .get();
+
+    const properties = listRef.docs.map((doc) => {
+      return { id: doc.id, ...doc.data() };
+    });
+    res.status(200).send(properties);
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: "An error occurred while retrieving properties." });
+    return;
+  }
+};
+
 app.post("/register", register);
 app.post("/getUserInfo", getUserInfo);
 app.post("/updateUser", updateUser);
+
+// property
+app.post("/addProperty", addProperty);
+app.get("/getPropertyList", getPropertyList);
 
 exports.app = functions.https.onRequest(app);
