@@ -20,8 +20,9 @@ import { login } from "../../api/auth/authApi";
 function SignInPage() {
   const classes = useStyles();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarErrorMsg, setSnackbarErrorMsg] = useState("");
+  const [snackbarErrorMsg, setSnackbarErrorMsg] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  // const [isDisabled, setIsDisabled] = useState(false);
 
   const [state, setState] = React.useState({
     open: false,
@@ -31,21 +32,19 @@ function SignInPage() {
   const { vertical, horizontal, open } = state;
   const navigate = useNavigate();
   const handleLogin = async () => {
-    try {
-      setIsLoading(true);
-      const result = await login(values);
-    } catch (error) {
-      setIsLoading(false);
-      setSnackbarOpen(true);
-      console.log(error.message);
-      if (
-        error.message ===
-        "Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests)."
-      ) {
-        setSnackbarErrorMsg("Try a different user and password combination");
-      } else setSnackbarErrorMsg("user-not-found");
+    setIsLoading(true);
+    const result = await login(values);
+    setIsLoading(false);
+   
+    if (!result.response) {
+      setSnackbarOpen(true)
+      setSnackbarErrorMsg(result.message)
+    } else {
+      navigate('/')
     }
-  };
+    
+  }; 
+
 
   const { values, handleChange, touched, errors, handleSubmit, handleBlur } =
     useFormik({
@@ -76,6 +75,13 @@ function SignInPage() {
       </IconButton>
     </React.Fragment>
   );
+  const disableButton = () => {
+    
+  }
+  const  isDisabled = !values.email ||
+  !values.password ||
+  errors.email ||
+  errors.password
   return (
     <>
       {/* snackbar */}
@@ -143,22 +149,24 @@ function SignInPage() {
                 helperText={touched.email ? errors.email : null}
                 sx={{ mb: 2 }}
               />
+         
               <TextField
                 fullWidth
                 size="small"
                 color="gray600"
                 bordercolor="gray200"
                 required
+                type='password'
                 id="password"
-                type="password"
                 value={values.password}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="Password"
+                label="password"
                 variant="outlined"
-                placeholder="Enter your password"
+                placeholder="Enter your password address"
                 error={errors.password && touched.password}
                 helperText={touched.password ? errors.password : null}
+                sx={{ mb: 2 }}
               />
 
               {/*    Forgot Password button */}
@@ -196,12 +204,11 @@ function SignInPage() {
                 disableElevation
                 color="primary"
                 onClick={handleLogin}
-                disabled={
-                  !values.email ||
-                  !values.password ||
-                  errors.email ||
-                  errors.password
-                }
+                disabled={Boolean(isDisabled)}
+                
+
+               
+                
               >
                 Submit
               </LoadingButton>
@@ -238,3 +245,23 @@ function SignInPage() {
 }
 
 export default SignInPage;
+
+
+/*
+
+ try {
+      setIsLoading(true);
+      const result = await login(values);
+      console.log(result);
+    } catch (error) {
+      setIsLoading(false);
+      setSnackbarOpen(true);
+      console.log(error.message);
+      if (
+        error.message ===
+        "Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests)."
+      ) {
+        setSnackbarErrorMsg("Try a different user and password combination");
+      } else setSnackbarErrorMsg("user-not-found");
+    }
+ */
