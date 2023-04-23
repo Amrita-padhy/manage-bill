@@ -7,7 +7,6 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-
 import { Button, Stack } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -80,7 +79,8 @@ const useStyles = makeStyles((theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     backgroundColor: "#495057",
-    boxShadow: "0px 0px 0px 0px",
+    boxshadow: "0px 0px 0px 0px",
+    width:"100vw"
   },
   drawer: {
     flexShrink: 0,
@@ -114,11 +114,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function GeneralLayout() {
-  // const { logout } = useAuth();
   const classes = useStyles();
   const theme = useTheme();
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
-
   const [mobMenu, setMobMenu] = useState(false);
   const [open, setOpen] = React.useState(false);
 
@@ -150,10 +148,10 @@ function GeneralLayout() {
     <>
       <div className={classes.root}>
         <CssBaseline />
-        <AppBar
+        <Box
           position="fixed"
-          color="gray700.main"
-          boxShadow="0px"
+          color="#495057"
+       boxshadow="0px"
           className={classes.appBar}
         >
           <Toolbar>
@@ -190,7 +188,7 @@ function GeneralLayout() {
               />
             </Search>
           </Toolbar>
-        </AppBar>
+        </Box>
         <Drawer
           className={classes.drawer}
           variant={isMdUp ? "permanent" : "temporary"}
@@ -274,7 +272,7 @@ function GeneralLayout() {
                 width: "248px",
                 borderRadius: "8px",
                 mt: "46px",
-                boxShadow: 1,
+              boxshadow: 1,
               }}
             >
               <Box
@@ -360,7 +358,7 @@ function GeneralLayout() {
                 width: "248px",
                 borderRadius: "8px",
                 mt: "60px",
-                boxShadow: 1,
+                boxshadow: 1,
               }}
             >
               <Box
@@ -442,8 +440,8 @@ function GeneralLayout() {
                   endIcon={<KeyboardArrowDownIcon />}
                   onClick={handleMenuOpen}
                   aria-controls={Open ? "basic-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={Open ? "true" : undefined}
+                  // aria-haspopup="true"
+                  aria-expanded={Open ? true : undefined}
                 >
                   ACCOUNTS
                 </Button>

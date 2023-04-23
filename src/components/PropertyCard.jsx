@@ -126,8 +126,8 @@ function PropertyCard({ item }) {
                   aria-label="more"
                   id="long-button"
                   aria-controls={open ? "long-menu" : undefined}
-                  aria-expanded={open ? "true" : undefined}
-                  aria-haspopup="true"
+                  aria-expanded={open ? true : undefined}
+                  // aria-haspopup=true
                   onClick={handleMenuClick}
                 >
                   <MoreVertIcon fontSize="medium" color="gray600" />
@@ -148,15 +148,16 @@ function PropertyCard({ item }) {
                     },
                   }}
                 >
-                  {menuItems.map((menuItem) => (
+                  {menuItems.map((menuItem,index) => (
                     <Link
+                    key={index}
                       to={menuItem.url}
                       style={{
                         textDecoration: "none",
                         color: "#495057",
                       }}
                     >
-                      <MenuItem key={menuItem}>{menuItem.label}</MenuItem>
+                      <MenuItem key={index}>{menuItem.label}</MenuItem>
                     </Link>
                   ))}
                 </Menu>

@@ -61,7 +61,7 @@ const overViewCard = [
 
 function ManageProperty() {
   const [propertyData, setPropertyData] = useState([]);
-  console.log(propertyData);
+  // console.log(propertyData);
   const [activeTab, setActiveTab] = useState(0);
   const [sort, setSort] = useState("");
   const [isLading, setIsLoading] = useState(false);
@@ -74,7 +74,7 @@ function ManageProperty() {
     }
   };
   const handleTabChange = (e, val) => {
-    console.log(val);
+    // console.log(val);
     setActiveTab(val);
   };
 
@@ -87,12 +87,12 @@ function ManageProperty() {
 
   const getPropertyList = async () => {
     const uid = user?.uid;
-    console.log(uid);
+    // console.log(uid);
     setIsLoading(true);
     const result = await getProperty(uid);
     setIsLoading(false);
 
-    console.log(result.data);
+    // console.log(result.data);
     setPropertyData(result.data);
   };
   useEffect(() => {
@@ -153,9 +153,9 @@ function ManageProperty() {
           </Box>
           {/* Overview card main */}
           <Box width={"100%"} marginTop="16px">
-            <Grid container rowGap={"15px"}>
-              <Grid xs={6} md={3}>
-                <Item>
+            {/* <Grid container rowGap={"15px"}>
+              <Grid >
+                <Item xs={6} md={3}>
                   <Typography
                     sx={{
                       fontSize: "12px",
@@ -179,8 +179,8 @@ function ManageProperty() {
                 </Item>
               </Grid>
 
-              {/*  */}
-            </Grid>
+              
+            </Grid> */}
           </Box>
         </Card>
         {/* tab card */}

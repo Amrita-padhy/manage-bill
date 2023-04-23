@@ -432,11 +432,11 @@ function AddProperty() {
             justifyContent={"center"}
             alignItems="center"
           >
-            <Box textAlign={"center"}>
+            <Box textalign={"center"}>
               <CloudUploadOutlinedIcon fontSize="medium" color="secondary" />
               <Box display={"flex"} alignItems="center">
                 <Button
-                  textAlign={"center"}
+                  textalign={"center"}
                   variant="text"
                   color="secondary"
                   sx={{ textTransform: "none", p: "1px" }}
@@ -444,7 +444,7 @@ function AddProperty() {
                   Click to upload
                 </Button>
                 <Typography
-                  textAlign={"center"}
+                  textalign={"center"}
                   sx={{
                     fontSize: "14px",
                     fontWeight: "400",
@@ -459,7 +459,7 @@ function AddProperty() {
                   fontSize: "14px",
                   fontWeight: "400",
                   color: "gray600.main",
-                  textAlign: "center",
+                  textalign: "center",
                 }}
               >
                 SVG, PNG, JPG or GIF (max. 800x400px)
@@ -541,7 +541,7 @@ function AddProperty() {
               mt: "10px",
             }}
             // variant="outlined"
-            disableElevation
+            // disableelevation
           >
             {notes.map((note, index) => (
               <Box key={index}>
