@@ -102,6 +102,7 @@ function ManageProperty() {
   return (
     <>
       <Stack
+      width={"75vw"}
         direction={{ xs: "column", sm: "row" }}
         justifyContent="space-between"
         alignItems={"center"}
