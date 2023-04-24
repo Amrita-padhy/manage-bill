@@ -33,6 +33,8 @@ import axios from "axios";
 import { getProperty } from "../../api/property/property";
 import { useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
+import { InputBase, InputLabel, } from '@material-ui/core';
+import SearchIcon from '@mui/icons-material/Search';
 
 const Item = styled(Paper)(() => ({
   backgroundColor: "white",
@@ -101,11 +103,13 @@ function ManageProperty() {
 
   return (
     <>
-      <Stack
-      width={"75vw"}
+    <Box sx={{p:"20px",mt:"50px"}}>
+    <Stack
         direction={{ xs: "column", sm: "row" }}
         justifyContent="space-between"
+        textAlign={'center'}
         alignItems={"center"}
+       
       >
         <Header heading=" Properties:" title="Manage Properties" />
         <Button
@@ -127,6 +131,7 @@ function ManageProperty() {
       {/* property card */}
       <Box justifyContent={"center"}>
         <Card
+        variant="outlined"
           sx={{
             height: "auto",
             mt: "35px",
@@ -153,36 +158,7 @@ function ManageProperty() {
             </IconButton>
           </Box>
           {/* Overview card main */}
-          <Box width={"100%"} marginTop="16px">
-            {/* <Grid container rowGap={"15px"}>
-              <Grid >
-                <Item xs={6} md={3}>
-                  <Typography
-                    sx={{
-                      fontSize: "12px",
-                      fontWeight: "500",
-                      color: "gray600.main",
-                    }}
-                  >
-                    label
-                  </Typography>
-
-                  <Typography
-                    sx={{
-                      fontSize: "30px",
-                      fontWeight: "700",
-                      color: "gray900.main",
-                      mt: "6px",
-                    }}
-                  >
-                    value
-                  </Typography>
-                </Item>
-              </Grid>
-
-              
-            </Grid> */}
-          </Box>
+        
         </Card>
         {/* tab card */}
         <Card
@@ -239,8 +215,9 @@ function ManageProperty() {
             {/* search button */}
             <Stack
               direction={{ xs: "column", md: "row" }}
-              alignItems="center"
+              alignItems={{sm:"flex-start",md:"center"}}
               gap={1}
+              mb={'20px'}
             >
               <Typography
                 sx={{
@@ -252,32 +229,20 @@ function ManageProperty() {
               >
                 Find Property
               </Typography>
-              <TextField
-                fullWidth
-                id="input-with-icon-textfield"
-                placeholder="Search"
-                size="small"
-                margin="normal"
-                sx={{
-                  bgcolor: "white.main",
-                  border: "0.5px solid gray",
-                  borderRadius: "8px",
-                  p: "10px",
-                }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchOutlinedIcon />
-                    </InputAdornment>
-                  ),
-                }}
-                variant="standard"
-              />
+              <Box component="form" sx={{ padding:"5px",border:"1.5px solid #FBE122",borderRadius:"10px"}}>
+      <InputBase
+        placeholder="Search property…"
+        inputProps={{ 'aria-label': 'search' }}
+      />
+      <IconButton type="submit" aria-label="search">
+        <SearchIcon />
+      </IconButton>
+    </Box>
             </Stack>
             {/* sort button */}
             <Stack
               direction={{ xs: "column", md: "row" }}
-              alignItems="center"
+              alignItems={{sm:"flex-start",md:"center"}}
               gap={1}
             >
               <Typography
@@ -290,32 +255,18 @@ function ManageProperty() {
               >
                 Sort By
               </Typography>
-
-              <FormControl
-                fullWidth
-                size="small"
-                margin="normal"
-                variant="standard"
-                sx={{
-                  bgcolor: "white.main",
-                  borderRadius: "8px",
-                  p: "6px",
-                  border: "0.5px solid gray",
-                }}
-              >
-                <Select
-                  autoWidth
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={sort}
-                  label="A-Z"
-                  onChange={handleSortProperty}
-                >
-                  <MenuItem value={10}>A-Z</MenuItem>
+  <Select
+  sx={{border:"1.5px solid #FBE122",borderRadius:"10px",p:"4px"}}
+    labelId="demo-simple-select-label"
+    id="demo-simple-select"
+    value={sort}
+    onChange={handleSortProperty}
+  >
+   <MenuItem value={10}>A-Z</MenuItem>
                   <MenuItem value={20}>Z-A</MenuItem>
                   <MenuItem value={30}>LOW-HIGH</MenuItem>
-                </Select>
-              </FormControl>
+  </Select>
+
             </Stack>
           </CardActions>
           <Divider />
@@ -389,6 +340,8 @@ function ManageProperty() {
           </CardContent>
         </Card>
       </Box>
+    </Box>
+    
     </>
   );
 }

@@ -1,105 +1,300 @@
-import React from "react";
-import { makeStyles, styled, useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Drawer from "@material-ui/core/Drawer";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import MenuIcon from "@mui/icons-material/Menu";
-import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
-
+import * as React from 'react';
+import Drawer from '@mui/material/Drawer';
+import Box from '@mui/material/Box';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import { useTheme } from '@emotion/react';
+import { useState } from 'react';
+import {  useMediaQuery } from '@material-ui/core';
+import { Button, Divider, Typography } from '@mui/material';
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { Box } from "@mui/material";
-
+import StarIcon from "@mui/icons-material/Star";
+import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
+import { InputBase, Paper } from '@material-ui/core';
+import SearchIcon from '@mui/icons-material/Search';
 const drawerWidth = 280;
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: "transparent",
-  "&:hover": {
-    backgroundColor: "transparent",
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
-}));
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  borderBottom: "1px",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "#FBE122",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "150px",
-    borderBottom: "1px solid yellow",
-    [theme.breakpoints.up("sm")]: {
-      width: "300px",
-    },
-  },
-}));
-
 
 function AppNavbar() {
   const theme = useTheme();
+  const [mobileOpen, setMobileOpen] = useState(false);
+const handleDrawerToggle = () => {
+  setMobileOpen(!mobileOpen);
+};
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
-  const [open, setOpen] = React.useState(false);
-  const toggleDrawer = (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-
-    setOpen(!open);
-  };
+  
   return (
-   
- <Box bgcolor="#495057" position="fixed" sx={{width:"100vw",ml:"280px"}}>
-          <Toolbar>
-          <IconButton aria-label="menu" onClick={toggleDrawer}>
-  <MenuIcon sx={{
-    display:{sm:"block",md:"none"}
-  }}
-   />
-</IconButton>
-            <Typography>
-              MANAGE-BILL
-            </Typography>
-            <Search>
-              <SearchIconWrapper>  
-                <SearchIcon color="primary" />
-              </SearchIconWrapper>
-              <StyledInputBase
-                color="primary"
-                placeholder="Welcome, Ranger Bill. Ask me anything."
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
-          </Toolbar>
-        </Box>
+    <Box sx={{ display: 'flex' }}>
+      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: { sm: `${drawerWidth}px` }, }} color='gray700' >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display:{sm:"block",md:"none"} }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Box component="form" sx={{borderBottom:"1px solid #FBE122", width:{sm:"200px",md:"300px"}}}  >
+          <IconButton type="submit" aria-label="search">
+        <SearchIcon />
+      </IconButton>
+      <InputBase
+      style={{color:"#FBE122"}}
+        placeholder="Search something here..."
+        inputProps={{ 'aria-label': 'search' }}
+      />
+     
+    </Box>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        sx={{
+          
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+          },
+          display: { xs: 'block', md: 'block' },
+        }}
+        variant={isMdUp ? "permanent" : "temporary"}
+        anchor="left"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+       
+      >
+     <Toolbar sx={{bgcolor:"gray700.main"}}>
+     <Typography color="primary.main" margin={'auto'}>MANAGE BILL</Typography>
+        </Toolbar>
+       <Box sx={{ bgcolor: "gray700.main", height: "232px",}}>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              justifyContent={"center"}
+              alignItems="center"
+              padding={"16px"}
+            >
+              <Box
+                display={"flex"}
+                gap="10px"
+                justifyContent={"center"}
+                alignItems="center"
+                marginBottom={"4px"}
+              >
+                <Typography color="white.main">Increase in NOI YTD</Typography>
+                <InfoOutlinedIcon color="white" fontSize="small" />
+              </Box>
+              <Button
+                variant="contained"
+                color="white"
+                fullWidth
+                sx={{ height: "48px", padding: "8px" }}
+              >
+                $ 1,000.00
+              </Button>
+            </Box>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              justifyContent={"center"}
+              alignItems="center"
+              padding={"16px"}
+            >
+              <Box
+                display={"flex"}
+                gap="10px"
+                justifyContent={"center"}
+                alignItems="center"
+                marginBottom={"4px"}
+              >
+                <Typography color="white.main">% of bills recovered</Typography>
+                <InfoOutlinedIcon color="white" fontSize="small" />
+              </Box>
+              <Button
+                variant="contained"
+                color="white"
+                fullWidth
+                sx={{ height: "48px", padding: "8px" }}
+              >
+                50%
+              </Button>
+            </Box>
+          </Box>
+          <Divider />
+          {/* card */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              
+            }}
+          >
+            <Box
+              sx={{
+                bgcolor: "white",
+                height: "120px",
+                width: "248px",
+                borderRadius: "8px",
+                mt: "46px",
+              boxshadow: 1,
+              border:"0.5px solid gray"
+
+              }}
+            >
+              <Box
+                sx={{
+                  height: "40px",
+                  bgcolor: "primary.main",
+                  borderTopLeftRadius: "8px",
+                  borderTopRightRadius: "8px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: "10px",
+                }}
+              >
+                <Typography
+                  fontSize={"12px"}
+                  fontWeight="500"
+                  color="gray700.main"
+                >
+                  START IT
+                </Typography>
+                <AddCircleOutlineIcon fontSize="small" color="gray700" />
+              </Box>
+              <Box
+                sx={{
+                  height: "40px",
+                  bgcolor: "white",
+                  borderTopLeftRadius: "8px",
+                  borderTopRightRadius: "8px",
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  padding: "10px",
+                  gap: "8px",
+                }}
+              >
+                <StarIcon fontSize="small" color="primary" />
+                <Typography
+                  fontSize={"12px"}
+                  fontWeight="500"
+                  color="gray700.main"
+                >
+                  Manage Properties
+                </Typography>
+              </Box>
+              <Divider />
+              <Box
+                sx={{
+                  height: "40px",
+                  bgcolor: "white",
+                  borderTopLeftRadius: "8px",
+                  borderTopRightRadius: "8px",
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  padding: "10px",
+                  gap: "8px",
+                }}
+              >
+                <StarIcon fontSize="small" color="primary" />
+                <Typography
+                  fontSize={"12px"}
+                  fontWeight="500"
+                  color="gray700.main"
+                >
+                  Add Units
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+          {/* account info card */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Box
+              sx={{
+                bgcolor: "transparent",
+                height: "70px",
+                width: "248px",
+                borderRadius: "8px",
+                mt: "60px",
+                boxshadow: 1,
+              border:"0.5px solid gray"
+
+              }}
+            >
+              <Box
+                sx={{
+                  height: "30px",
+                  bgcolor: "primary.main",
+                  borderTopLeftRadius: "8px",
+                  borderTopRightRadius: "8px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "10px",
+                }}
+              >
+                <Typography
+                  fontSize={"12px"}
+                  fontWeight="500"
+                  color="gray700.main"
+                >
+                  RANGER
+                </Typography>
+              </Box>
+
+              <Divider />
+              <Box
+                sx={{
+                  height: "35px",
+                  bgcolor: "white",
+                  borderTopLeftRadius: "8px",
+                  borderTopRightRadius: "8px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "10px",
+                  gap: "8px",
+                }}
+              >
+                <Typography
+                  fontSize={"12px"}
+                  fontWeight="500"
+                  color="gray700.main"
+                >
+                  Bill Wattson
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+          {/*  Sign Out  */}
+          <Button
+          
+            variant="outlined"
+            color="gray700"
+            sx={{ margin: "auto", textTransform: "none", color: "gray700",
+            justifyContent: 'flex-end', bottom:"0px"
+             }}
+            endIcon={<SubdirectoryArrowRightIcon color="gray700" />}
+          >
+            Sign Out
+          </Button>
+      </Drawer>
+    </Box>
     
    
   );
