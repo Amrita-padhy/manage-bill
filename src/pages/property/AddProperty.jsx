@@ -184,7 +184,7 @@ function AddProperty() {
           action={action}
         />
       </div>
-      <Box sx={{ width: "100%" }}>
+      <Box sx={{ width: "100%" ,p:"20px"}}>
         {/* back btn */}
         <BackButton />
         {/*Properties heading  */}

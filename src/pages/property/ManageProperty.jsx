@@ -277,7 +277,7 @@ function ManageProperty() {
                 {isLading ? (
                   <CircularProgress color="secondary" />
                 ) : (
-                  <Stack justifyContent={"center"} alignItems="center">
+                  <Stack width={'100%'} justifyContent={"center"} alignItems="center">
                     {propertyData.slice(0, showProperty).map((item, index) => (
                       <PropertyCard key={index} item={item} />
                     ))}
@@ -314,8 +314,11 @@ function ManageProperty() {
                     >
                       Currently, No properties are added.
                     </Typography>
-                  ) && (
-                    <Button
+                  )  
+                    
+                   
+                  }
+                  {!isLading && !propertyData.length && <Button
                       variant="contained"
                       color="secondary"
                       sx={{
@@ -330,8 +333,8 @@ function ManageProperty() {
                       onClick={() => navigate("/add-property")}
                     >
                       Add New Property
-                    </Button>
-                  )}
+                    </Button>}
+
               </Stack>
             </TabPanel>
             <TabPanel value={activeTab} index={1}>

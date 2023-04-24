@@ -39,14 +39,13 @@ function PropertyCard({ item }) {
         sx={{
           display: "flex",
           alignItems: { xs: "flex-start", lg: "center" },
-          // justifyContent: "center",
           flexDirection: {
             xs: "column",
             sm: "column",
             md: "row",
             lg: "row",
           },
-          width: "160%",
+          width: "100%",
           height: "auto",
           padding: "18px",
           borderRadius: "8px",
