@@ -157,6 +157,28 @@ const getPropertyList = async (req, res) => {
   }
 };
 
+const getPropertyDetailById = async (req, res) => {
+  const { propertyId } = req.params;
+  try {
+    if (req.method !== "GET") return res.status(405).send("Method not allowed");
+    if (!propertyId)
+      return res.status(400).send({ message: "propertyId is missing" });
+    const docRef = db.collection("properties").doc(propertyId);
+
+    const doc = await docRef.get();
+
+    if (!doc.exists) {
+      return res.status(500).send({ message: "Property not found" });
+    }
+
+    return res.status(200).send({ ...doc.data(), id: propertyId });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: "An error occurred while retrieving properties." });
+    return;
+  }
+};
 app.post("/register", register);
 app.post("/getUserInfo", getUserInfo);
 app.post("/updateUser", updateUser);
@@ -164,5 +186,6 @@ app.post("/updateUser", updateUser);
 // property
 app.post("/addProperty", addProperty);
 app.get("/getPropertyList", getPropertyList);
+app.get("/getPropertyDetailById/:propertyId", getPropertyDetailById); // add utility details
 
 exports.app = functions.https.onRequest(app);
