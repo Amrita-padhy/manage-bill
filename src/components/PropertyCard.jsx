@@ -13,7 +13,9 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { PROPERTY_DETAILS } from "@/constants/routes";
+import { useSelector } from "react-redux";
 
 const menuItems = [
   { label: "Edit Property Details", url: "/add-property" },
@@ -21,6 +23,7 @@ const menuItems = [
   { label: "Edit Resident Details" },
 ];
 const ITEM_HEIGHT = 140;
+
 function PropertyCard({ item }) {
   const navigate = useNavigate();
   const [menuEl, setMenuEl] = useState(null);
@@ -31,10 +34,11 @@ function PropertyCard({ item }) {
   const handleMenuClose = () => {
     setMenuEl(null);
   };
+
   return (
     <>
       <Card
-        onClick={() => navigate("/property-details")}
+        onClick={() => navigate(`/property-details/${item.id}`)}
         variant="outlined"
         sx={{
           display: "flex",
@@ -147,9 +151,9 @@ function PropertyCard({ item }) {
                     },
                   }}
                 >
-                  {menuItems.map((menuItem,index) => (
+                  {menuItems.map((menuItem, index) => (
                     <Link
-                    key={index}
+                      key={index}
                       to={menuItem.url}
                       style={{
                         textDecoration: "none",

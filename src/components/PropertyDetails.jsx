@@ -1,6 +1,6 @@
 import { Box } from "@mui/system";
 import React, { useState } from "react";
-import { useNavigate, Outlet } from "react-router-dom";
+import { useNavigate, Outlet, useParams } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
   Button,
@@ -23,6 +23,8 @@ function TabPanel(props) {
   return <div>{value === index && <h1>{children}</h1>}</div>;
 }
 function PropertyDetailCard() {
+  const { propertyId } = useParams();
+  console.log(propertyId);
   const [sort, setSort] = useState("");
   const handleSortProperty = (event) => {
     setSort(event.target.value);
@@ -36,7 +38,7 @@ function PropertyDetailCard() {
 
   return (
     <>
-      <Box width={"100%"}>
+      <Box width={"100%"} marginTop="70px" padding="20px">
         <BackButton />
 
         {/* property heading */}
@@ -54,9 +56,9 @@ function PropertyDetailCard() {
           <StarOutlineIcon fontSize="20px" color="gray700.main" />
         </Box>
         {/* property card component */}
-        <Box sx={{ mt: "16px" }}>
+        {/* <Box sx={{ mt: "16px" }}>
           <PropertyCard />
-        </Box>
+        </Box> */}
         {/* Property Utilities */}
         <PropertyUtilitiesCard />
 

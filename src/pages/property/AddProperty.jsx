@@ -212,7 +212,7 @@ function AddProperty() {
                 disabled={isDisable}
                 required
                 fullWidth
-                size="small"
+                size="medium"
                 margin="normal"
                 variant="outlined"
                 type={"text"}
@@ -233,7 +233,7 @@ function AddProperty() {
                 required
                 fullWidth
                 select
-                size="small"
+                size="medium"
                 margin="normal"
                 variant="outlined"
                 type={"text"}
@@ -265,7 +265,7 @@ function AddProperty() {
                 disabled={isDisable}
                 required
                 fullWidth
-                size="small"
+                size="medium"
                 margin="normal"
                 variant="outlined"
                 type={"text"}
@@ -284,7 +284,7 @@ function AddProperty() {
                 disabled={isDisable}
                 required
                 fullWidth
-                size="small"
+                size="medium"
                 margin="normal"
                 variant="outlined"
                 type={"number"}
@@ -309,7 +309,7 @@ function AddProperty() {
                 disabled={isDisable}
                 required
                 fullWidth
-                size="small"
+                size="medium"
                 margin="normal"
                 variant="outlined"
                 type={"text"}
@@ -336,7 +336,7 @@ function AddProperty() {
                 disabled={isDisable}
                 required
                 fullWidth
-                size="small"
+                size="medium"
                 margin="normal"
                 variant="outlined"
                 type={"text"}
@@ -355,7 +355,7 @@ function AddProperty() {
                 disabled={isDisable}
                 required
                 fullWidth
-                size="small"
+                size="medium"
                 margin="normal"
                 variant="outlined"
                 type={"text"}
@@ -374,7 +374,7 @@ function AddProperty() {
                 disabled={isDisable}
                 required
                 fullWidth
-                size="small"
+                size="medium"
                 margin="normal"
                 variant="outlined"
                 type={"number"}
