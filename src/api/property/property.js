@@ -1,54 +1,54 @@
-import {
-    useSelector
-} from "react-redux";
+import { useSelector } from "react-redux";
 import api from "../api";
 
-
-
 const URLS = {
-    addProperty: "/addProperty",
-    getProperty: "/getPropertyList"
-}
-
-
+  addProperty: "/addProperty",
+  getProperty: "/getPropertyList",
+  propertyDetails: "/getPropertyDetailById",
+};
 
 const addProperty = async (body) => {
-    const result = {
-        response: true
-    }
-    try {
-        const {
-            data
-        } = await api.post(URLS.addProperty, body)
-        console.log(data);
-
-    } catch (error) {
-        console.error(error)
-        result.response = false;
-    } finally {
-        return result;
-    };
-}
+  const result = {
+    response: true,
+  };
+  try {
+    const { data } = await api.post(URLS.addProperty, body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+    result.response = false;
+  } finally {
+    return result;
+  }
+};
 
 const getProperty = async (uid) => {
+  const result = {
+    response: true,
+  };
+  try {
+    const { data } = await api.get(`${URLS.getProperty}?uid=${uid}`);
+    return (result.data = data);
+  } catch (error) {
+    console.error(error);
+    result.response = false;
+  } finally {
+    return result;
+  }
+};
+const getPropertyDetails = async (propertyId) => {
+  const result = {
+    response: true,
+  };
+  try {
+    const { data } = await api.get(`${URLS.propertyDetails}/${propertyId}`);
+    return (result.data = data);
+  } catch (error) {
+    console.error(error);
+    result.response = false;
+  } finally {
+    return result;
+  }
+};
 
-    const result = {
-        response: true
-    }
-    try {
-        const {
-            data
-        } = await api.get(`${URLS.getProperty}?uid=${uid}`)
-        return result.data = data;
-    } catch (error) {
-        console.error(error)
-        result.response = false;
-    } finally {
-        return result;
-    }
-}
-
-export {
-    addProperty,
-    getProperty
-}
+export { addProperty, getProperty, getPropertyDetails };

@@ -102,6 +102,7 @@ function ManageProperty() {
     getData();
   }, []);
 
+
   return (
     <>
       <Box sx={{ p: "20px", mt: "50px" }}>
@@ -294,9 +295,11 @@ function ManageProperty() {
                       {propertyList
                         ?.slice(0, showProperty)
                         .map((item, index) => (
-                          <PropertyCard key={index} item={item} />
+       
+        <PropertyCard key={index} item={item}  />
                         ))}
                       <Button
+                      
                         variant="contained"
                         onClick={handleShowItem}
                         color={"secondary"}

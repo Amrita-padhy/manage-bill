@@ -65,6 +65,7 @@ function PropertyUtilitiesCard(prop) {
         >
           {residentUtilities.map((item, index) => (
             <Grid
+            item
               xs={2}
               sm={4}
               md={1}
@@ -72,7 +73,7 @@ function PropertyUtilitiesCard(prop) {
               justifyContent="center"
               alignItems={"center"}
             >
-              <Item>
+              <Item >
                 <Box>{item.icon}</Box>
                 <Typography
                   sx={{

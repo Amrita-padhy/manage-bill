@@ -1,15 +1,19 @@
-import {createSlice} from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit";
 
-const propertySlice =  createSlice({
-name:"property",
-initialState:{
-    propertyList : []
-},
-reducers :{
-    getPropertyList:(state,action) => {
-      state.propertyList = action.payload  
+const propertySlice = createSlice({
+  name: "property",
+  initialState: {
+    propertyList: [],
+    selectedProperty: {},
+  },
+  reducers: {
+    getPropertyList: (state, action) => {
+      state.propertyList = action.payload;
+    },
+    getSelectedProperty:(state,action) => {
+      state.selectedProperty = action.payload
     }
-}
-})
-export const {getPropertyList}  = propertySlice.actions 
-export default propertySlice.reducer
+  },
+});
+export const { getPropertyList,getSelectedProperty } = propertySlice.actions;
+export default propertySlice.reducer;

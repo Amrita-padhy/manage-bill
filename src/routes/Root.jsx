@@ -74,3 +74,10 @@ export const AppRouter = () => {
   ]);
   return <RouterProvider router={router}></RouterProvider>;
 };
+
+
+/*
+navogate fun on parent
+detail page card show 
+
+*/ 

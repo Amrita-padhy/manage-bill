@@ -72,6 +72,7 @@ function ResidentFeesCard() {
         >
           {cards.map((item, index) => (
             <Grid
+            item
               xs={2}
               sm={4}
               md={1}
