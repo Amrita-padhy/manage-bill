@@ -31,8 +31,11 @@ import { Link, useNavigate } from "react-router-dom";
 import PropertyCard from "../../components/PropertyCard";
 import axios from "axios";
 import { getProperty } from "../../api/property/property";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
+import { InputBase, InputLabel } from "@material-ui/core";
+import SearchIcon from "@mui/icons-material/Search";
+import { getPropertyList } from "../../store/property/propertyReducer";
 
 const Item = styled(Paper)(() => ({
   backgroundColor: "white",
@@ -60,12 +63,14 @@ const overViewCard = [
 ];
 
 function ManageProperty() {
-  const [propertyData, setPropertyData] = useState([]);
-  console.log(propertyData);
+  const { propertyList } = useSelector((state) => state.property);
+
   const [activeTab, setActiveTab] = useState(0);
   const [sort, setSort] = useState("");
   const [isLading, setIsLoading] = useState(false);
   const [showProperty, setShowProperty] = useState(4);
+  const dispatch = useDispatch();
+
   const handleShowItem = () => {
     if (showProperty === propertyData.length) {
       setShowProperty(4);
@@ -74,7 +79,7 @@ function ManageProperty() {
     }
   };
   const handleTabChange = (e, val) => {
-    console.log(val);
+    // console.log(val);
     setActiveTab(val);
   };
 
@@ -85,273 +90,235 @@ function ManageProperty() {
 
   const { user } = useSelector((state) => state.user);
 
-  const getPropertyList = async () => {
+  const getData = async () => {
     const uid = user?.uid;
-    console.log(uid);
     setIsLoading(true);
-    const result = await getProperty(uid);
+    const { data } = await getProperty(uid);
     setIsLoading(false);
-
-    console.log(result.data);
-    setPropertyData(result.data);
+    // console.log(data);
+    dispatch(getPropertyList(data));
   };
   useEffect(() => {
-    getPropertyList();
+    getData();
   }, []);
 
   return (
     <>
-      <Stack
-        direction={{ xs: "column", sm: "row" }}
-        justifyContent="space-between"
-        alignItems={"center"}
-      >
-        <Header heading=" Properties:" title="Manage Properties" />
-        <Button
-          variant="contained"
-          color="secondary"
-          sx={{
-            width: "184px",
-            height: "40px",
-            fontSize: "14px",
-            fontWeight: "500",
-            textTransform: "none",
-          }}
-          startIcon={<AddCircleOutlineIcon />}
-          onClick={() => navigate("/add-property")}
+      <Box sx={{ p: "20px", mt: "50px" }}>
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          justifyContent="space-between"
+          textAlign={"center"}
+          alignItems={"center"}
         >
-          Add New Property
-        </Button>
-      </Stack>
-      {/* property card */}
-      <Box justifyContent={"center"}>
-        <Card
-          sx={{
-            height: "auto",
-            mt: "35px",
-            padding: "24px",
-          }}
-        >
-          {/* Overview */}
-          <Box
+          <Header heading=" Properties:" title="Manage Properties" />
+          <Button
+            variant="contained"
+            color="secondary"
             sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
+              width: "184px",
+              height: "40px",
+              fontSize: "14px",
+              fontWeight: "500",
+              textTransform: "none",
+            }}
+            startIcon={<AddCircleOutlineIcon />}
+            onClick={() => navigate("/add-property")}
+          >
+            Add New Property
+          </Button>
+        </Stack>
+        {/* property card */}
+        <Box justifyContent={"center"}>
+          <Card
+            variant="outlined"
+            sx={{
+              height: "auto",
+              mt: "35px",
+              padding: "24px",
             }}
           >
-            <Typography
-              fontSize={"20px"}
-              fontWeight="700"
-              color={"gray900.main"}
-            >
-              Overview
-            </Typography>
-            <IconButton>
-              <KeyboardArrowUpIcon />
-            </IconButton>
-          </Box>
-          {/* Overview card main */}
-          <Box width={"100%"} marginTop="16px">
-            <Grid container rowGap={"15px"}>
-              <Grid xs={6} md={3}>
-                <Item>
-                  <Typography
-                    sx={{
-                      fontSize: "12px",
-                      fontWeight: "500",
-                      color: "gray600.main",
-                    }}
-                  >
-                    label
-                  </Typography>
-
-                  <Typography
-                    sx={{
-                      fontSize: "30px",
-                      fontWeight: "700",
-                      color: "gray900.main",
-                      mt: "6px",
-                    }}
-                  >
-                    value
-                  </Typography>
-                </Item>
-              </Grid>
-
-              {/*  */}
-            </Grid>
-          </Box>
-        </Card>
-        {/* tab card */}
-        <Card
-          variant="outlined"
-          sx={{
-            mt: "32px",
-            bgcolor: "transparent",
-            height: "auto",
-            mb: "40px",
-          }}
-        >
-          {/* tab  */}
-          <Box
-            sx={{
-              width: "100%",
-              height: "48px",
-              bgcolor: "white.main",
-            }}
-          >
-            <Tabs
-              variant="fullWidth"
-              value={activeTab}
-              onChange={handleTabChange}
-              textColor="secondary"
-              indicatorColor="secondary"
-            >
-              <Tab
-                label="Active Properties"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: "600",
-                  textTransform: "none",
-                }}
-              />
-              <Tab
-                label=" Inactive Properties"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: "600",
-                  textTransform: "none",
-                }}
-              />
-            </Tabs>
-          </Box>
-          <CardActions
-            sx={{
-              px: "26px",
-              py: "20px",
-
-              display: { xs: "block", md: "flex" },
-              justifyContent: "space-between",
-            }}
-          >
-            {/* search button */}
-            <Stack
-              direction={{ xs: "column", md: "row" }}
-              alignItems="center"
-              gap={1}
+            {/* Overview */}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
             >
               <Typography
-                sx={{
-                  color: "gray600.main",
-                  fontSize: "16px",
-                  fontWeight: "400",
-                  whiteSpace: "nowrap",
-                }}
+                fontSize={"20px"}
+                fontWeight="700"
+                color={"gray900.main"}
               >
-                Find Property
+                Overview
               </Typography>
-              <TextField
-                fullWidth
-                id="input-with-icon-textfield"
-                placeholder="Search"
-                size="small"
-                margin="normal"
-                sx={{
-                  bgcolor: "white.main",
-                  border: "0.5px solid gray",
-                  borderRadius: "8px",
-                  p: "10px",
-                }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchOutlinedIcon />
-                    </InputAdornment>
-                  ),
-                }}
-                variant="standard"
-              />
-            </Stack>
-            {/* sort button */}
-            <Stack
-              direction={{ xs: "column", md: "row" }}
-              alignItems="center"
-              gap={1}
+              <IconButton>
+                <KeyboardArrowUpIcon />
+              </IconButton>
+            </Box>
+            {/* Overview card main */}
+          </Card>
+          {/* tab card */}
+          <Card
+            variant="outlined"
+            sx={{
+              mt: "32px",
+              bgcolor: "transparent",
+              height: "auto",
+              mb: "40px",
+            }}
+          >
+            {/* tab  */}
+            <Box
+              sx={{
+                width: "100%",
+                height: "48px",
+                bgcolor: "white.main",
+              }}
             >
-              <Typography
-                sx={{
-                  color: "gray600.main",
-                  fontSize: "16px",
-                  fontWeight: "500",
-                  whiteSpace: "nowrap",
-                }}
+              <Tabs
+                variant="fullWidth"
+                value={activeTab}
+                onChange={handleTabChange}
+                textColor="secondary"
+                indicatorColor="secondary"
               >
-                Sort By
-              </Typography>
+                <Tab
+                  label="Active Properties"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: "600",
+                    textTransform: "none",
+                  }}
+                />
+                <Tab
+                  label=" Inactive Properties"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: "600",
+                    textTransform: "none",
+                  }}
+                />
+              </Tabs>
+            </Box>
+            <CardActions
+              sx={{
+                px: "26px",
+                py: "20px",
 
-              <FormControl
-                fullWidth
-                size="small"
-                margin="normal"
-                variant="standard"
-                sx={{
-                  bgcolor: "white.main",
-                  borderRadius: "8px",
-                  p: "6px",
-                  border: "0.5px solid gray",
-                }}
+                display: { xs: "block", md: "flex" },
+                justifyContent: "space-between",
+              }}
+            >
+              {/* search button */}
+              <Stack
+                direction={{ xs: "column", md: "row" }}
+                alignItems={{ sm: "flex-start", md: "center" }}
+                gap={1}
+                mb={"20px"}
               >
+                <Typography
+                  sx={{
+                    color: "gray600.main",
+                    fontSize: "16px",
+                    fontWeight: "400",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Find Property
+                </Typography>
+                <Box
+                  component="form"
+                  sx={{
+                    padding: "5px",
+                    border: "1.5px solid #FBE122",
+                    borderRadius: "10px",
+                  }}
+                >
+                  <InputBase
+                    placeholder="Search property…"
+                    inputProps={{ "aria-label": "search" }}
+                  />
+                  <IconButton type="submit" aria-label="search">
+                    <SearchIcon />
+                  </IconButton>
+                </Box>
+              </Stack>
+              {/* sort button */}
+              <Stack
+                direction={{ xs: "column", md: "row" }}
+                alignItems={{ sm: "flex-start", md: "center" }}
+                gap={1}
+              >
+                <Typography
+                  sx={{
+                    color: "gray600.main",
+                    fontSize: "16px",
+                    fontWeight: "500",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Sort By
+                </Typography>
                 <Select
-                  autoWidth
+                  sx={{
+                    border: "1.5px solid #FBE122",
+                    borderRadius: "10px",
+                    p: "4px",
+                  }}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={sort}
-                  label="A-Z"
                   onChange={handleSortProperty}
                 >
                   <MenuItem value={10}>A-Z</MenuItem>
                   <MenuItem value={20}>Z-A</MenuItem>
                   <MenuItem value={30}>LOW-HIGH</MenuItem>
                 </Select>
-              </FormControl>
-            </Stack>
-          </CardActions>
-          <Divider />
-
-          <CardContent>
-            <TabPanel value={activeTab} index={0}>
-              <Stack justifyContent={"center"} alignItems="center">
-                {isLading ? (
-                  <CircularProgress color="secondary" />
-                ) : (
-                  <Stack justifyContent={"center"} alignItems="center">
-                    {propertyData.slice(0, showProperty).map((item, index) => (
-                      <PropertyCard key={index} item={item} />
-                    ))}
-                    <Button
-                      variant="contained"
-                      onClick={handleShowItem}
-                      color={"secondary"}
-                      disableElevation
-                      sx={{
-                        textTransform: "none",
-                        mt: "20px",
-                        width: "200px",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      {showProperty === propertyData.length
-                        ? "Show Less"
-                        : "Load More"}
-                    </Button>
-                  </Stack>
-                )}
               </Stack>
-              {/*  */}
-              <Stack justifyContent={"center"} alignItems="center">
-                {!propertyData.length && (
+            </CardActions>
+            <Divider />
+
+            <CardContent>
+              <TabPanel value={activeTab} index={0}>
+                <Stack justifyContent={"center"} alignItems="center">
+                  {isLading ? (
+                    <CircularProgress color="secondary" />
+                  ) : (
+                    <Stack
+                      width={"100%"}
+                      justifyContent={"center"}
+                      alignItems="center"
+                    >
+                      {propertyList
+                        ?.slice(0, showProperty)
+                        .map((item, index) => (
+                          <PropertyCard key={index} item={item} />
+                        ))}
+                      <Button
+                        variant="contained"
+                        onClick={handleShowItem}
+                        color={"secondary"}
+                        disableElevation
+                        sx={{
+                          textTransform: "none",
+                          mt: "20px",
+                          width: "200px",
+                          fontSize: "14px",
+                          fontWeight: "500",
+                        }}
+                      >
+                        {showProperty === propertyList.length
+                          ? "Show Less"
+                          : "Load More"}
+                      </Button>
+                    </Stack>
+                  )}
+                </Stack>
+                {/*  */}
+                <Stack justifyContent={"center"} alignItems="center">
+                  {!propertyList.length && (
                     <Typography
                       sx={{
                         color: "gray600.main",
@@ -362,7 +329,8 @@ function ManageProperty() {
                     >
                       Currently, No properties are added.
                     </Typography>
-                  ) && (
+                  )}
+                  {!isLading && !propertyList.length && (
                     <Button
                       variant="contained"
                       color="secondary"
@@ -380,13 +348,14 @@ function ManageProperty() {
                       Add New Property
                     </Button>
                   )}
-              </Stack>
-            </TabPanel>
-            <TabPanel value={activeTab} index={1}>
-              Inactive Properties
-            </TabPanel>
-          </CardContent>
-        </Card>
+                </Stack>
+              </TabPanel>
+              <TabPanel value={activeTab} index={1}>
+                Inactive Properties
+              </TabPanel>
+            </CardContent>
+          </Card>
+        </Box>
       </Box>
     </>
   );

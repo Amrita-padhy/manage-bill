@@ -11,3 +11,4 @@ export const ONBOARDING = "/onboarding";
 // Main
 export const MANAGE_PROPERTY = "/";
 export const ADD_PROPERTY = "/add-property";
+export const PROPERTY_DETAILS = "/property-details/:propertyId";

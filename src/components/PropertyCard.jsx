@@ -13,7 +13,9 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { PROPERTY_DETAILS } from "@/constants/routes";
+import { useSelector } from "react-redux";
 
 const menuItems = [
   { label: "Edit Property Details", url: "/add-property" },
@@ -21,6 +23,7 @@ const menuItems = [
   { label: "Edit Resident Details" },
 ];
 const ITEM_HEIGHT = 140;
+
 function PropertyCard({ item }) {
   const navigate = useNavigate();
   const [menuEl, setMenuEl] = useState(null);
@@ -31,22 +34,22 @@ function PropertyCard({ item }) {
   const handleMenuClose = () => {
     setMenuEl(null);
   };
+
   return (
     <>
       <Card
-        onClick={() => navigate("/property-details")}
+        onClick={() => navigate(`/property-details/${item.id}`)}
         variant="outlined"
         sx={{
           display: "flex",
           alignItems: { xs: "flex-start", lg: "center" },
-          // justifyContent: "center",
           flexDirection: {
             xs: "column",
             sm: "column",
             md: "row",
             lg: "row",
           },
-          width: "160%",
+          width: "100%",
           height: "auto",
           padding: "18px",
           borderRadius: "8px",
@@ -126,8 +129,8 @@ function PropertyCard({ item }) {
                   aria-label="more"
                   id="long-button"
                   aria-controls={open ? "long-menu" : undefined}
-                  aria-expanded={open ? "true" : undefined}
-                  aria-haspopup="true"
+                  aria-expanded={open ? true : undefined}
+                  // aria-haspopup=true
                   onClick={handleMenuClick}
                 >
                   <MoreVertIcon fontSize="medium" color="gray600" />
@@ -148,15 +151,16 @@ function PropertyCard({ item }) {
                     },
                   }}
                 >
-                  {menuItems.map((menuItem) => (
+                  {menuItems.map((menuItem, index) => (
                     <Link
+                      key={index}
                       to={menuItem.url}
                       style={{
                         textDecoration: "none",
                         color: "#495057",
                       }}
                     >
-                      <MenuItem key={menuItem}>{menuItem.label}</MenuItem>
+                      <MenuItem key={index}>{menuItem.label}</MenuItem>
                     </Link>
                   ))}
                 </Menu>

@@ -1,146 +1,302 @@
-import React from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Drawer from "@material-ui/core/Drawer";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-
+import * as React from 'react';
+import Drawer from '@mui/material/Drawer';
+import Box from '@mui/material/Box';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import { useTheme } from '@emotion/react';
+import { useState } from 'react';
+import {  useMediaQuery } from '@material-ui/core';
+import { Button, Divider, Typography } from '@mui/material';
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-
-const drawerWidth = 200;
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-  },
-  drawer: {
-    flexShrink: 0,
-    width: drawerWidth,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up("md")]: {
-      display: "none",
-    },
-  },
-  toolbar: {
-    ...theme.mixins.toolbar,
-    [theme.breakpoints.down("sm")]: {
-      display: "none",
-    },
-  },
-  content: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing(3),
-  },
-}));
+import StarIcon from "@mui/icons-material/Star";
+import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
+import { InputBase, Paper } from '@material-ui/core';
+import SearchIcon from '@mui/icons-material/Search';
+const drawerWidth = 280;
 
 function AppNavbar() {
   const theme = useTheme();
+  const [mobileOpen, setMobileOpen] = useState(false);
+const handleDrawerToggle = () => {
+  setMobileOpen(!mobileOpen);
+};
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
-
-  const [open, setOpen] = React.useState(false);
-
-  const toggleDrawer = (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-
-    setOpen(!open);
-  };
+  
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
+    <Box sx={{ display: 'flex' }}>
+      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: { sm: `${drawerWidth}px` }, }} color='gray700' >
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
-            onClick={toggleDrawer}
-            className={classes.menuButton}
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display:{sm:"block",md:"none"} }}
           >
-            <AddCircleOutlineIcon />
+            <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            Responsive Drawer Example
-          </Typography>
+          <Box component="form" sx={{borderBottom:"1px solid #FBE122", width:{sm:"200px",md:"300px"}}}  >
+          <IconButton type="submit" aria-label="search">
+        <SearchIcon />
+      </IconButton>
+      <InputBase
+      style={{color:"#FBE122"}}
+        placeholder="Search something here..."
+        inputProps={{ 'aria-label': 'search' }}
+      />
+     
+    </Box>
         </Toolbar>
       </AppBar>
       <Drawer
-        className={classes.drawer}
-        variant={isMdUp ? "permanent" : "temporary"}
-        classes={{
-          paper: classes.drawerPaper,
+        sx={{
+          
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+          },
+          display: { xs: 'block', md: 'block' },
         }}
+        variant={isMdUp ? "permanent" : "temporary"}
         anchor="left"
-        open={open}
-        onClose={toggleDrawer}
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+       
       >
-        <div className={classes.toolbar} />
-        <Divider />
+     <Toolbar sx={{bgcolor:"gray700.main"}}>
+     <Typography color="primary.main" margin={'auto'}>MANAGE BILL</Typography>
+        </Toolbar>
+       <Box sx={{ bgcolor: "gray700.main", height: "232px",}}>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              justifyContent={"center"}
+              alignItems="center"
+              padding={"16px"}
+            >
+              <Box
+                display={"flex"}
+                gap="10px"
+                justifyContent={"center"}
+                alignItems="center"
+                marginBottom={"4px"}
+              >
+                <Typography color="white.main">Increase in NOI YTD</Typography>
+                <InfoOutlinedIcon color="white" fontSize="small" />
+              </Box>
+              <Button
+                variant="contained"
+                color="white"
+                fullWidth
+                sx={{ height: "48px", padding: "8px" }}
+              >
+                $ 1,000.00
+              </Button>
+            </Box>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              justifyContent={"center"}
+              alignItems="center"
+              padding={"16px"}
+            >
+              <Box
+                display={"flex"}
+                gap="10px"
+                justifyContent={"center"}
+                alignItems="center"
+                marginBottom={"4px"}
+              >
+                <Typography color="white.main">% of bills recovered</Typography>
+                <InfoOutlinedIcon color="white" fontSize="small" />
+              </Box>
+              <Button
+                variant="contained"
+                color="white"
+                fullWidth
+                sx={{ height: "48px", padding: "8px" }}
+              >
+                50%
+              </Button>
+            </Box>
+          </Box>
+          <Divider />
+          {/* card */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              
+            }}
+          >
+            <Box
+              sx={{
+                bgcolor: "white",
+                height: "120px",
+                width: "248px",
+                borderRadius: "8px",
+                mt: "46px",
+              boxshadow: 1,
+              border:"0.5px solid gray"
 
-        <Divider />
+              }}
+            >
+              <Box
+                sx={{
+                  height: "40px",
+                  bgcolor: "primary.main",
+                  borderTopLeftRadius: "8px",
+                  borderTopRightRadius: "8px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: "10px",
+                }}
+              >
+                <Typography
+                  fontSize={"12px"}
+                  fontWeight="500"
+                  color="gray700.main"
+                >
+                  START IT
+                </Typography>
+                <AddCircleOutlineIcon fontSize="small" color="gray700" />
+              </Box>
+              <Box
+                sx={{
+                  height: "40px",
+                  bgcolor: "white",
+                  borderTopLeftRadius: "8px",
+                  borderTopRightRadius: "8px",
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  padding: "10px",
+                  gap: "8px",
+                }}
+              >
+                <StarIcon fontSize="small" color="primary" />
+                <Typography
+                  fontSize={"12px"}
+                  fontWeight="500"
+                  color="gray700.main"
+                >
+                  Manage Properties
+                </Typography>
+              </Box>
+              <Divider />
+              <Box
+                sx={{
+                  height: "40px",
+                  bgcolor: "white",
+                  borderTopLeftRadius: "8px",
+                  borderTopRightRadius: "8px",
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  padding: "10px",
+                  gap: "8px",
+                }}
+              >
+                <StarIcon fontSize="small" color="primary" />
+                <Typography
+                  fontSize={"12px"}
+                  fontWeight="500"
+                  color="gray700.main"
+                >
+                  Add Units
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+          {/* account info card */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Box
+              sx={{
+                bgcolor: "transparent",
+                height: "70px",
+                width: "248px",
+                borderRadius: "8px",
+                mt: "60px",
+                boxshadow: 1,
+              border:"0.5px solid gray"
+
+              }}
+            >
+              <Box
+                sx={{
+                  height: "30px",
+                  bgcolor: "primary.main",
+                  borderTopLeftRadius: "8px",
+                  borderTopRightRadius: "8px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "10px",
+                }}
+              >
+                <Typography
+                  fontSize={"12px"}
+                  fontWeight="500"
+                  color="gray700.main"
+                >
+                  RANGER
+                </Typography>
+              </Box>
+
+              <Divider />
+              <Box
+                sx={{
+                  height: "35px",
+                  bgcolor: "white",
+                  borderTopLeftRadius: "8px",
+                  borderTopRightRadius: "8px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "10px",
+                  gap: "8px",
+                }}
+              >
+                <Typography
+                  fontSize={"12px"}
+                  fontWeight="500"
+                  color="gray700.main"
+                >
+                  Bill Wattson
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+          {/*  Sign Out  */}
+          <Button
+          
+            variant="outlined"
+            color="gray700"
+            sx={{ margin: "auto", textTransform: "none", color: "gray700",
+            justifyContent: 'flex-end', bottom:"0px"
+             }}
+            endIcon={<SubdirectoryArrowRightIcon color="gray700" />}
+          >
+            Sign Out
+          </Button>
       </Drawer>
-      <main className={classes.content}>
-        <Toolbar />
-        <Typography component="h2" variant="h6" gutterBottom>
-          On small and extra-small screens the sidebar/drawer is temporary and
-          can be opened via the menu icon in the toolbar.
-        </Typography>
-        <Typography component="h2" variant="h6" gutterBottom>
-          On medium, large, and extra-large screens the sidebar/drawer is
-          permanent and there is no menu icon in the toolbar.
-        </Typography>
-        <hr />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-          dolor purus non enim praesent elementum facilisis leo vel. Risus at
-          ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
-          quisque non tellus. Convallis convallis tellus id interdum velit
-          laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
-          adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-          integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-          eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-          quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-          vivamus at augue. At augue eget arcu dictum varius duis at consectetur
-          lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
-          faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
-      </main>
-    </div>
+    </Box>
+    
+   
   );
 }
 

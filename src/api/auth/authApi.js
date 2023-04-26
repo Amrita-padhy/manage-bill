@@ -49,6 +49,7 @@ const login = async (body) => {
   try {
     await signInWithEmailAndPassword(auth, body.email, body.password);
   } catch (error) {
+    console.log(error);
     result.response = false;
     result.message = handleAuthErrorMsg(error.message);
   } finally {
