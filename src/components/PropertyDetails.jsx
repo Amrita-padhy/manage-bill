@@ -56,6 +56,13 @@ dispatch(getSelectedProperty(data))
     getDetails()
   })
 
+  function scrollToTopOnReload() {
+    window.scrollTo(0, 0);
+  }
+  useEffect(() => {
+    scrollToTopOnReload()
+  }, []);
+
   return (
     <>
       <Box width={"100%"} marginTop="70px" padding="20px">

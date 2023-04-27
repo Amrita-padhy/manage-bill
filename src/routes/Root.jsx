@@ -1,6 +1,7 @@
 import {
   Navigate,
   RouterProvider,
+  ScrollRestoration,
   createBrowserRouter,
   useNavigate,
 } from "react-router-dom";
@@ -72,12 +73,11 @@ export const AppRouter = () => {
       ],
     },
   ]);
-  return <RouterProvider router={router}></RouterProvider>;
+  return <RouterProvider router={router}>
+    <ScrollRestoration getKey={(location,matches) => {
+        return location.key
+      }} />
+  </RouterProvider>;
 };
 
 
-/*
-navogate fun on parent
-detail page card show 
-
-*/ 
