@@ -72,10 +72,10 @@ function ManageProperty() {
   const dispatch = useDispatch();
 
   const handleShowItem = () => {
-    if (showProperty === propertyData.length) {
+    if (showProperty === propertyList.length) {
       setShowProperty(4);
     } else {
-      setShowProperty(propertyData.length);
+      setShowProperty(propertyList.length);
     }
   };
   const handleTabChange = (e, val) => {
@@ -101,6 +101,9 @@ function ManageProperty() {
   useEffect(() => {
     getData();
   }, []);
+useEffect(() => {
+
+},[])
 
   return (
     <>
@@ -294,9 +297,11 @@ function ManageProperty() {
                       {propertyList
                         ?.slice(0, showProperty)
                         .map((item, index) => (
-                          <PropertyCard key={index} item={item} />
+       
+        <PropertyCard key={index} item={item}  />
                         ))}
                       <Button
+                      
                         variant="contained"
                         onClick={handleShowItem}
                         color={"secondary"}

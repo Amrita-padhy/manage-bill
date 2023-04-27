@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider ,ScrollRestoration} from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 
 import store from "@/store/store.js";

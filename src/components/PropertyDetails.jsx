@@ -1,5 +1,5 @@
 import { Box } from "@mui/system";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, Outlet, useParams } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
@@ -18,13 +18,23 @@ import PropertyCard from "./PropertyCard";
 import PropertyUtilitiesCard from "./PropertyUtilitiesCard";
 import ResidentFeesCard from "./ResidentFeesCard";
 import BackButton from "../common/BackButton";
+import { getPropertyDetails } from "../api/property/property";
+import { getSelectedProperty } from "../store/property/propertyReducer";
+import {useSelector,useDispatch} from 'react-redux'
+
+
 function TabPanel(props) {
   const { children, value, index } = props;
   return <div>{value === index && <h1>{children}</h1>}</div>;
 }
 function PropertyDetailCard() {
+const {selectedProperty} = useSelector((state) => state.property)
+// console.log(selectedProperty);
+
+const dispatch = useDispatch()
+
+  // const [propertyData, setPropertyData] = useState([])
   const { propertyId } = useParams();
-  console.log(propertyId);
   const [sort, setSort] = useState("");
   const handleSortProperty = (event) => {
     setSort(event.target.value);
@@ -35,6 +45,23 @@ function PropertyDetailCard() {
     console.log(val);
     setActiveTab(val);
   };
+
+const getDetails = async() => {
+// console.log(propertyId);
+const {data} = await getPropertyDetails(propertyId)
+// console.log(data);
+dispatch(getSelectedProperty(data))
+}
+  useEffect(() => {
+    getDetails()
+  })
+
+  function scrollToTopOnReload() {
+    window.scrollTo(0, 0);
+  }
+  useEffect(() => {
+    scrollToTopOnReload()
+  }, []);
 
   return (
     <>
@@ -56,9 +83,9 @@ function PropertyDetailCard() {
           <StarOutlineIcon fontSize="20px" color="gray700.main" />
         </Box>
         {/* property card component */}
-        {/* <Box sx={{ mt: "16px" }}>
-          <PropertyCard />
-        </Box> */}
+        <Box sx={{ mt: "16px" }}>
+          <PropertyCard item={selectedProperty} />
+        </Box>
         {/* Property Utilities */}
         <PropertyUtilitiesCard />
 
