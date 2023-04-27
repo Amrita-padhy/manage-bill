@@ -32,8 +32,6 @@ const {selectedProperty} = useSelector((state) => state.property)
 // console.log(selectedProperty);
 
 const dispatch = useDispatch()
-
-  // const [propertyData, setPropertyData] = useState([])
   const { propertyId } = useParams();
   const [sort, setSort] = useState("");
   const handleSortProperty = (event) => {
@@ -47,14 +45,12 @@ const dispatch = useDispatch()
   };
 
 const getDetails = async() => {
-// console.log(propertyId);
 const {data} = await getPropertyDetails(propertyId)
-// console.log(data);
 dispatch(getSelectedProperty(data))
 }
   useEffect(() => {
     getDetails()
-  })
+  },[])
 
   function scrollToTopOnReload() {
     window.scrollTo(0, 0);
@@ -79,7 +75,7 @@ dispatch(getSelectedProperty(data))
             gap: "10px",
           }}
         >
-          Colonial Gardens
+          {selectedProperty.propertyName}
           <StarOutlineIcon fontSize="20px" color="gray700.main" />
         </Box>
         {/* property card component */}

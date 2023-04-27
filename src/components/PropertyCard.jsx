@@ -16,6 +16,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { PROPERTY_DETAILS } from "@/constants/routes";
 import { useSelector } from "react-redux";
+import property_image from '../assets/property_image.jpg'
 
 const menuItems = [
   { label: "Edit Property Details", url: "/add-property" },
@@ -44,10 +45,7 @@ function PropertyCard({ item }) {
           display: "flex",
           alignItems: { xs: "flex-start", lg: "center" },
           flexDirection: {
-            xs: "column",
-            sm: "column",
-            md: "row",
-            lg: "row",
+            xs:"column",sm:"row"
           },
           width: "100%",
           height: "auto",
@@ -61,11 +59,12 @@ function PropertyCard({ item }) {
         <CardMedia
           component="img"
           sx={{
-            width: { xs: "100%", md: "200px" },
+            width: { xs: "100%", lg: "100%" },
+            maxWidth:"300px",
             height: "136px",
             borderRadius: "8px",
           }}
-          image="live-from-space.jpg"
+          image={property_image}
           alt="Live from space album cover"
         />
         <CardContent sx={{ flex: "1", p: "0px" }}>

@@ -117,8 +117,7 @@ export const basicSchema = yup.object().shape({
         .required("This field is required"),
     PropertyID: yup
         .string()
-        // .matches(/^[A-Za-z ]*$/, 'Please enter valid first name')
-        .max(30)
+        .max(4)
         .min(1, "Property name must be 1 characters at minimum")
         .required("This field is required"),
     NumberOfUnits: yup

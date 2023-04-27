@@ -1,20 +1,16 @@
 import { Box, Button, Card, Grid, Paper, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
-import ShowerIcon from "@mui/icons-material/Shower";
-import OpacityOutlinedIcon from "@mui/icons-material/OpacityOutlined";
-import WaterDamageOutlinedIcon from "@mui/icons-material/WaterDamageOutlined";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import PowerOutlinedIcon from "@mui/icons-material/PowerOutlined";
-import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
-import PestControlIcon from "@mui/icons-material/PestControl";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import React from "react";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 import { residentUtilities } from "../pages/utilities/Utilies";
+import { useSelector } from "react-redux";
+
 
 function PropertyUtilitiesCard(prop) {
+
+  const {selectedProperty} = useSelector((state) => state.property)
   const Item = styled(Paper)(() => ({
     width: "95%",
     height: "100px",
@@ -49,7 +45,7 @@ function PropertyUtilitiesCard(prop) {
               borderRadius: "8px",
               textTransform: "none",
             }}
-            onClick={() => navigate("/add-utility")}
+            onClick={() => navigate(`/property-details/${selectedProperty.id}/add-utility`)}
           >
             Edit
           </Button>
@@ -57,11 +53,12 @@ function PropertyUtilitiesCard(prop) {
         {/* utility grid */}
         <Grid
           container
-          columns={{ xs: 4, sm: 12, md: 12 }}
+          columns={{ xs: 4, sm: 8, md: 8 }}
           justifyContent={"space-around"}
           alignItems="center"
           marginTop="24px"
           rowGap={"10px"}
+          item
         >
           {residentUtilities.map((item, index) => (
             <Grid

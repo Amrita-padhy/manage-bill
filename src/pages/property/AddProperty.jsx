@@ -263,6 +263,7 @@ function AddProperty() {
             >
               <TextField
                 disabled={isDisable}
+                inputProps={{ maxLength: 4 }}
                 required
                 fullWidth
                 size="medium"

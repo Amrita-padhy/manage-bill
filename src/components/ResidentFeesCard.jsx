@@ -64,7 +64,7 @@ function ResidentFeesCard() {
         <Grid
           container
           width={"100%"}
-          columns={{ xs: 4, sm: 12, md: 12 }}
+          columns={{ xs: 4, sm: 8, md: 8 }}
           justifyContent={"space-around"}
           alignItems="center"
           marginTop="24px"
