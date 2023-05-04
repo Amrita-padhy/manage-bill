@@ -101,9 +101,7 @@ function ManageProperty() {
   useEffect(() => {
     getData();
   }, []);
-useEffect(() => {
-
-},[])
+  useEffect(() => {}, []);
 
   return (
     <>
@@ -129,6 +127,9 @@ useEffect(() => {
             onClick={() => navigate("/add-property")}
           >
             Add New Property
+          </Button>
+          <Button onClick={() => navigate("/add-residents")}>
+            Add Residents
           </Button>
         </Stack>
         {/* property card */}
@@ -297,11 +298,9 @@ useEffect(() => {
                       {propertyList
                         ?.slice(0, showProperty)
                         .map((item, index) => (
-       
-        <PropertyCard key={index} item={item}  />
+                          <PropertyCard key={index} item={item} />
                         ))}
                       <Button
-                      
                         variant="contained"
                         onClick={handleShowItem}
                         color={"secondary"}

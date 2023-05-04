@@ -13,3 +13,4 @@ export const MANAGE_PROPERTY = "/";
 export const ADD_PROPERTY = "/add-property";
 export const PROPERTY_DETAILS = "/property-details/:propertyId";
 export const PROPERTY_UTILITY = "/property-details/:propertyId/add-utility"
+export const ADD_RESIDENTS = "/add-residents";
