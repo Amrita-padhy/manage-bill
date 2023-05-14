@@ -171,7 +171,22 @@ const getPropertyDetailById = async (req, res) => {
       return res.status(500).send({ message: "Property not found" });
     }
 
-    return res.status(200).send({ ...doc.data(), id: propertyId });
+    const utilityRef = db.collection("utilities").doc(propertyId);
+    const utilityDoc = await utilityRef.get();
+
+    // Check if the property exists
+    if (!utilityDoc.exists) {
+      res.status(404).send("Property not found.");
+      return;
+    }
+
+    const accountRef = await utilityRef.get();
+    const utilities = JSON.parse(accountRef.data()?.utilities);
+    const residentFees = JSON.parse(accountRef.data()?.residentFees);
+
+    return res
+      .status(200)
+      .send({ ...doc.data(), id: propertyId, utilities, residentFees });
   } catch (error) {
     res
       .status(500)
@@ -179,6 +194,58 @@ const getPropertyDetailById = async (req, res) => {
     return;
   }
 };
+
+const addUtility = async (req, res) => {
+  const { propertyId } = req.body;
+  try {
+    if (req.method !== "POST")
+      return res.status(405).send("Method not allowed");
+
+    if (!propertyId)
+      return res.status(400).send({ message: "propertyId is missing" });
+
+    const utilitiesRef = db.collection("utilities");
+    const utilDoc = utilitiesRef.doc(propertyId);
+
+    // Create a new utility document with the given propertyId
+    await utilDoc.set({
+      utilities: JSON.stringify(req.body?.utility ? req.body.utility : []),
+      residentFees: JSON.stringify(
+        req.body?.residentFees ? req.body.residentFees : []
+      ),
+    });
+
+    res.status(200).send({ message: "Utilities created successfully" });
+  } catch (error) {
+    res.status(500).send({
+      message: "Please refresh an error came while adding a property",
+    });
+  }
+};
+
+const getUtility = async (req, res) => {
+  const propertyId = req.params.propertyId;
+
+  try {
+    const utilityRef = db.collection("utilities").doc(propertyId);
+    const utilityDoc = await utilityRef.get();
+
+    // Check if the property exists
+    if (!utilityDoc.exists) {
+      res.status(404).send("Property not found.");
+      return;
+    }
+
+    const accountRef = await utilityRef.get();
+    const utilities = JSON.parse(accountRef.data()?.utilities);
+    const residentFees = JSON.parse(accountRef.data()?.residentFees);
+
+    res.status(200).send({ utilities, residentFees });
+  } catch (error) {
+    res.status(500).send("Error getting property data.");
+  }
+};
+
 app.post("/register", register);
 app.post("/getUserInfo", getUserInfo);
 app.post("/updateUser", updateUser);
@@ -187,5 +254,9 @@ app.post("/updateUser", updateUser);
 app.post("/addProperty", addProperty);
 app.get("/getPropertyList", getPropertyList);
 app.get("/getPropertyDetailById/:propertyId", getPropertyDetailById); // add utility details
+
+// UTILITY
+app.post("/addUtility", addUtility);
+app.get("/getUtility/:propertyId", getUtility);
 
 exports.app = functions.https.onRequest(app);
