@@ -173,20 +173,27 @@ const getPropertyDetailById = async (req, res) => {
 
     const utilityRef = db.collection("utilities").doc(propertyId);
     const utilityDoc = await utilityRef.get();
-
-    // Check if the property exists
-    if (!utilityDoc.exists) {
-      res.status(404).send("Property not found.");
-      return;
+    let utilities = [];
+    let residentFees = [];
+    if (utilityDoc.exists) {
+      utilities = JSON.parse(utilityDoc.data()?.utilities);
+      residentFees = JSON.parse(utilityDoc.data()?.residentFees);
     }
 
-    const accountRef = await utilityRef.get();
-    const utilities = JSON.parse(accountRef.data()?.utilities);
-    const residentFees = JSON.parse(accountRef.data()?.residentFees);
+    const unitsRef = db.collection("units").doc(propertyId);
+    const unitDoc = await unitsRef.get();
+    let unitData = [];
+    if (unitDoc.exists) {
+      unitData = JSON.parse(unitDoc.data()?.unitData);
+    }
 
-    return res
-      .status(200)
-      .send({ ...doc.data(), id: propertyId, utilities, residentFees });
+    return res.status(200).send({
+      ...doc.data(),
+      id: propertyId,
+      utilities,
+      residentFees,
+      unitData,
+    });
   } catch (error) {
     res
       .status(500)
@@ -218,7 +225,7 @@ const addUtility = async (req, res) => {
     res.status(200).send({ message: "Utilities created successfully" });
   } catch (error) {
     res.status(500).send({
-      message: "Please refresh an error came while adding a property",
+      message: "Please refresh an error came while adding utility",
     });
   }
 };
@@ -246,6 +253,29 @@ const getUtility = async (req, res) => {
   }
 };
 
+const addUnit = async (req, res) => {
+  const { propertyId, unitData } = req.body;
+  try {
+    if (req.method !== "POST")
+      return res.status(405).send("Method not allowed");
+
+    if (!propertyId)
+      return res.status(400).send({ message: "propertyId is missing" });
+
+    const unitsRef = db.collection("units");
+    const unitDoc = unitsRef.doc(propertyId);
+
+    await unitDoc.set({
+      unitData: JSON.stringify(unitData),
+    });
+    res.status(200).send({ message: "Unit created successfully" });
+  } catch (error) {
+    res.status(500).send({
+      message: "Please refresh an error came while adding units",
+    });
+  }
+};
+
 app.post("/register", register);
 app.post("/getUserInfo", getUserInfo);
 app.post("/updateUser", updateUser);
@@ -258,5 +288,8 @@ app.get("/getPropertyDetailById/:propertyId", getPropertyDetailById); // add uti
 // UTILITY
 app.post("/addUtility", addUtility);
 app.get("/getUtility/:propertyId", getUtility);
+
+//units
+app.post("/addUnit/:propertyId", addUnit);
 
 exports.app = functions.https.onRequest(app);
