@@ -25,7 +25,11 @@ import { useEffect } from "react";
 import { auth } from "../boot/firebase.js";
 import { App } from "../App.jsx";
 import { ProtectedRoute } from "./ProtectedRoute.jsx";
+ property-utility-functionality
+
+
 import AddResident from "../pages/property/AddResident.jsx";
+ 
 
 export const AppRouter = () => {
   const { user } = useSelector(selectUser);
@@ -69,6 +73,13 @@ export const AppRouter = () => {
               path: ROUTE.PROPERTY_DETAILS,
               element: <PropertyDetails />,
             },
+ property-utility-functionality
+            {
+              path: ROUTE.PROPERTY_UTILITY,
+              element: <AddUtility/>,
+            },
+           
+
 add-resident
             {
               path: ROUTE.ADD_RESIDENT,
@@ -79,6 +90,7 @@ add-resident
             //   path: ROUTE.PROPERTY_UTILITY,
             //   element: <AddUtility/>,
             // },
+ 
  
           ],
         },

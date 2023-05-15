@@ -101,15 +101,15 @@ function ManageProperty() {
   useEffect(() => {
     getData();
   }, []);
-useEffect(() => {
-
-},[])
+  useEffect(() => {}, []);
 
   return (
     <>
       <Box sx={{ p: "20px", mt: "50px" }}>
         <Stack
-          direction={{ xs: "column", lg: "row" }}
+ property-utility-functionality
+          direction={{ sm: "column", lg: "row" }}
+
           justifyContent="space-between"
           textAlign={"center"}
           alignItems={"center"}
@@ -130,7 +130,11 @@ useEffect(() => {
           >
             Add New Property
           </Button>
+ property-utility-functionality
+        
+
           <Button variant="contained" onClick={() => navigate("/add-resident")}>Add residents</Button>
+ 
         </Stack>
         {/* property card */}
         <Box justifyContent={"center"}>
@@ -298,11 +302,9 @@ useEffect(() => {
                       {propertyList
                         ?.slice(0, showProperty)
                         .map((item, index) => (
-       
-        <PropertyCard key={index} item={item}  />
+                          <PropertyCard key={index} item={item} />
                         ))}
                       <Button
-                      
                         variant="contained"
                         onClick={handleShowItem}
                         color={"secondary"}

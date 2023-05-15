@@ -20,7 +20,10 @@ import { basicSchema } from "../../common/validators";
 import AddPropertyUtilityModal from "../../components/AddPropertyUtilityModal";
 import EditUtilityModal from "../../components/EditUtilityModal";
 import DeleteUtilityModal from "../../components/DeleteUtilityModal";
-import {useParams} from 'react-router-dom'
+property-utility-functionality
+import { useSelector } from "react-redux";
+
+
 const Item = styled(Paper)(() => ({
   width: "95%",
   height: "100px",
@@ -38,6 +41,7 @@ function AddUtility() {
   const {propertyId} = useParams()
   console.log(propertyId);
   const [checked, setChecked] = useState(false);
+  const {selectedProperty} = useSelector((state) => state.property)
 
   // formik
   const {
@@ -120,8 +124,6 @@ function AddUtility() {
       setEditModalOpen(true);
       setAddUtilityModalOpen(false);
     }
-
-    //  empty all input fields
     resetForm();
   };
 
@@ -209,10 +211,13 @@ function AddUtility() {
         addUtilityModalOpen={addUtilityModalOpen}
         handleAddUtilityModalClose={handleAddUtilityModalClose}
       />
-      <Box width="100%">
+      <Box width="100%" padding={'20px'}>
         {/* back btn */}
         <BackButton />
         <Header heading="Edit Utilities & Fees" title="" />
+property-utility-functionality
+        <PropertyCard  item={selectedProperty} />
+
         {/* <PropertyCard /> */}
         {/* add utility */}
         <Card
@@ -246,7 +251,7 @@ function AddUtility() {
             </Typography>
             <Grid
               container
-              columns={{ xs: 4, sm: 12, md: 12 }}
+              columns={{ xs: 4, sm: 8, md: 8 }}
               justifyContent={"space-around"}
               alignItems="center"
               marginTop="24px"
@@ -260,6 +265,7 @@ function AddUtility() {
                   key={index}
                   justifyContent="center"
                   alignItems={"center"}
+                  item
                 >
                   <Item
                     variant="elevation"
@@ -318,7 +324,7 @@ function AddUtility() {
             </Typography>
             <Grid
               container
-              columns={{ xs: 4, sm: 12, md: 12 }}
+              columns={{ xs: 4, sm: 8, md: 8 }}
               justifyContent={"space-around"}
               alignItems="center"
               marginTop="24px"
@@ -332,6 +338,7 @@ function AddUtility() {
                   key={index}
                   justifyContent="center"
                   alignItems={"center"}
+                  item
                 >
                   <Item
                     sx={{ cursor: "pointer" }}

@@ -29,7 +29,8 @@ function TabPanel(props) {
 function PropertyDetailCard() {
   const { selectedProperty } = useSelector((state) => state.property);
 
-  const dispatch = useDispatch();
+ property-utility-functionality
+const dispatch = useDispatch()
 
   const { propertyId } = useParams();
   const [sort, setSort] = useState("");
@@ -42,11 +43,16 @@ function PropertyDetailCard() {
     setActiveTab(val);
   };
 
-  const getDetails = async () => {
-    const { data } = await getPropertyDetails(propertyId);
+property-utility-functionality
+const getDetails = async() => {
+const {data} = await getPropertyDetails(propertyId)
+dispatch(getSelectedProperty(data))
+}
+  useEffect(() => {
+    getDetails()
+  },[])
 
-    dispatch(getSelectedProperty(data));
-  };
+ 
 
   function scrollToTopOnReload() {
     window.scrollTo(0, 0);
@@ -72,7 +78,7 @@ function PropertyDetailCard() {
             gap: "10px",
           }}
         >
-          Colonial Gardens
+          {selectedProperty.propertyName}
           <StarOutlineIcon fontSize="20px" color="gray700.main" />
         </Box>
         {/* property card component */}

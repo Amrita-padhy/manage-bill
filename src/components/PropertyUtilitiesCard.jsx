@@ -1,24 +1,25 @@
 import { Box, Button, Card, Grid, Paper, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
-import ShowerIcon from "@mui/icons-material/Shower";
-import OpacityOutlinedIcon from "@mui/icons-material/OpacityOutlined";
-import WaterDamageOutlinedIcon from "@mui/icons-material/WaterDamageOutlined";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import PowerOutlinedIcon from "@mui/icons-material/PowerOutlined";
-import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
-import PestControlIcon from "@mui/icons-material/PestControl";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import React from "react";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 import { residentUtilities } from "../pages/utilities/Utilies";
-// import { PROPERTY_UTILITY } from "../constants/routes";
+property-utility-functionality
 import { useSelector } from "react-redux";
+
+
+function PropertyUtilitiesCard(prop) {
+
+  const {selectedProperty} = useSelector((state) => state.property)
+=======
+// import { PROPERTY_UTILITY } from "../constants/routes";
+
 
 function PropertyUtilitiesCard(prop) {
   const { selectedProperty } = useSelector((state) => state.property);
   console.log(selectedProperty.id);
+
 
   const Item = styled(Paper)(() => ({
     width: "95%",
@@ -54,7 +55,9 @@ function PropertyUtilitiesCard(prop) {
               borderRadius: "8px",
               textTransform: "none",
             }}
-            // onClick={() => navigate(`/property-details/${selectedProperty.id}/add-utility`)}
+property-utility-functionality
+            onClick={() => navigate(`/property-details/${selectedProperty.id}/add-utility`)}
+
           >
             Edit
           </Button>
@@ -67,6 +70,7 @@ function PropertyUtilitiesCard(prop) {
           alignItems="center"
           marginTop="24px"
           rowGap={"10px"}
+          item
         >
           {residentUtilities.map((item, index) => (
             <Grid

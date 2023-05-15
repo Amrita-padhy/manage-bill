@@ -30,7 +30,9 @@ const handleDrawerToggle = () => {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, width: { md: `calc(100% - ${drawerWidth}px)` },
+property-utility-functionality
+      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, width: { lg: `calc(100% - ${drawerWidth}px)` },
+
           ml: { sm: `${drawerWidth}px` }, }} color='gray700' >
         <Toolbar>
           <IconButton
