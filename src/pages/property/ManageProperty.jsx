@@ -107,7 +107,9 @@ function ManageProperty() {
     <>
       <Box sx={{ p: "20px", mt: "50px" }}>
         <Stack
+ property-utility-functionality
           direction={{ sm: "column", lg: "row" }}
+
           justifyContent="space-between"
           textAlign={"center"}
           alignItems={"center"}
@@ -128,9 +130,11 @@ function ManageProperty() {
           >
             Add New Property
           </Button>
-          <Button onClick={() => navigate("/add-residents")}>
-            Add Residents
-          </Button>
+ property-utility-functionality
+        
+
+          <Button variant="contained" onClick={() => navigate("/add-resident")}>Add residents</Button>
+ 
         </Stack>
         {/* property card */}
         <Box justifyContent={"center"}>

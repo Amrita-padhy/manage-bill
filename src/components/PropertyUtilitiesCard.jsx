@@ -5,12 +5,22 @@ import React from "react";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 import { residentUtilities } from "../pages/utilities/Utilies";
+property-utility-functionality
 import { useSelector } from "react-redux";
 
 
 function PropertyUtilitiesCard(prop) {
 
   const {selectedProperty} = useSelector((state) => state.property)
+=======
+// import { PROPERTY_UTILITY } from "../constants/routes";
+
+
+function PropertyUtilitiesCard(prop) {
+  const { selectedProperty } = useSelector((state) => state.property);
+  console.log(selectedProperty.id);
+
+
   const Item = styled(Paper)(() => ({
     width: "95%",
     height: "100px",
@@ -45,7 +55,9 @@ function PropertyUtilitiesCard(prop) {
               borderRadius: "8px",
               textTransform: "none",
             }}
+property-utility-functionality
             onClick={() => navigate(`/property-details/${selectedProperty.id}/add-utility`)}
+
           >
             Edit
           </Button>
@@ -62,7 +74,7 @@ function PropertyUtilitiesCard(prop) {
         >
           {residentUtilities.map((item, index) => (
             <Grid
-            item
+              item
               xs={2}
               sm={4}
               md={1}
@@ -70,7 +82,7 @@ function PropertyUtilitiesCard(prop) {
               justifyContent="center"
               alignItems={"center"}
             >
-              <Item >
+              <Item>
                 <Box>{item.icon}</Box>
                 <Typography
                   sx={{

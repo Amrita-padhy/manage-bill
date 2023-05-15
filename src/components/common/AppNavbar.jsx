@@ -6,7 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useTheme } from '@emotion/react';
-import { useState } from 'react';
+import { useState ,useEffect,useRef} from 'react';
 import {  useMediaQuery } from '@material-ui/core';
 import { Button, Divider, Typography } from '@mui/material';
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
@@ -18,16 +18,21 @@ import SearchIcon from '@mui/icons-material/Search';
 const drawerWidth = 280;
 
 function AppNavbar() {
+  const inputRef = useRef(null);
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [placeholder, setPlaceholder] = useState('');
 const handleDrawerToggle = () => {
   setMobileOpen(!mobileOpen);
 };
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
   
+
   return (
     <Box sx={{ display: 'flex' }}>
+property-utility-functionality
       <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, width: { lg: `calc(100% - ${drawerWidth}px)` },
+
           ml: { sm: `${drawerWidth}px` }, }} color='gray700' >
         <Toolbar>
           <IconButton
@@ -39,7 +44,7 @@ const handleDrawerToggle = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Box component="form" sx={{borderBottom:"1px solid #FBE122", width:{sm:"200px",md:"300px"}}}  >
+          <Box component="form" sx={{borderBottom:"1px solid #FBE122", width:{xs:"200px",md:"300px"}, display:"flex"}}  >
           <IconButton type="submit" aria-label="search">
         <SearchIcon />
       </IconButton>

@@ -20,7 +20,9 @@ import { basicSchema } from "../../common/validators";
 import AddPropertyUtilityModal from "../../components/AddPropertyUtilityModal";
 import EditUtilityModal from "../../components/EditUtilityModal";
 import DeleteUtilityModal from "../../components/DeleteUtilityModal";
+property-utility-functionality
 import { useSelector } from "react-redux";
+
 
 const Item = styled(Paper)(() => ({
   width: "95%",
@@ -35,6 +37,9 @@ const Item = styled(Paper)(() => ({
 }));
 
 function AddUtility() {
+
+  const {propertyId} = useParams()
+  console.log(propertyId);
   const [checked, setChecked] = useState(false);
   const {selectedProperty} = useSelector((state) => state.property)
 
@@ -210,7 +215,10 @@ function AddUtility() {
         {/* back btn */}
         <BackButton />
         <Header heading="Edit Utilities & Fees" title="" />
+property-utility-functionality
         <PropertyCard  item={selectedProperty} />
+
+        {/* <PropertyCard /> */}
         {/* add utility */}
         <Card
           variant="elevation"
