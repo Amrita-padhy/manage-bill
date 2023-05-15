@@ -16,7 +16,10 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { PROPERTY_DETAILS } from "@/constants/routes";
 import { useSelector } from "react-redux";
+ add-resident
 import property_image from '../assets/property_image.jpg'
+
+import property_image from "../assets/property_image.jpg"
 
 const menuItems = [
   { label: "Edit Property Details", url: "/add-property" },
@@ -62,8 +65,9 @@ function PropertyCard({ item }) {
         <CardMedia
           component="img"
           sx={{
-            width: { xs: "100%", md: "200px" },
+            width: { xs: "100%", md: "100%" },
             height: "136px",
+            maxWidth:"300px",
             borderRadius: "8px",
           }}
           image={property_image}
@@ -174,6 +178,7 @@ function PropertyCard({ item }) {
             sx={{
               display: "flex",
               alignItems: "center",
+              justifyContent:"center",
               mt: "24px",
             }}
           >

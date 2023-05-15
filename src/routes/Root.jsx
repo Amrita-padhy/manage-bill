@@ -69,10 +69,17 @@ export const AppRouter = () => {
               path: ROUTE.PROPERTY_DETAILS,
               element: <PropertyDetails />,
             },
+add-resident
             {
               path: ROUTE.ADD_RESIDENT,
               element: <AddResident />,
             },
+
+            // {
+            //   path: ROUTE.PROPERTY_UTILITY,
+            //   element: <AddUtility/>,
+            // },
+ 
           ],
         },
       ],

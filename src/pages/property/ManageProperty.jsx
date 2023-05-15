@@ -109,7 +109,7 @@ useEffect(() => {
     <>
       <Box sx={{ p: "20px", mt: "50px" }}>
         <Stack
-          direction={{ xs: "column", sm: "row" }}
+          direction={{ xs: "column", lg: "row" }}
           justifyContent="space-between"
           textAlign={"center"}
           alignItems={"center"}
