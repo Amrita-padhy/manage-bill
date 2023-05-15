@@ -20,7 +20,6 @@ import { basicSchema } from "../../common/validators";
 import AddPropertyUtilityModal from "../../components/AddPropertyUtilityModal";
 import EditUtilityModal from "../../components/EditUtilityModal";
 import DeleteUtilityModal from "../../components/DeleteUtilityModal";
-property-utility-functionality
 import { useSelector } from "react-redux";
 
 

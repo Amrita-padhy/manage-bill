@@ -39,12 +39,12 @@ import { useFormik } from "formik";
 
 function AddResident() {
   const { propertyId } = useParams();
-
+const[unitNumbers,setUnitNumbers] = useState('')
   const { values, handleChange, handleBlur, touched, errors, handleSubmit } =
     useFormik({
       initialValues: {
         residentInformation: {
-          unitNumbers: "",
+          unitNumbers: unitNumbers,
           NoOfOccupants: "",
           amount: "",
           moveInDate: "",
@@ -121,12 +121,11 @@ function AddResident() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   error={errors.unitNumbers && touched.unitNumbers}
-                  helperText={touched.unitNumbers ? errors.unitNumbers : null}
+                  helpertext={touched.unitNumbers ? errors.unitNumbers : null}
                 >
                   <MenuItem value="1">1</MenuItem>
                   <MenuItem value="2">2</MenuItem>
                   <MenuItem value="3">3</MenuItem>
-                  <MenuItem value="more">more</MenuItem>
                 </TextField>
               </Grid>
               <Grid item xs={12} md={4}>
@@ -140,10 +139,12 @@ function AddResident() {
                   bordercolor="gray200"
                   id="NoOfOccupants"
                   value={values.NoOfOccupants}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    setUnitNumbers(e.target.value)
+                  }}
                   onBlur={handleBlur}
                   error={errors.NoOfOccupants && touched.NoOfOccupants}
-                  helperText={
+                  helpertext={
                     touched.NoOfOccupants ? errors.NoOfOccupants : null
                   }
                 />
@@ -170,7 +171,7 @@ function AddResident() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={errors.amount && touched.amount}
-                    helperText={touched.amount ? errors.amount : null}
+                    helpertext={touched.amount ? errors.amount : null}
                   />
                 </FormControl>
               </Grid>
@@ -189,7 +190,7 @@ function AddResident() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   error={errors.moveInDate && touched.moveInDate}
-                  helperText={touched.moveInDate ? errors.moveInDate : null}
+                  helpertext={touched.moveInDate ? errors.moveInDate : null}
                 />
               </Grid>
               <Grid item xs={12} md={4}>
@@ -207,7 +208,7 @@ function AddResident() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   error={errors.moveOutDate && touched.moveOutDate}
-                  helperText={touched.moveOutDate ? errors.moveOutDate : null}
+                  helpertext={touched.moveOutDate ? errors.moveOutDate : null}
                 />
               </Grid>
             </Grid>
@@ -233,7 +234,7 @@ function AddResident() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   error={errors.residentsId && touched.residentsId}
-                  helperText={touched.residentsId ? errors.residentsId : null}
+                  helpertext={touched.residentsId ? errors.residentsId : null}
                 />
               </Grid>
               <Grid item xs={12} md={4}>
@@ -250,7 +251,7 @@ function AddResident() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   error={errors.residentsFirstName && touched.residentsFirstName}
-                  helperText={touched.residentsFirstName ? errors.residentsFirstName : null}
+                  helpertext={touched.residentsFirstName ? errors.residentsFirstName : null}
                 />
               </Grid>
 
@@ -268,7 +269,7 @@ function AddResident() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   error={errors.residentsLastName && touched.residentsLastName}
-                  helperText={touched.residentsLastName ? errors.residentsLastName : null}
+                  helpertext={touched.residentsLastName ? errors.residentsLastName : null}
                 />
               </Grid>
               <Grid item xs={12} md={4}>
@@ -285,7 +286,7 @@ function AddResident() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   error={errors.residentsEmail && touched.residentsEmail}
-                  helperText={touched.residentsEmail ? errors.residentsEmail : null}
+                  helpertext={touched.residentsEmail ? errors.residentsEmail : null}
                 />
               </Grid>
               <Grid item xs={12} md={4}>
@@ -302,7 +303,7 @@ function AddResident() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   error={errors.residentsMobileNumber && touched.residentsMobileNumber}
-                  helperText={touched.residentsMobileNumber ? errors.residentsMobileNumber : null}
+                  helpertext={touched.residentsMobileNumber ? errors.residentsMobileNumber : null}
                 />
               </Grid>
             </Grid>
