@@ -20,20 +20,17 @@ import ResidentFeesCard from "./ResidentFeesCard";
 import BackButton from "../common/BackButton";
 import { getPropertyDetails } from "../api/property/property";
 import { getSelectedProperty } from "../store/property/propertyReducer";
-import {useSelector,useDispatch} from 'react-redux'
-
+import { useSelector, useDispatch } from "react-redux";
 
 function TabPanel(props) {
   const { children, value, index } = props;
   return <div>{value === index && <h1>{children}</h1>}</div>;
 }
 function PropertyDetailCard() {
-const {selectedProperty} = useSelector((state) => state.property)
-// console.log(selectedProperty);
+  const { selectedProperty } = useSelector((state) => state.property);
 
-const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  // const [propertyData, setPropertyData] = useState([])
   const { propertyId } = useParams();
   const [sort, setSort] = useState("");
   const handleSortProperty = (event) => {
@@ -42,25 +39,21 @@ const dispatch = useDispatch()
 
   const [activeTab, setActiveTab] = useState(0);
   const handleTabChange = (e, val) => {
-    console.log(val);
     setActiveTab(val);
   };
 
-const getDetails = async() => {
-// console.log(propertyId);
-const {data} = await getPropertyDetails(propertyId)
-// console.log(data);
-dispatch(getSelectedProperty(data))
-}
-  useEffect(() => {
-    getDetails()
-  })
+  const getDetails = async () => {
+    const { data } = await getPropertyDetails(propertyId);
+
+    dispatch(getSelectedProperty(data));
+  };
 
   function scrollToTopOnReload() {
     window.scrollTo(0, 0);
   }
   useEffect(() => {
-    scrollToTopOnReload()
+    scrollToTopOnReload();
+    getDetails();
   }, []);
 
   return (

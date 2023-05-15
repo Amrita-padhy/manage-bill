@@ -20,7 +20,7 @@ import { basicSchema } from "../../common/validators";
 import AddPropertyUtilityModal from "../../components/AddPropertyUtilityModal";
 import EditUtilityModal from "../../components/EditUtilityModal";
 import DeleteUtilityModal from "../../components/DeleteUtilityModal";
-
+import {useParams} from 'react-router-dom'
 const Item = styled(Paper)(() => ({
   width: "95%",
   height: "100px",
@@ -34,6 +34,9 @@ const Item = styled(Paper)(() => ({
 }));
 
 function AddUtility() {
+
+  const {propertyId} = useParams()
+  console.log(propertyId);
   const [checked, setChecked] = useState(false);
 
   // formik
@@ -210,7 +213,7 @@ function AddUtility() {
         {/* back btn */}
         <BackButton />
         <Header heading="Edit Utilities & Fees" title="" />
-        <PropertyCard />
+        {/* <PropertyCard /> */}
         {/* add utility */}
         <Card
           variant="elevation"

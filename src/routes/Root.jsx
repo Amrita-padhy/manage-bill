@@ -68,6 +68,10 @@ export const AppRouter = () => {
               path: ROUTE.PROPERTY_DETAILS,
               element: <PropertyDetails />,
             },
+            // {
+            //   path: ROUTE.PROPERTY_UTILITY,
+            //   element: <AddUtility/>,
+            // },
           ],
         },
       ],
