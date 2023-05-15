@@ -40,8 +40,6 @@ const dispatch = useDispatch()
   const handleTabChange = (e, val) => {
     setActiveTab(val);
   };
-
-property-utility-functionality
 const getDetails = async() => {
 const {data} = await getPropertyDetails(propertyId)
 dispatch(getSelectedProperty(data))
