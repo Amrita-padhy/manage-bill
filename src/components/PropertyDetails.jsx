@@ -28,8 +28,6 @@ function TabPanel(props) {
 }
 function PropertyDetailCard() {
   const { selectedProperty } = useSelector((state) => state.property);
-
- property-utility-functionality
 const dispatch = useDispatch()
 
   const { propertyId } = useParams();
@@ -42,8 +40,6 @@ const dispatch = useDispatch()
   const handleTabChange = (e, val) => {
     setActiveTab(val);
   };
-
-property-utility-functionality
 const getDetails = async() => {
 const {data} = await getPropertyDetails(propertyId)
 dispatch(getSelectedProperty(data))
