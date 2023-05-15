@@ -10,9 +10,6 @@ import Snackbar from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import LoadingButton from "@mui/lab/LoadingButton";
-
-import Typography from "@mui/material/Typography";
-
 import { useAuth } from "../../context/authContext";
 import { SIGNUP } from "@/constants/routes";
 import { login } from "../../api/auth/authApi";
@@ -75,9 +72,7 @@ function SignInPage() {
       </IconButton>
     </React.Fragment>
   );
-  const disableButton = () => {
-    
-  }
+  
   const  isDisabled = !values.email ||
   !values.password ||
   errors.email ||
