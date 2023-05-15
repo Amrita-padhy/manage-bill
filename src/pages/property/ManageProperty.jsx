@@ -130,6 +130,7 @@ useEffect(() => {
           >
             Add New Property
           </Button>
+          <Button variant="contained" onClick={() => navigate("/add-resident")}>Add residents</Button>
         </Stack>
         {/* property card */}
         <Box justifyContent={"center"}>
